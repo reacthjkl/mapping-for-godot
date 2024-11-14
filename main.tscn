@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://73gcl8aynsus"]
+
+[ext_resource type="PackedScene" uid="uid://ch5ht0yb65nuj" path="res://blender-models/pillars_scene.blend" id="1_iihv5"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="pillars_scene" parent="." instance=ExtResource("1_iihv5")]
+
+[editable path="pillars_scene"]
