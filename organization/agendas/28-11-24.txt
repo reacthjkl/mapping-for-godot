@@ -1,0 +1,2 @@
+1. Sich auf ein Projekt-Management-App (z.B. Trello) einigen und Projekt anlegen.
+2. Godot-Demo anschauen und überlegen, was technisch gesehen noch fehlt, um die Projektion auszuprobieren.
