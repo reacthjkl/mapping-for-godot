@@ -1,0 +1,286 @@
+# cmake build file
+
+# minimum required cmake version
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)
+
+# project name
+PROJECT(all)
+
+# cmake policy preliminaries
+IF (POLICY CMP0072)
+   CMAKE_POLICY(SET CMP0072 NEW)
+ENDIF (POLICY CMP0072)
+
+# path check
+STRING(FIND ${CMAKE_CURRENT_SOURCE_DIR} " " POS)
+IF (NOT POS EQUAL -1)
+   MESSAGE(FATAL_ERROR "path to working directory must not contain spaces")
+ENDIF (NOT POS EQUAL -1)
+
+# compiler check
+INCLUDE(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+CHECK_CXX_COMPILER_FLAG("-std=c++1z" COMPILER_SUPPORTS_CXX17)
+
+# compiler options
+OPTION(BUILD_WITH_CXX11 "Use C++11 standard." ${COMPILER_SUPPORTS_CXX11})
+OPTION(BUILD_WITH_CXX17 "Use C++17 standard." ${COMPILER_SUPPORTS_CXX17})
+OPTION(BUILD_WITH_OPTIMIZATION "Use compiler optimizations." OFF)
+OPTION(BUILD_WITH_PCH "Use pre-compiled headers." ON)
+
+# opengl options
+OPTION(OPENGL_COMPATIBILITY_PROFILE "Use OpenGL compatibility profile" OFF)
+
+# qt search paths
+SET(QT4_SEARCH_PATH "/usr/local/qt4" CACHE PATH "Search path for manual Qt4 installations")
+SET(QT5_SEARCH_PATH "/usr/local/qt5" CACHE PATH "Search path for manual Qt5 installations")
+SET(QT6_SEARCH_PATH "/usr/local/qt6" CACHE PATH "Search path for manual Qt6 installations")
+
+# find qmake to retrieve qt installation path and version
+IF (UNIX)
+   FIND_PROGRAM(QMAKE_PATH qmake)
+   IF (NOT QMAKE_PATH)
+      FIND_PATH(QMAKE_SEARCH qmake PATHS ${QT4_SEARCH_PATH} ${QT5_SEARCH_PATH} ${QT6_SEARCH_PATH} PATH_SUFFIXES "bin" NO_DEFAULT_PATH)
+      IF (QMAKE_SEARCH)
+         SET(QMAKE_PATH "${QMAKE_SEARCH}/qmake")
+      ENDIF (QMAKE_SEARCH)
+      FIND_PATH(QMAKE5_SEARCH qmake-qt5 PATHS ${QT4_SEARCH_PATH} ${QT5_SEARCH_PATH} ${QT6_SEARCH_PATH} PATH_SUFFIXES "bin")
+      IF (QMAKE5_SEARCH)
+         SET(QMAKE_PATH "${QMAKE5_SEARCH}/qmake-qt5")
+      ENDIF (QMAKE5_SEARCH)
+   ENDIF (NOT QMAKE_PATH)
+   IF (QMAKE_PATH)
+      EXECUTE_PROCESS(COMMAND bash -c "${QMAKE_PATH} -v | grep Using | sed -e 's/.*\\ \\([0-9]*\\)\\.[0-9]*.*/\\1/'" OUTPUT_VARIABLE QT_MAJOR)
+      STRING(REPLACE "\n" "" QT_MAJOR "${QT_MAJOR}")
+      EXECUTE_PROCESS(COMMAND bash -c "${QMAKE_PATH} -v | grep Using | sed -e 's/.*\\ \\([0-9]*\\.[0-9]*\\.[0-9]*\\).*/\\1/'" OUTPUT_VARIABLE QT_VERSION)
+      STRING(REPLACE "\n" "" QT_VERSION "${QT_VERSION}")
+      EXECUTE_PROCESS(COMMAND bash -c "${QMAKE_PATH} -v | grep Using | sed -e 's/.*\\ in\\ \\(.*\\)lib.*/\\1/'" OUTPUT_VARIABLE QT_PATH)
+      STRING(REPLACE "\n" "" QT_PATH "${QT_PATH}")
+      MESSAGE(STATUS "detected Qt${QT_MAJOR}: ${QT_VERSION} in ${QT_PATH}")
+   ELSE (QMAKE_PATH)
+      MESSAGE(STATUS "unable to detect Qt")
+   ENDIF (QMAKE_PATH)
+ENDIF (UNIX)
+
+# if qt5 or qt6 has been found use it by default
+IF (${QT_MAJOR} MATCHES "6")
+   OPTION(BUILD_WITH_QT5 "Use Qt5 instead of Qt4." OFF)
+   OPTION(BUILD_WITH_QT6 "Use Qt6 instead of Qt5." ON)
+ELSEIF (${QT_MAJOR} MATCHES "5")
+   OPTION(BUILD_WITH_QT5 "Use Qt5 instead of Qt4." ON)
+   OPTION(BUILD_WITH_QT6 "Use Qt6 instead of Qt5." OFF)
+ELSE (${QT_MAJOR} MATCHES "5")
+   OPTION(BUILD_WITH_QT5 "Use Qt5 instead of Qt4." OFF)
+   OPTION(BUILD_WITH_QT6 "Use Qt6 instead of Qt5." OFF)
+ENDIF (${QT_MAJOR} MATCHES "6")
+
+# if qt has not been found use some common search paths
+IF (${QT_MAJOR} MATCHES "4")
+   SET(QT4_DIR ${QT_PATH} CACHE PATH "Qt4 installation path")
+ELSE (${QT_MAJOR} MATCHES "4")
+   SET(QT4_DIR /usr/local/Trolltech/Qt-4.7.4 CACHE PATH "Qt4 installation path")
+ENDIF (${QT_MAJOR} MATCHES "4")
+IF (${QT_MAJOR} MATCHES "5")
+   SET(QT5_DIR ${QT_PATH} CACHE PATH "Qt5 installation path")
+ELSE (${QT_MAJOR} MATCHES "5")
+   SET(QT5_DIR /usr/local/Qt-5.7.1 CACHE PATH "Qt5 installation path")
+ENDIF (${QT_MAJOR} MATCHES "5")
+IF (${QT_MAJOR} MATCHES "6")
+   SET(QT6_DIR ${QT_PATH} CACHE PATH "Qt6 installation path")
+ELSE (${QT_MAJOR} MATCHES "6")
+   SET(QT6_DIR /usr/local/qt6 CACHE PATH "Qt6 installation path")
+ENDIF (${QT_MAJOR} MATCHES "6")
+
+# gcc version
+IF (CMAKE_COMPILER_IS_GNUCXX)
+   EXEC_PROGRAM(${CMAKE_CXX_COMPILER} ARGS --version OUTPUT_VARIABLE _compiler_output)
+   STRING(REGEX REPLACE ".* ([0-9]*\\.[0-9]*(\\.[0-9]*)*).*" "\\1" GCC_COMPILER_VERSION ${_compiler_output})
+   MESSAGE(STATUS "gcc version: ${GCC_COMPILER_VERSION}")
+ENDIF (CMAKE_COMPILER_IS_GNUCXX)
+
+# clang version
+IF (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+   EXEC_PROGRAM(${CMAKE_CXX_COMPILER} ARGS --version OUTPUT_VARIABLE _compiler_output)
+   STRING(REGEX REPLACE ".* ([0-9]*\\.[0-9]*(\\.[0-9]*)*).*" "\\1" CLANG_COMPILER_VERSION ${_compiler_output})
+   MESSAGE(STATUS "clang version: ${CLANG_COMPILER_VERSION}")
+ENDIF (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+
+# default Unix compiler definitions
+IF (NOT CMAKE_BUILD_TYPE)
+   IF (UNIX)
+      SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
+      IF (BUILD_WITH_OPTIMIZATION)
+         SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O")
+      ENDIF (BUILD_WITH_OPTIMIZATION)
+   ENDIF (UNIX)
+ENDIF (NOT CMAKE_BUILD_TYPE)
+IF (UNIX)
+   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-unused-parameter -Wno-parentheses -Wno-deprecated-declarations")
+   IF (GCC_COMPILER_VERSION VERSION_GREATER "4.4" OR CLANG_COMPILER_VERSION VERSION_GREATER "3.0")
+      SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unknown-pragmas")
+   ENDIF (GCC_COMPILER_VERSION VERSION_GREATER "4.4" OR CLANG_COMPILER_VERSION VERSION_GREATER "3.0")
+   IF (CLANG_COMPILER_VERSION VERSION_GREATER "3.0")
+      SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-dangling-else")
+   ENDIF (CLANG_COMPILER_VERSION VERSION_GREATER "3.0")
+ENDIF (UNIX)
+
+# default C++ standard
+IF (BUILD_WITH_CXX17)
+   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -fPIC")
+ELSEIF (BUILD_WITH_CXX11)
+   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+ENDIF (BUILD_WITH_CXX17)
+
+# OpenGL profile
+IF (USE_OPENGL_COMPATIBILITY_PROFILE)
+   ADD_DEFINITIONS("-DFORCE_COMPATIBILITY_PROFILE")
+ENDIF (USE_OPENGL_COMPATIBILITY_PROFILE)
+
+# non-standard path to Qt4 source installation
+IF (NOT BUILD_WITH_QT5 AND NOT BUILD_WITH_QT6)
+   SET(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH}; ${QT4_DIR};)
+ENDIF (NOT BUILD_WITH_QT5 AND NOT BUILD_WITH_QT6)
+
+# non-standard path to Qt5
+IF (BUILD_WITH_QT5 AND NOT BUILD_WITH_QT6)
+   SET(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH}; ${QT5_DIR};)
+ENDIF (BUILD_WITH_QT5 AND NOT BUILD_WITH_QT6)
+
+# non-standard path to Qt6
+IF (BUILD_WITH_QT6)
+   SET(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH}; ${QT6_DIR};)
+ENDIF (BUILD_WITH_QT6)
+
+# glvertex header
+SET(GLVERTEX_ENV_PATH $ENV{GLVERTEX_PATH})
+IF (GLVERTEX_ENV_PATH)
+   SET(GLVERTEX_SEARCH_PATH "${GLVERTEX_ENV_PATH}" CACHE PATH "Preset search path for manual glVertex installations")
+ELSE (GLVERTEX_ENV_PATH)
+   SET(GLVERTEX_SEARCH_PATH "/usr/local" CACHE PATH "Search path for manual glVertex installations")
+ENDIF (GLVERTEX_ENV_PATH)
+FIND_PATH(GLVERTEX_PATH glvertex.h PATHS . .. ../glvertex ../../glvertex PATH_SUFFIXES include glvertex NO_DEFAULT_PATH)
+FIND_PATH(GLVERTEX_PATH glvertex.h PATHS ${GLVERTEX_SEARCH_PATH} PATH_SUFFIXES include glvertex)
+IF (GLVERTEX_PATH)
+   MESSAGE(STATUS "detected glvertex headers in ${GLVERTEX_PATH}")
+ELSE (GLVERTEX_PATH)
+   MESSAGE(STATUS "glvertex not found")
+ENDIF (GLVERTEX_PATH)
+FIND_FILE(GLVERTEX_H glvertex.h PATHS ${GLVERTEX_PATH} NO_DEFAULT_PATH)
+SET(GLVERTEX_MOCS ${GLVERTEX_PATH}/glvertex_qt_codeeditor.h ${GLVERTEX_PATH}/glvertex_qt_shadereditor.h)
+
+# Qt dependency
+IF (BUILD_WITH_QT5 AND NOT BUILD_WITH_QT6)
+   SET(CMAKE_AUTOMOC ON)
+   SET(CMAKE_INCLUDE_CURRENT_DIR ON)
+   FIND_PACKAGE(Qt5Widgets REQUIRED)
+   FIND_PACKAGE(Qt5OpenGL REQUIRED)
+   INCLUDE_DIRECTORIES(${Qt5Widgets_INCLUDE_DIRS})
+   INCLUDE_DIRECTORIES(${Qt5OpenGL_INCLUDE_DIRS})
+   IF (Qt5_POSITION_INDEPENDENT_CODE)
+      SET(CMAKE_POSITION_INDEPENDENT_CODE ON)
+   ELSE (Qt5_POSITION_INDEPENDENT_CODE)
+      SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
+   ENDIF (Qt5_POSITION_INDEPENDENT_CODE)
+ELSEIF (BUILD_WITH_QT6)
+   SET(CMAKE_AUTOMOC ON)
+   SET(CMAKE_INCLUDE_CURRENT_DIR ON)
+   FIND_PACKAGE(Qt6Widgets REQUIRED)
+   FIND_PACKAGE(Qt6OpenGL REQUIRED)
+   FIND_PACKAGE(Qt6OpenGLWidgets REQUIRED)
+   FIND_PACKAGE(Qt6Core5Compat REQUIRED)
+   INCLUDE_DIRECTORIES(${Qt6Widgets_INCLUDE_DIRS})
+   INCLUDE_DIRECTORIES(${Qt6OpenGL_INCLUDE_DIRS})
+   INCLUDE_DIRECTORIES(${Qt6OpenGLWidgets_INCLUDE_DIRS})
+   INCLUDE_DIRECTORIES(${Qt6Core5Compat_INCLUDE_DIRS})
+   IF (Qt6_POSITION_INDEPENDENT_CODE)
+      SET(CMAKE_POSITION_INDEPENDENT_CODE ON)
+   ELSE (Qt6_POSITION_INDEPENDENT_CODE)
+      SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt6Widgets_EXECUTABLE_COMPILE_FLAGS}")
+   ENDIF (Qt6_POSITION_INDEPENDENT_CODE)
+ELSE (BUILD_WITH_QT6)
+   SET(QT_USE_QTOPENGL TRUE)
+   FIND_PACKAGE(Qt4 COMPONENTS QtCore QtGui REQUIRED)
+   INCLUDE(${QT_USE_FILE})
+   ADD_DEFINITIONS(${QT_DEFINITIONS})
+ENDIF (BUILD_WITH_QT5 AND NOT BUILD_WITH_QT6)
+
+# OpenGL dependency
+FIND_PACKAGE(OpenGL)
+
+# optional Bullet dependency
+FIND_PACKAGE(Bullet)
+IF (BULLET_FOUND)
+   INCLUDE_DIRECTORIES(${BULLET_INCLUDE_DIRS})
+   ADD_DEFINITIONS("-DHAVE_BULLET_PHYSICS")
+ENDIF (BULLET_FOUND)
+
+# moc
+IF (NOT BUILD_WITH_QT5 AND NOT BUILD_WITH_QT6)
+   QT4_WRAP_CPP(MOC_OUTFILES ${GLVERTEX_MOCS})
+ENDIF (NOT BUILD_WITH_QT5 AND NOT BUILD_WITH_QT6)
+
+# executable macro
+MACRO(MAKE_EXECUTABLE target source)
+   INCLUDE_DIRECTORIES(. ${GLVERTEX_PATH})
+   STRING(REPLACE ".cpp" "" ${source}base ${source})
+   FILE(GLOB ${${source}base}EXTRA_HEADERS . ${${source}base}_*.h)
+   FILE(GLOB ${${source}base}EXTRA_MODULES . ${${source}base}_*.cxx)
+   IF (NOT BUILD_WITH_QT5 AND NOT BUILD_WITH_QT6)
+      QT4_WRAP_CPP(${${source}base}MOC_EXTRA_OUTFILES ${${${source}base}EXTRA_HEADERS})
+   ENDIF (NOT BUILD_WITH_QT5 AND NOT BUILD_WITH_QT6)
+   ADD_EXECUTABLE(${target} ${source} ${GLVERTEX_H} ${GLVERTEX_MOCS} ${MOC_OUTFILES} ${${${source}base}EXTRA_HEADERS} ${${${source}base}EXTRA_MODULES} ${${${source}base}MOC_EXTRA_OUTFILES})
+   IF (BUILD_WITH_PCH)
+      IF (NOT ${CMAKE_VERSION} VERSION_LESS "3.16")
+         TARGET_PRECOMPILE_HEADERS(${target} PUBLIC ${GLVERTEX_PATH}/glvertex_qt_glui.h)
+      ENDIF (NOT ${CMAKE_VERSION} VERSION_LESS "3.16")
+   ENDIF (BUILD_WITH_PCH)
+   IF (BUILD_WITH_QT5 AND NOT BUILD_WITH_QT6)
+      TARGET_LINK_LIBRARIES(${target}
+         Qt5::Widgets
+         Qt5::OpenGL
+         )
+   ELSEIF (BUILD_WITH_QT6)
+      TARGET_LINK_LIBRARIES(${target}
+         Qt6::Widgets
+         Qt6::OpenGL
+         Qt6::OpenGLWidgets
+         Qt6::Core5Compat
+         )
+   ELSE (BUILD_WITH_QT6)
+      TARGET_LINK_LIBRARIES(${target}
+         ${QT_LIBRARIES}
+         )
+   ENDIF (BUILD_WITH_QT5 AND NOT BUILD_WITH_QT6)
+   IF (BULLET_FOUND)
+      TARGET_LINK_LIBRARIES(${target}
+         ${BULLET_LIBRARIES}
+         )
+   ENDIF (BULLET_FOUND)
+   TARGET_LINK_LIBRARIES(${target}
+      ${OPENGL_LIBRARIES}
+      )
+ENDMACRO(MAKE_EXECUTABLE)
+
+# filter macro
+MACRO(FILTER_TARGET input output)
+   SET(${output} ${input})
+   STRING(REGEX MATCH "(.*)_automoc(.*)" match1 ${input})
+   STRING(REGEX MATCH "moc_(.*)" match2 ${input})
+   IF (NOT "${match1}" STREQUAL "" OR NOT "${match2}" STREQUAL "")
+      SET(${output} "")
+   ENDIF()
+ENDMACRO()
+
+# target list
+FILE(GLOB targets . *.cpp)
+LIST(SORT targets)
+
+# add executable for all targets
+FOREACH(source ${targets})
+   GET_FILENAME_COMPONENT(target ${source} NAME_WE)
+   FILTER_TARGET(${target} filter)
+   IF (NOT "${filter}" STREQUAL "")
+      MESSAGE(STATUS "Adding target ${target}")
+      MAKE_EXECUTABLE(${target} ${source})
+   ENDIF()
+ENDFOREACH()
