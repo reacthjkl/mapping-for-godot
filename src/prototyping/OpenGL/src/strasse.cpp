@@ -1,47 +1,47 @@
 const char shader[] =
- "#version 120\n"
- "uniform mat4 mvp;                 // Standard: ModelViewProjection-Matrix\n"
- "\n"
- "attribute vec4 vertex_position;   // Standard: the vertex position\n"
- "varying vec4 frag_position;       // Pass position to fragment shader\n"
- "\n"
- "void main()\n"
- "{\n"
- "    gl_Position = mvp * vertex_position;\n"
- "    frag_position = vertex_position;\n"
- "}\n"
- "\n"
- "---\n"
- "\n"
- " #version 120\n"
- "varying vec4 frag_position;\n"
- "\n"
- "void main()\n"
- "{\n"
- "    // Create a chessboard pattern\n"
- "    float size = 0.5; // Size of each square\n"
- "    int num_squares = 10; // Number of squares along one axis\n"
- "    vec3 color = vec3(1.0, 1.0, 1.0); // Default color (white)\n"
- "\n"
- "    for (int i = 0; i < num_squares; ++i)\n"
- "    {\n"
- "        for (int j = 0; j < num_squares; ++j)\n"
- "        {\n"
- "            float x = frag_position.x + i * size;\n"
- "            float y = frag_position.y + j * size;\n"
- "            if (mod(floor(x / size) + floor(y / size), 2.0) == 0.0)\n"
- "            {\n"
- "                color = vec3(0.0, 0.0, 0.0); // Black square\n"
- "            }\n"
- "            else\n"
- "            {\n"
- "                color = vec3(1.0, 1.0, 1.0); // White square\n"
- "            }\n"
- "        }\n"
- "    }\n"
- "\n"
- "    gl_FragColor = vec4(color, 1.0);\n"
- "}\n";
+        "#version 120\n"
+        "uniform mat4 mvp;                 // Standard: ModelViewProjection-Matrix\n"
+        "\n"
+        "attribute vec4 vertex_position;   // Standard: the vertex position\n"
+        "varying vec4 frag_position;       // Pass position to fragment shader\n"
+        "\n"
+        "void main()\n"
+        "{\n"
+        "    gl_Position = mvp * vertex_position;\n"
+        "    frag_position = vertex_position;\n"
+        "}\n"
+        "\n"
+        "---\n"
+        "\n"
+        " #version 120\n"
+        "varying vec4 frag_position;\n"
+        "\n"
+        "void main()\n"
+        "{\n"
+        "    // Create a chessboard pattern\n"
+        "    float size = 0.5; // Size of each square\n"
+        "    int num_squares = 10; // Number of squares along one axis\n"
+        "    vec3 color = vec3(1.0, 1.0, 1.0); // Default color (white)\n"
+        "\n"
+        "    for (int i = 0; i < num_squares; ++i)\n"
+        "    {\n"
+        "        for (int j = 0; j < num_squares; ++j)\n"
+        "        {\n"
+        "            float x = frag_position.x + i * size;\n"
+        "            float y = frag_position.y + j * size;\n"
+        "            if (mod(floor(x / size) + floor(y / size), 2.0) == 0.0)\n"
+        "            {\n"
+        "                color = vec3(0.0, 0.0, 0.0); // Black square\n"
+        "            }\n"
+        "            else\n"
+        "            {\n"
+        "                color = vec3(1.0, 1.0, 1.0); // White square\n"
+        "            }\n"
+        "        }\n"
+        "    }\n"
+        "\n"
+        "    gl_FragColor = vec4(color, 1.0);\n"
+        "}\n";
 
 #include <glvertex_qt_glui.h>
 
@@ -51,12 +51,13 @@ GLuint prog_id;
 class Qt_GLWindow: public lgl_Qt_GLUI
 {
 public:
-    lglVBO *pillar =lglLoadObj("pillar.obj");
-    lglVBO *gate =lglLoadObj("wall.obj");
+    lglVBO *pillar;
+    lglVBO *gate;
 
     Qt_GLWindow() : lgl_Qt_GLUI()
     {
-
+        pillar = lglLoadObj("pillar.obj");
+        gate = lglLoadObj("wall.obj");
     }
 
 protected:
@@ -67,15 +68,15 @@ protected:
         prog_id = lglCompileGLSLProgram(shader);
         create_lgl_Qt_ShaderEditor("shader", &prog_id);
         glEnable(GL_DEPTH_TEST);
-        glClearColor(0.56, 0.93, 0.56, 0.1);
+        glClearColor(0.2, 0.5, 1, 1);
 
     }
- // OpenGL rendering commands here:
+    // OpenGL rendering commands here:
     void renderOpenGL(double dt)
     {
         lglUseProgram(prog_id, false);
         // clear frame buffer
-     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         mat4 M_manip = lglGetManip(); // manipulation matrix
 
