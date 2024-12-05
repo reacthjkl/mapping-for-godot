@@ -74,9 +74,9 @@ protected:
     // OpenGL rendering commands here:
     void renderOpenGL(double dt)
     {
-        lglUseProgram(prog_id, false);
         // clear frame buffer
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        lglUseProgram(prog_id, false);
 
         mat4 M_manip = lglGetManip(); // manipulation matrix
 
@@ -125,15 +125,10 @@ protected:
         lglVertex( 25,0, 15);
         lglVertex(-15,0, 15);
         lglEnd();
-
-
-
-
     }
 
     void keyPressed(char key)
     {
-
     }
 
 };
@@ -141,11 +136,7 @@ protected:
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-
     Qt_GLWindow main;
     main.show();
-
-
-
     return(app.exec());
 }
