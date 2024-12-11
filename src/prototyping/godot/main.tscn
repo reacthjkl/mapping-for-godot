@@ -8,7 +8,7 @@
 [node name="pillars_scene" parent="." instance=ExtResource("1_iihv5")]
 
 [node name="Camera" parent="pillars_scene" index="3"]
-transform = Transform3D(-1, -6.62301e-08, 1.09735e-06, 1.38427e-07, 0.982653, 0.185454, -1.09059e-06, 0.185454, -0.982653, 0, 6.09285, -9.18544)
+transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, -26.2724, 3.36548, -4.03496)
 script = ExtResource("2_lm2g6")
 
 [editable path="pillars_scene"]
