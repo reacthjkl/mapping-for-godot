@@ -1,14 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://73gcl8aynsus"]
+[gd_scene load_steps=4 format=3 uid="uid://73gcl8aynsus"]
 
+[ext_resource type="Script" path="res://main.gd" id="1_4hmbx"]
 [ext_resource type="PackedScene" uid="uid://ch5ht0yb65nuj" path="res://blender-models/pillars_scene.blend" id="1_iihv5"]
 [ext_resource type="Script" path="res://camera.gd" id="2_lm2g6"]
 
 [node name="Node3D" type="Node3D"]
+script = ExtResource("1_4hmbx")
 
 [node name="pillars_scene" parent="." instance=ExtResource("1_iihv5")]
 
 [node name="Camera" parent="pillars_scene" index="3"]
 transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, -26.2724, 3.36548, -4.03496)
 script = ExtResource("2_lm2g6")
+
+[node name="left cyl" parent="pillars_scene" index="7"]
+transform = Transform3D(-0.678336, 0, 0.734752, 0, 1, 0, -0.734752, 0, -0.678336, -8.77157, 5.21269, -8.10145)
+
+[node name="right cube" parent="pillars_scene" index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.77157, 5.20117, 0.691778)
+
+[node name="AnimationPlayer" parent="pillars_scene" index="10"]
+autoplay = "left animation"
 
 [editable path="pillars_scene"]
