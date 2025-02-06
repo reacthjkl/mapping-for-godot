@@ -1,61 +1,91 @@
-[gd_scene load_steps=7 format=3 uid="uid://73gcl8aynsus"]
+[gd_scene load_steps=9 format=3 uid="uid://73gcl8aynsus"]
 
 [ext_resource type="PackedScene" uid="uid://ch5ht0yb65nuj" path="res://blender-models/pillars_scene.blend" id="1_iihv5"]
+[ext_resource type="Script" path="res://main.gd" id="1_n8vl0"]
 [ext_resource type="Script" path="res://camera.gd" id="2_lm2g6"]
-[ext_resource type="Script" path="res://suzanne.gd" id="3_r1frv"]
+[ext_resource type="PackedScene" uid="uid://cvvilx26bq8jd" path="res://human_animation.tscn" id="4_4io47"]
+[ext_resource type="Script" path="res://animatable_body_3d.gd" id="4_u46s7"]
 
-[sub_resource type="Animation" id="Animation_jhn0g"]
-resource_name = "monkey_animation"
-length = 10.0
-loop_mode = 1
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, -15.249, 3.84464, -8.35528, 5, 1, -15.249, 3.845, 1, 10, 1, -15.249, 3.84464, -8.35528)
-
-[sub_resource type="Animation" id="Animation_0mfvs"]
+[sub_resource type="Animation" id="Animation_dsxsj"]
 length = 0.001
 tracks/0/type = "position_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".")
+tracks/0/path = NodePath("human-animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, -15.249, 3.84464, -8.35528)
+tracks/0/keys = PackedFloat32Array(0, 1, -14.2946, 0, -8.87863)
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ti6ah"]
+[sub_resource type="Animation" id="Animation_cebjm"]
+resource_name = "move"
+length = 20.0
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("human-animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -14.2946, 0, -8.87863, 9.7, 1, -14.295, 0, 3.491, 10.3, 1, -14.295, 0, 3.491, 19.4667, 1, -14.2946, 0, -8.87863, 19.9333, 1, -14.2946, 0, -8.87863)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("human-animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(9.73333, 1, 0, 0, 0, 1, 10.2667, 1, 0, 0.997677, 0, 0.0681197, 19.3667, 1, 0, 0.997677, 0, 0.0681197, 19.9, 1, 0, 0, 0, 1)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pq2y8"]
 _data = {
-"RESET": SubResource("Animation_0mfvs"),
-"monkey_animation": SubResource("Animation_jhn0g")
+"RESET": SubResource("Animation_dsxsj"),
+"move": SubResource("Animation_cebjm")
 }
 
 [node name="Node3D" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.249, 3.84464, -8.35528)
+script = ExtResource("1_n8vl0")
 
 [node name="pillars_scene" parent="." instance=ExtResource("1_iihv5")]
+
+[node name="Pillar" parent="pillars_scene" index="0"]
+visible = false
+
+[node name="Pillow Plate" parent="pillars_scene" index="1"]
+visible = false
 
 [node name="Camera" parent="pillars_scene" index="3"]
 transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, -26.2724, 3.36548, -4.03496)
 script = ExtResource("2_lm2g6")
 
-[node name="Suzanne" parent="pillars_scene" index="7"]
-transform = Transform3D(-0.0142535, 0, -0.999898, 0, 1, 0, 0.999898, 0, -0.0142535, -15.249, 3.84464, -8.35528)
-cast_shadow = 3
-script = ExtResource("3_r1frv")
+[node name="Ground" parent="pillars_scene" index="4"]
+visible = false
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="pillars_scene/Suzanne" index="0"]
-libraries = {
-"": SubResource("AnimationLibrary_ti6ah")
-}
+[node name="left building" parent="pillars_scene" index="5"]
+visible = false
+
+[node name="right building" parent="pillars_scene" index="6"]
+visible = false
+
+[node name="Human" parent="pillars_scene" index="7"]
+transform = Transform3D(0.204774, 0, -0.238876, 0, 0.314633, 0, 0.238876, 0, 0.204774, -15.1643, 3.41869, -8.38715)
 
 [node name="Spot" parent="pillars_scene" index="8"]
 transform = Transform3D(-0.00208152, 0, -0.999998, 0.999998, 0, -0.00208152, 0, -1, 0, -46.107, 3.46544, -4.00158)
 light_energy = 16.0
 shadow_enabled = true
-shadow_reverse_cull_face = true
 shadow_transmittance_bias = 0.939
 shadow_blur = 1.278
+
+[node name="AnimatableBody3D" type="AnimatableBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3907, 0, -1.15018)
+script = ExtResource("4_u46s7")
+
+[node name="human-animation" parent="AnimatableBody3D" instance=ExtResource("4_4io47")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.2946, 0, -8.87863)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatableBody3D"]
+libraries = {
+"": SubResource("AnimationLibrary_pq2y8")
+}
 
 [editable path="pillars_scene"]
