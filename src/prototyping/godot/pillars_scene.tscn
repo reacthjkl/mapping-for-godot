@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtuv04vx4u4yp"]
+
+[ext_resource type="PackedScene" uid="uid://ch5ht0yb65nuj" path="res://blender-models/pillars_scene.blend" id="1_6huhh"]
+
+[node name="pillars_scene" instance=ExtResource("1_6huhh")]
+
+[node name="Sun" parent="." index="0"]
+transform = Transform3D(0.707107, -0.664463, -0.241845, -2.98023e-08, -0.34202, 0.939693, -0.707107, -0.664463, -0.241845, 6.41808, 40, 3.93791)
+
+[node name="Camera" parent="." index="1"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -19.312, 3.5, -0.0425756)
+
+[node name="Cube_009" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.293537, 3.5, -0.0425801)

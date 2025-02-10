@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkw5q87alvwqa"]
+
+[ext_resource type="PackedScene" uid="uid://bm4l58roa28j2" path="res://blender-models/cubes-scene.blend" id="1_jpyha"]
+[ext_resource type="Script" path="res://cubes_scene.gd" id="2_n8lcc"]
+
+[node name="cubes-scene" instance=ExtResource("1_jpyha")]
+script = ExtResource("2_n8lcc")
+move_distance = 2.0

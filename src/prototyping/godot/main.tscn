@@ -1,14 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://73gcl8aynsus"]
+[gd_scene load_steps=4 format=3 uid="uid://73gcl8aynsus"]
 
 [ext_resource type="PackedScene" uid="uid://ch5ht0yb65nuj" path="res://blender-models/pillars_scene.blend" id="1_iihv5"]
 [ext_resource type="Script" path="res://camera.gd" id="2_lm2g6"]
+[ext_resource type="PackedScene" uid="uid://bkw5q87alvwqa" path="res://cubes_scene.tscn" id="3_v5ppf"]
 
 [node name="Node3D" type="Node3D"]
 
 [node name="pillars_scene" parent="." instance=ExtResource("1_iihv5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.2121, 0, 3.92696)
 
-[node name="Camera" parent="pillars_scene" index="3"]
+[node name="Camera" parent="pillars_scene" index="1"]
 transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, -26.2724, 3.36548, -4.03496)
 script = ExtResource("2_lm2g6")
+
+[node name="cubes-scene" parent="." instance=ExtResource("3_v5ppf")]
+transform = Transform3D(0.996868, 0, 0, 0, 1.15357, 0, 0, 0, 1.08328, 1.50131, 0.0352516, -0.0926437)
 
 [editable path="pillars_scene"]
