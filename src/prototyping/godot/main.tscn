@@ -58,7 +58,7 @@ transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, -26.2724
 script = ExtResource("2_lm2g6")
 
 [node name="Ground" parent="pillars_scene" index="4"]
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.8805, 0, 0)
 
 [node name="left building" parent="pillars_scene" index="5"]
 visible = false
