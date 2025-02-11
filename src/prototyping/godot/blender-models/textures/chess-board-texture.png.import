@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dxqb5ing774tm"
 path.s3tc="res://.godot/imported/chess-board-texture.png-4791b1f5e49d1e1416b310b6916f8090.s3tc.ctex"
+path.etc2="res://.godot/imported/chess-board-texture.png-4791b1f5e49d1e1416b310b6916f8090.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://blender-models/textures/chess-board-texture.png"
-dest_files=["res://.godot/imported/chess-board-texture.png-4791b1f5e49d1e1416b310b6916f8090.s3tc.ctex"]
+dest_files=["res://.godot/imported/chess-board-texture.png-4791b1f5e49d1e1416b310b6916f8090.s3tc.ctex", "res://.godot/imported/chess-board-texture.png-4791b1f5e49d1e1416b310b6916f8090.etc2.ctex"]
 
 [params]
 
