@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://ch5ht0yb65nuj" path="res://blender-models/pillars_scene.blend" id="1_iihv5"]
 [ext_resource type="Script" path="res://main.gd" id="1_n8vl0"]
 [ext_resource type="Script" path="res://camera.gd" id="2_lm2g6"]
-[ext_resource type="PackedScene" uid="uid://cvvilx26bq8jd" path="res://human_animation.tscn" id="4_4io47"]
+[ext_resource type="PackedScene" path="res://human_animation.tscn" id="4_4io47"]
 [ext_resource type="Script" path="res://animatable_body_3d.gd" id="4_u46s7"]
 
 [sub_resource type="Animation" id="Animation_dsxsj"]
