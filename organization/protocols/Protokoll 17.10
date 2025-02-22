@@ -1,0 +1,11 @@
+Projektidee: Beleuchtung des Germanischen Museums bzw. der Säulen davor,
+noch offene Frage zur inhaltlichen Message.
+
+•  Rechercheaufgabe: Jeder soll bestehende Projection-Mapping-Projekte analysieren (Umsetzung, Technik, Inspiration).
+•  Projektorganisation: Wahl einer Planungsplattform (Asana, Teams, Jira,Trello 
+
+ Demo-Erstellung:
+•	Erste Testszenen mit Projektion eines Würfels oder Hauses mit Textur.
+•	Unterschiedliche Software-Ansätze: Glvertex (Denis), Godot (Marina & Dari), Processing (Rest des Teams).
+•  Versionskontrolle: Einrichtung eines GitLab-Repositorys zur Ablage der Demos.
+
