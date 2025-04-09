@@ -59,6 +59,7 @@ script = ExtResource("2_lm2g6")
 
 [node name="Ground" parent="pillars_scene" index="4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.8805, 0, 0)
+visible = false
 
 [node name="left building" parent="pillars_scene" index="5"]
 visible = false
@@ -76,8 +77,15 @@ shadow_enabled = true
 shadow_transmittance_bias = 0.939
 shadow_blur = 1.278
 
+[node name="Cube-anim" parent="pillars_scene" index="9"]
+transform = Transform3D(-0.232734, -0.0746286, 0, 0.0109984, -1.57919, 0, 0, 0, 1.58095, -7.28168, 5.98251, -8.46261)
+
+[node name="Suzanne" parent="pillars_scene" index="10"]
+transform = Transform3D(-0.0486402, 0, -1.30906, 0, 1.30996, 0, 1.30906, 0, -0.0486402, -4.8296, 3.16721, -8.46261)
+
 [node name="AnimatableBody3D" type="AnimatableBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3907, 0, -1.15018)
+visible = false
 script = ExtResource("4_u46s7")
 
 [node name="human-animation" parent="AnimatableBody3D" instance=ExtResource("4_4io47")]
