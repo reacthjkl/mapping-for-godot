@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://ba5ukajhua5af"]
+
+[ext_resource type="PackedScene" uid="uid://cdn7r20icj0fh" path="res://location-2.blend" id="1_w344i"]
+[ext_resource type="Script" path="res://camera_3d.gd" id="2_6aw2i"]
+[ext_resource type="PackedScene" uid="uid://bje2xntnducxj" path="res://pigeon.tscn" id="3_4cddc"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="location-2" parent="." instance=ExtResource("1_w344i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.04387, 0, 0.517109)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.996688, 5.46093)
+script = ExtResource("2_6aw2i")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.37422, 1.80854, -1.58752)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="pigeon" parent="." instance=ExtResource("3_4cddc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.922606, 1.19922, -3.60154)
+
+[node name="pigeon2" parent="." instance=ExtResource("3_4cddc")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.0231023, 1.56079, -3.60154)

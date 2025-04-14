@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bje2xntnducxj"]
+
+[ext_resource type="PackedScene" uid="uid://wvw54cc4qmvx" path="res://pigeon.blend" id="1_2m5r7"]
+[ext_resource type="Script" path="res://pigeon.gd" id="2_rqqjq"]
+
+[node name="pigeon" instance=ExtResource("1_2m5r7")]
+script = ExtResource("2_rqqjq")
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/1/rotation = Quaternion(-0.347298, 0.615942, 0.347298, 0.615942)
+bones/2/rotation = Quaternion(-0.599152, -9.58561e-08, 4.26702e-08, 0.800635)
+bones/3/rotation = Quaternion(-0.111225, -0.698304, -0.337624, 0.621297)
