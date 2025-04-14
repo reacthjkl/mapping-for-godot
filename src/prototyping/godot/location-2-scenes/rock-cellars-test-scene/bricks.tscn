@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://djn4bm2h7u87o"]
+
+[ext_resource type="PackedScene" uid="uid://bw4w45msauadb" path="res://bricks.blend" id="1_kqwo8"]
+[ext_resource type="Script" path="res://bricks.gd" id="2_0h2yh"]
+
+[node name="bricks" instance=ExtResource("1_kqwo8")]
+script = ExtResource("2_0h2yh")

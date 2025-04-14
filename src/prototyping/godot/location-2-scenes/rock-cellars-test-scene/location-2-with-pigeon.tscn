@@ -14,12 +14,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.996688, 5.46093)
 script = ExtResource("2_6aw2i")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.37422, 1.80854, -1.58752)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.31352, 1.63948, -1.05452)
 light_energy = 2.0
 shadow_enabled = true
 
 [node name="pigeon" parent="." instance=ExtResource("3_4cddc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.922606, 1.19922, -3.60154)
+
+[node name="pigeon3" parent="." instance=ExtResource("3_4cddc")]
+transform = Transform3D(0.968339, 0, 1.54684, 0, 1.82494, 0, -1.54684, 0, 0.968339, 0.354039, 1.42083, -4.10531)
 
 [node name="pigeon2" parent="." instance=ExtResource("3_4cddc")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.0231023, 1.56079, -3.60154)

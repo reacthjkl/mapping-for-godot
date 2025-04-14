@@ -14,3 +14,11 @@ config/name="rock-cellars-test-scene"
 run/main_scene="res://location-2.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/mode=3
+
+[rendering]
+
+lights_and_shadows/positional_shadow/atlas_size=16000
