@@ -143,6 +143,9 @@ func _apply_rotation(yaw: float, pitch: float):
 	rotate_y(deg_to_rad(yaw))
 	rotate_object_local(Vector3(1, 0, 0), deg_to_rad(pitch))
 
+func _exit_tree():
+	_save_camera_config()
+
 # Funktion zum Zurücksetzen der Kamera
 func reset_camera():
 	global_position = _original_position
