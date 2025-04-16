@@ -36,12 +36,25 @@ var saved_positions = {}
 var _original_position: Vector3
 var _original_rotation: Vector3
 
+# Config
+const CONFIG_PATH := "user://camera_config.json"
+
 func _ready():
 	# Speichert die ursprüngliche Position und Rotation der Kamera
 	_original_position = global_position
 	_original_rotation = rotation_degrees
+	
+	_load_camera_config()
 
 func _input(event):
+	
+	# Handle Cmd+S and Cmd+L
+	if event is InputEventKey and event.pressed:
+		if event.keycode == KEY_J:  
+			_save_camera_config()
+		if event.keycode == KEY_K: 
+			_load_camera_config()
+		
 	if event is InputEventKey:
 		match event.keycode:
 			KEY_W: _w = event.pressed
@@ -153,3 +166,48 @@ func log_camera_transform():
 	var rot = rotation_degrees
 	print("📷 Kamera Position: x=%.2f, y=%.2f, z=%.2f" % [pos.x, pos.y, pos.z])
 	print("🌀 Kamera Rotation: x=%.2f°, y=%.2f°, z=%.2f°" % [rot.x, rot.y, rot.z])
+	print("🌀 FOV: %.2f°" % [fov])
+	
+	
+func _save_camera_config():
+	var config = {
+		"position": global_position,
+		"rotation": rotation_degrees,
+		"fov": fov
+	}
+
+	var file = FileAccess.open(CONFIG_PATH, FileAccess.WRITE)
+	if file:
+		file.store_string(JSON.stringify(config, "\t"))  # Pretty print
+		file.close()
+		print("💾 Camera config saved to:", CONFIG_PATH)
+
+func _string_to_vector3(value: String) -> Vector3:
+	var cleaned = value.replace("(", "").replace(")", "")  # Remove parentheses
+	var parts = cleaned.split(",")
+	if parts.size() == 3:
+		return Vector3(parts[0].to_float(), parts[1].to_float(), parts[2].to_float())
+	return Vector3.ZERO  # Fallback
+
+func _load_camera_config():
+	if not FileAccess.file_exists(CONFIG_PATH):
+		print("⚠️ Config file not found at:", CONFIG_PATH)
+		return
+
+	var file = FileAccess.open(CONFIG_PATH, FileAccess.READ)
+	if file:
+		var content = file.get_as_text()
+		file.close()
+
+		var config = JSON.parse_string(content)
+		if config is Dictionary:
+			if config.has("position") and config.position is String:
+				global_position = _string_to_vector3(config.position)
+			if config.has("rotation") and config.rotation is String:
+				rotation_degrees = _string_to_vector3(config.rotation)
+			if config.has("fov"):
+				fov = config.fov
+
+			print("✅ Camera config loaded from:", CONFIG_PATH)
+		else:
+			print("❌ Failed to parse config file.")
