@@ -21,4 +21,5 @@ window/size/mode=3
 
 [rendering]
 
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
 lights_and_shadows/positional_shadow/atlas_size=16000

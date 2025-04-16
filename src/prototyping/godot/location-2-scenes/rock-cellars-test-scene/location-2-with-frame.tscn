@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://b75pdr8hnvpd1"]
+
+[ext_resource type="PackedScene" uid="uid://cdn7r20icj0fh" path="res://location-2.blend" id="1_h8yhc"]
+[ext_resource type="Script" path="res://camera_3d.gd" id="2_rgj3e"]
+[ext_resource type="PackedScene" uid="uid://tf0rm5hk73g2" path="res://frame.blend" id="3_0pbmw"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="location-2" parent="." instance=ExtResource("1_h8yhc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.04387, 0, 0.517109)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.996688, 5.46093)
+current = true
+fov = 29.0
+script = ExtResource("2_rgj3e")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.37422, 1.80854, -1.58752)
+light_energy = 3.0
+
+[node name="frame" parent="." instance=ExtResource("3_0pbmw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.02541, -1.19209e-07, 0.520464)

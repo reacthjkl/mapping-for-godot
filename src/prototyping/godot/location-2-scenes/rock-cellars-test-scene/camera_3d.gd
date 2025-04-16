@@ -62,6 +62,12 @@ func _input(event):
 			KEY_L:
 				if event.pressed:
 					log_camera_transform()
+			KEY_9:
+				if event.pressed:
+					fov += 1;
+			KEY_0:
+				if event.pressed:
+					fov -= 1;
 			# Tasten zum Speichern von Positionen und Rotationen
 			KEY_1: _save_position(1) if _shift else _load_position(1)
 			KEY_2: _save_position(2) if _shift else _load_position(2)
