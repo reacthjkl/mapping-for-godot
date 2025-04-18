@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c7glyd2ssrwfb"
+path="res://.godot/imported/Sleep Music Vol 16.mp3-3128071a6b034325fb87253c1aa32363.mp3str"
+
+[deps]
+
+source_file="res://audio/Sleep Music Vol 16.mp3"
+dest_files=["res://.godot/imported/Sleep Music Vol 16.mp3-3128071a6b034325fb87253c1aa32363.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
