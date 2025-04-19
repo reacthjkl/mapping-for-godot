@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b75pdr8hnvpd1"]
 
 [ext_resource type="PackedScene" uid="uid://cdn7r20icj0fh" path="res://location/location-2.blend" id="1_h8yhc"]
-[ext_resource type="Script" path="res://global scripts/camera_3d.gd" id="2_rgj3e"]
+[ext_resource type="Script" path="res://scripts/camera_3d.gd" id="2_rgj3e"]
 [ext_resource type="PackedScene" uid="uid://tf0rm5hk73g2" path="res://calibration_frame/frame.blend" id="3_0pbmw"]
 
 [node name="Node3D" type="Node3D"]

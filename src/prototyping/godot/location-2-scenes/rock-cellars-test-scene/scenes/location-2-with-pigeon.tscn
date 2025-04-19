@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://ba5ukajhua5af"]
 
 [ext_resource type="PackedScene" uid="uid://cdn7r20icj0fh" path="res://location/location-2.blend" id="1_w344i"]
-[ext_resource type="Script" path="res://global scripts/camera_3d.gd" id="2_6aw2i"]
+[ext_resource type="Script" path="res://scripts/camera_3d.gd" id="2_6aw2i"]
 [ext_resource type="PackedScene" uid="uid://bje2xntnducxj" path="res://characters/pigeon.tscn" id="3_4cddc"]
 
 [node name="Node3D" type="Node3D"]
