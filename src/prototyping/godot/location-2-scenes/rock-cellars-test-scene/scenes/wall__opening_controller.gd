@@ -2,25 +2,25 @@ extends Node3D
 class_name WallOpeningController
 
 # ───────────────── CONFIG ─────────────────
-@export var bricks_root_path : NodePath              # Parent that contains all MeshInstance3D bricks
-@export var center_brick     : Node3D                # Reference to the anchor brick
-@export var radius         : float    = 0.8
-@export var rotate_time      : float    = 4          # Seconds to reach 90° twist
-@export var move_time        : float    = 8          # Seconds to finish sliding
-@export var bricks_audio_player_path: NodePath       # AudioStreamPlayer3D for sounds
+@export var bricks_root_path              : NodePath                # Parent that contains all MeshInstance3D bricks
+@export var center_brick                  : Node3D                  # Reference to the anchor brick
+@export var radius                        : float          = 0.8
+@export var rotate_time                   : float          = 4      # Seconds to reach 90° twist
+@export var move_time                     : float          = 8      # Seconds to finish sliding
+@export var bricks_audio_player_path      : NodePath                # AudioStreamPlayer3D for sounds
 
 # ───────────── INTERNAL STATE ─────────────
-var _bricks           : Array[MeshInstance3D] = []
-var _orig_positions   : Array[Vector3]        = []
-var _slide_targets    : Array[Vector3]        = []
-var _state  : float = 0.0   # Animation progress, 0‑1
-var _dir    : int   = 0     # +1 opening, −1 closing, 0 idle
-var _is_open: bool  = false
-var _total_time     : float                  # rotate_time + move_time (set in _ready)
-var _rotate_portion : float                  # rotate_time / total_time (set in _ready)
+var _bricks                  : Array[MeshInstance3D] = []
+var _orig_positions          : Array[Vector3]        = []
+var _slide_targets           : Array[Vector3]        = []
+var _state                   : float                 = 0.0    # Animation progress, 0‑1
+var _dir                     : int                   = 0      # +1 opening, −1 closing, 0 idle
+var _is_open                 : bool                  = false
+var _total_time              : float                          # rotate_time + move_time (set in _ready)
+var _rotate_portion          : float                          # rotate_time / total_time (set in _ready)
 
 # ───────────── MUSIC & FX ─────────────
-var _bricks_player: AudioStreamPlayer3D
+var _bricks_player           : AudioStreamPlayer3D
 
 # ============================================================
 #                           LIFECYCLE
