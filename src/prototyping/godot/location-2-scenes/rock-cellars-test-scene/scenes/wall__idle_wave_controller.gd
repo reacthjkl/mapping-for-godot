@@ -69,11 +69,8 @@ func _cache_audio_players() -> void:
 		_initial_bg_volume_db = _bg_player.volume_db
 
 func _initialize_bricks() -> void:
-	var root: Node3D = self
-	if bricks_root_path != NodePath():
-		var maybe_root = get_node_or_null(bricks_root_path)
-		if maybe_root and maybe_root is Node3D:
-			root = maybe_root
+	var root := get_node_or_null(bricks_root_path) as Node3D
+	assert(root, "bricks_root_path must point to a Node3D")
 
 	for child in root.get_children():
 		if child is MeshInstance3D:
