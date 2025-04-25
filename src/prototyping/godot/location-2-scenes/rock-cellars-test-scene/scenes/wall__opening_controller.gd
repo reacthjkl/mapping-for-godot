@@ -8,6 +8,8 @@ class_name WallOpeningController
 @export var rotate_time                   : float          = 4      # Seconds to reach 90° twist
 @export var move_time                     : float          = 8      # Seconds to finish sliding
 @export var bricks_audio_player_path      : NodePath                # AudioStreamPlayer3D for sounds
+@export var easing_curve: Curve
+
 
 # ───────────── INTERNAL STATE ─────────────
 var _bricks                  : Array[MeshInstance3D] = []
@@ -28,6 +30,8 @@ var _bricks_player           : AudioStreamPlayer3D
 func _ready() -> void:
 	_total_time    = rotate_time + move_time
 	_rotate_portion = rotate_time / _total_time
+	
+	easing_curve.bake()
 
 	_collect_bricks()
 	_compute_slide_targets()
@@ -118,7 +122,7 @@ func _process(delta: float) -> void:
 func _update_bricks() -> void:
 	var rot_ratio   : float
 	var slide_ratio : float
-
+	
 	if _state < _rotate_portion:
 		rot_ratio   = _state / _rotate_portion
 		slide_ratio = 0.0
@@ -129,6 +133,8 @@ func _update_bricks() -> void:
 	for i in _bricks.size():
 		var brick := _bricks[i]
 		
-		# Update position and rotation
-		brick.rotation_degrees.y = 90.0 * rot_ratio * sign(_slide_targets[i].x)
-		brick.position = _orig_positions[i] + _slide_targets[i] * slide_ratio
+		var eased_rot   = easing_curve.sample(rot_ratio)
+		var eased_slide = easing_curve.sample(slide_ratio)
+		
+		brick.rotation_degrees.y = 90.0 * eased_rot * sign(_slide_targets[i].x)
+		brick.position          = _orig_positions[i] + _slide_targets[i] * eased_slide
