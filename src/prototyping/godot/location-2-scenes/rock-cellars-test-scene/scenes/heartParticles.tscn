@@ -1,7 +1,7 @@
 [gd_scene load_steps=21 format=3 uid="uid://c1lpv23tytxxs"]
 
-[ext_resource type="Texture2D" uid="uid://u5qrf2edpc04" path="res://textures/heart.png" id="1_u7otn"]
-[ext_resource type="Texture2D" uid="uid://cpaf7qmbidovr" path="res://textures/WhiteHeart.png" id="3_ed5ux"]
+[ext_resource type="Texture2D" uid="uid://bcnn442tw6xnb" path="res://textures/heart.png" id="1_u7otn"]
+[ext_resource type="Texture2D" uid="uid://c5l8o7axmqp2y" path="res://textures/WhiteHeart.png" id="3_ed5ux"]
 
 [sub_resource type="Gradient" id="Gradient_y8vsa"]
 offsets = PackedFloat32Array(0, 0.735849, 1)
@@ -28,11 +28,13 @@ curve = SubResource("Curve_kn1xa")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_htm8u"]
 emission_shape = 3
 emission_box_extents = Vector3(1, 1, 1)
-initial_velocity_min = 1.0
-initial_velocity_max = 2.0
+initial_velocity_min = 0.2
+initial_velocity_max = 0.4
 angular_velocity_min = 30.0
 angular_velocity_max = 60.0
 gravity = Vector3(0, 0, 0)
+scale_min = 0.4
+scale_max = 0.5
 scale_curve = SubResource("CurveTexture_d2p30")
 color_ramp = SubResource("GradientTexture1D_8yynl")
 emission_curve = SubResource("CurveTexture_3dird")
@@ -111,12 +113,6 @@ particles_anim_loop = false
 material = SubResource("StandardMaterial3D_ch32p")
 
 [node name="Node3D" type="Node3D"]
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.994513, -0.000104959, 0.104609, -0.0141837, 0.9909, -0.13385, -0.103643, -0.134599, -0.985465, -5.59202, 0.738031, -8.60258)
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.422682, 0.906278, 0, -0.906278, -0.422682, -4.24697, 7.3454, -2.28917)
 
 [node name="Particles" type="Node" parent="."]
 
