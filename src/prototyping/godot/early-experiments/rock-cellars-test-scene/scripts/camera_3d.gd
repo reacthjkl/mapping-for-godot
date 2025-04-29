@@ -48,12 +48,14 @@ func _ready():
 
 func _input(event):
 	
-	# Handle Cmd+S and Cmd+L
-	if event is InputEventKey and event.pressed:
-		if event.keycode == KEY_J:  
-			_save_camera_config()
-		if event.keycode == KEY_K: 
-			_load_camera_config()
+	if event is InputEventKey and event.pressed and not event.echo:
+		match event.keycode:
+			KEY_J:  
+				_save_camera_config()
+			KEY_K: 
+				_load_camera_config()
+			KEY_ENTER:
+				$distortion_lens.visible = not $distortion_lens.visible
 		
 	if event is InputEventKey:
 		match event.keycode:
