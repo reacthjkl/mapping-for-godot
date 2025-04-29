@@ -1,5 +1,7 @@
 extends Control
 
+class_name DistortionControl
+
 const COLS := 16
 const ROWS := 8
 const POINT_RADIUS := 6.0
@@ -14,13 +16,14 @@ var dragging_index := -1        # which point we’re dragging, or -1
 var distortion_material: ShaderMaterial
 
 func _ready() -> void:
-	set_process(true)
-	_init_points()
-	queue_redraw()
-	
-	# find the MeshInstance3D that uses your distortion shader
+		# find the MeshInstance3D that uses your distortion shader
 	var mesh = get_node(distortion_mesh_path) as MeshInstance3D
 	distortion_material = mesh.get_active_material(0) as ShaderMaterial
+	
+	set_process(true)
+	_init_points()
+	load_grid()
+	queue_redraw()
 	
 	# initialize shader with the zero‐offset grid
 	_apply_offsets_to_shader()
@@ -90,3 +93,51 @@ func _compute_offsets() -> Array:
 func _apply_offsets_to_shader() -> void:
 	# Godot will accept a plain Array of Vector2 for a vec2[] uniform
 	distortion_material.set_shader_parameter("offsets", _compute_offsets())
+	
+func save_grid(path: String = "user://distortion_grid.json") -> void:
+	# 1) Build a plain Array of Dictionaries {x:…, y:…}
+	var data: Array = []
+	for p in points:
+		data.append({"x": p.x, "y": p.y})
+	# 2) Encode to JSON
+	var json_text: String = JSON.stringify(data)
+	# 3) Open the file for writing and store the string
+	var f = FileAccess.open(path, FileAccess.WRITE)
+	if f:
+		f.store_string(json_text)
+		f.close()
+		print("Distortion grid saved to ", path)
+	else:
+		push_error("Failed to open " + path + " for writing.")
+		
+func load_grid(path: String = "user://distortion_grid.json") -> void:
+	# 1) If no file exists yet, just bail
+	if not FileAccess.file_exists(path):
+		print("No grid config found at ", path)
+		return
+	# 2) Open and read the entire JSON string
+	var f = FileAccess.open(path, FileAccess.READ)
+	if not f:
+		push_error("Failed to open " + path + " for reading.")
+		return
+	var json_text: String = f.get_as_text()
+	f.close()
+	# 3) Parse it
+	var arr = JSON.parse_string(json_text)
+	if typeof(arr) != TYPE_ARRAY:
+		push_error("Grid JSON was not an Array!")
+		return
+	
+	points.clear()
+	for item in arr:
+		# assume each item is a Dictionary with x and y keys
+		var x = item.get("x", 0.0)
+		var y = item.get("y", 0.0)
+		points.append(Vector2(x, y))
+	# 5) Redraw and reapply to shader
+	queue_redraw()
+	_apply_offsets_to_shader()
+	print("Loaded distortion grid from ", path)
+	
+func _exit_tree():
+	save_grid()

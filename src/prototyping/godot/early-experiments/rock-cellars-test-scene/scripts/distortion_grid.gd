@@ -8,3 +8,6 @@ func _input(event: InputEvent) -> void:
 			match event.keycode:
 				KEY_TAB:
 					distortion_grid.visible = not distortion_grid.visible
+				KEY_ESCAPE:
+					distortion_grid._init_points()
+					distortion_grid._apply_offsets_to_shader()
