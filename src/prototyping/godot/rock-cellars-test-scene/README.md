@@ -3,6 +3,7 @@ Key Map Mapping For Godot
 - WASD: Forward, Left, Back, Right
 - Q/R: Up, Down
 - Arrow Keys: Rotate Camera 
+- F1: Toggle camera lock
 - 9/0: Adjust Camera FOV
 - R: Reset camera position
 - J: Save camera config

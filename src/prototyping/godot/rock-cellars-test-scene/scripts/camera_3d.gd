@@ -14,6 +14,8 @@ var _acceleration = 30
 var _deceleration = -10
 var _vel_multiplier = 4
 
+var is_locked = false
+
 # Keyboard state
 var _w = false
 var _s = false
@@ -54,6 +56,8 @@ func _input(event):
 				_save_camera_config()
 			KEY_K: 
 				_load_camera_config()
+			KEY_F1: 
+				is_locked = not is_locked
 			KEY_ENTER:
 				$"../DistortionLens/DistortionColorRect".visible = not $"../DistortionLens/DistortionColorRect".visible
 		
@@ -91,8 +95,9 @@ func _input(event):
 			KEY_5: _save_position(5) if _shift else _load_position(5)
 
 func _process(delta):
-	_update_look(delta)
-	_update_movement(delta)
+	if not is_locked:
+		_update_look(delta)
+		_update_movement(delta)
 
 	# Wenn Reset aktiv ist, Position und Rotation zurücksetzen
 	if _reset:
