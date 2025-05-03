@@ -42,6 +42,8 @@ var _original_rotation: Vector3
 const CONFIG_PATH := "user://camera_config.json"
 
 func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	
 	# Speichert die ursprüngliche Position und Rotation der Kamera
 	_original_position = global_position
 	_original_rotation = rotation_degrees
