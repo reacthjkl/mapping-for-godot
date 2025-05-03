@@ -14,3 +14,4 @@ Key Map Mapping For Godot
 - Tab: Toggle distortion grid visibility
 - Enter: Toggle distortion visibility
 - Esc: Reset distortion grid points
+- P: Test particles
