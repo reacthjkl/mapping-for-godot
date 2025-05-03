@@ -55,7 +55,7 @@ func _input(event):
 			KEY_K: 
 				_load_camera_config()
 			KEY_ENTER:
-				$distortion_lens.visible = not $distortion_lens.visible
+				$"../DistortionLens/DistortionColorRect".visible = not $"../DistortionLens/DistortionColorRect".visible
 		
 	if event is InputEventKey:
 		match event.keycode:

@@ -16,9 +16,9 @@ var dragging_index := -1        # which point we’re dragging, or -1
 var distortion_material: ShaderMaterial
 
 func _ready() -> void:
-		# find the MeshInstance3D that uses your distortion shader
-	var mesh = get_node(distortion_mesh_path) as MeshInstance3D
-	distortion_material = mesh.get_active_material(0) as ShaderMaterial
+		# find the ColorRect that uses the distortion shader
+	var rect = get_node(distortion_mesh_path) as ColorRect
+	distortion_material = rect.material as ShaderMaterial
 	
 	set_process(true)
 	_init_points()

@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-@onready var distortion_grid = $"Distortion Control"
+@onready var distortion_grid = $"DistortionControl"
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:

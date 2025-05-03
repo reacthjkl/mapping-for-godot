@@ -1,5 +1,4 @@
-shader_type spatial;
-render_mode unshaded;
+shader_type canvas_item;
 
 // The screen texture we want to deform
 uniform sampler2D screen_texture: hint_screen_texture;
@@ -42,5 +41,6 @@ void fragment() {
 	warp.x *= -1.0;
 	warp.y *= -1.0;
     vec2 warped_uv = uv + warp;
-    ALBEDO = texture(screen_texture, warped_uv).rgb;
+    COLOR = texture(screen_texture, warped_uv);
+
 }
