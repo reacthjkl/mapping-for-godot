@@ -3,9 +3,7 @@ class_name WallIdleWaveController
 
 @export var bricks_root_path: NodePath                     # Node containing MeshInstance3D bricks
 @export var bricks_audio_player_path: NodePath             # AudioStreamPlayer3D for wave sounds
-@export var bg_track_audio_player_path: NodePath           # AudioStreamPlayer3D for background music
 @export var auto_start: bool = true                        # Start waves automatically
-@export var bg_fade_duration: float = 2.0                  # seconds for fade in/out of background music
 
 # ----- Wave & Visual Settings -----
 @export var amplitude: float = 0.2                         # forward distance
@@ -25,16 +23,12 @@ var _materials: Array[StandardMaterial3D]     = []
 var _noise: FastNoiseLite
 var _time: float                              = 0.0
 var _max_wave_time: float                     = 0.0
+signal stoped
 
-# ----- Audio & Fade State -----
+# ----- Audio -----
 var _bricks_player: AudioStreamPlayer3D
-var _bg_player: AudioStreamPlayer3D
-var _initial_bg_volume_db: float              = 0.0
 var _is_playing: bool                         = false
 var _stop_requested: bool                     = false
-var _fading_in: bool                          = false
-var _fading_out: bool                         = false
-var _fade_elapsed: float                      = 0.0
 
 # =============================================================
 #                       LIFECYCLE
@@ -44,7 +38,7 @@ func _ready() -> void:
 	_setup_noise()
 	_cache_audio_players()
 	_initialize_bricks()
-	set_process(false)              # start disabled; play() enables
+	set_process(false)
 	if auto_start:
 		play()
 
@@ -59,14 +53,6 @@ func _cache_audio_players() -> void:
 		_bricks_player = get_node_or_null(bricks_audio_player_path)
 	if not _bricks_player and has_node("AudioStreamPlayer3D"):
 		_bricks_player = get_node("AudioStreamPlayer3D")
-
-	if bg_track_audio_player_path != NodePath():
-		_bg_player = get_node_or_null(bg_track_audio_player_path)
-	if not _bg_player and has_node("BG_MusicPlayer"):
-		_bg_player = get_node("BG_MusicPlayer")
-
-	if _bg_player:
-		_initial_bg_volume_db = _bg_player.volume_db
 
 func _initialize_bricks() -> void:
 	var root := get_node_or_null(bricks_root_path) as Node3D
@@ -99,14 +85,6 @@ func _initialize_bricks() -> void:
 #                        PUBLIC API
 # =============================================================
 func play() -> void:
-	# Fade‑in background music
-	if _bg_player:
-		_bg_player.volume_db = -80.0
-		_bg_player.play()
-		_fading_in = true
-		_fading_out = false
-		_fade_elapsed = 0.0
-
 	# Start wave system
 	_time = 0.0
 	_offsets.clear()
@@ -123,8 +101,6 @@ func stop() -> void:
 #                        MAIN LOOP
 # =============================================================
 func _process(delta: float) -> void:
-	_handle_fades(delta)
-
 	if not _is_playing:
 		return
 
@@ -134,29 +110,9 @@ func _process(delta: float) -> void:
 		if _stop_requested:
 			_is_playing = false
 			_stop_requested = false
-			if _bg_player:
-				_fading_out = true
-				_fading_in = false
-				_fade_elapsed = 0.0
+			emit_signal("stoped")
 		else:
 			_start_wave()
-
-func _handle_fades(delta: float) -> void:
-	if _fading_in and _bg_player:
-		_fade_elapsed += delta
-		var t = clamp(_fade_elapsed / bg_fade_duration, 0.0, 1.0)
-		_bg_player.volume_db = lerp(-80.0, _initial_bg_volume_db, t)
-		if t >= 1.0:
-			_fading_in = false
-
-	if _fading_out and _bg_player:
-		_fade_elapsed += delta
-		var t2 = clamp(_fade_elapsed / bg_fade_duration, 0.0, 1.0)
-		_bg_player.volume_db = lerp(_initial_bg_volume_db, -80.0, t2)
-		if t2 >= 1.0:
-			_bg_player.stop()
-			_fading_out = false
-			set_process(false)   # disable processing once everything is done
 
 func _update_waves(delta: float) -> void:
 	# 1) Advance the master timer that drives the whole wave.
