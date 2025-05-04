@@ -16,3 +16,6 @@ Key Map Mapping For Godot
 - Enter: Toggle distortion visibility
 - Esc: Reset distortion grid points
 - P: Test particles
+- O: Open Brick Wall
+- C: Close Brick Wall
+- Space: Start/Stop Brick Wall idle animation
