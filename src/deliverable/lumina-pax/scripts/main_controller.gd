@@ -23,12 +23,52 @@ func _run_sequence():
 	$"../Wall__IdleWaveController".stop()
 	await $"../Wall__IdleWaveController".stoped
 	
-	# open wall
+	# wait for 10 sec, music fade out, lights down
+	
+	# open wall, TODO: lights up, start music
 	$"../Wall__OpeningController".open()
 	await $"../Wall__OpeningController".pinboard_signal
 	
-	# bring the pinboard
+	# bring the empty pinboard
 	$"../Pinboard".showUp()
 	await $"../Pinboard".transition_completed
+	
+	# draw images, play drawing sounds
+	# await 
+	
+	# origami Faltungen, zeitversetzt
+	# await
+	
+	# replace tauben (transiotion not prio nr. 1)
+	
+	# start path following für 4 tauben: die 3 tauben setzten sich auf die steine, 1 taube fliegt
+	
+	# 8 tauben fliegen aus dem portal rein und bewegen sich im kreis await
+	
+	# tauben turteln, spot light auf dieses paar, particles anmachen
+	
+	# eine taube, die fliegt, fängt ein branch, setzt sich und pickt
+	
+	# x3 await
+	
+	# folow path: rausfliegen, await
+	
+	# close wall
+	$"../Wall__OpeningController".close()
+	await $"../Wall__OpeningController".finished
+	
+	# start idle animation
+	$"../Wall__IdleWaveController".play()
+	
+	
+	# end
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	

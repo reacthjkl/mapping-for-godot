@@ -21,6 +21,7 @@ var _is_open                 : bool                  = false
 var _total_time              : float                          # rotate_time + move_time (set in _ready)
 var _rotate_portion          : float                          # rotate_time / total_time (set in _ready)
 signal pinboard_signal
+signal finished
 
 # ───────────── MUSIC & FX ─────────────
 var _bricks_player           : AudioStreamPlayer3D
@@ -119,6 +120,9 @@ func _process(delta: float) -> void:
 		
 	if(_state > 0.5):
 		emit_signal("pinboard_signal")
+		
+	if(_state >= 1):
+		emit_signal("finished")
 
 # ------------------------------------------------------------
 #           Apply rotation & translation this frame
