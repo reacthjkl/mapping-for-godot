@@ -4,12 +4,13 @@ var isUp = false
 var inTransition = false
 var targetPosition = Vector3(1.5, 1.2, -0.14)
 var moveSpeed = 0.75
+var starting_position
 
 signal transition_completed
 
 
 func _ready() -> void:
-	pass
+	starting_position = global_position
 	
 func _process(delta: float) -> void:
 	_updatePosition(delta)
@@ -31,4 +32,9 @@ func _updatePosition(delta: float) -> void:
 			emit_signal("transition_completed")
 		else:
 			global_position += direction * step
+			
+func reset_position():
+	global_position = starting_position
+	isUp = false
+	
 	
