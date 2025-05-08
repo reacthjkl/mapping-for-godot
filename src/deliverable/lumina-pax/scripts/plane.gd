@@ -11,7 +11,7 @@ var frame_index := 0
 var time_accum := 0.0
 var drawing = false
 
-func _raedy():
+func _ready():
 	if not frames.is_empty():
 		frame_index = 0
 		var mat = mesh.surface_get_material(0)
@@ -39,3 +39,9 @@ func _process(delta):
 			
 func start_drawing():
 	drawing = true
+
+func reset_drawing():
+	frame_index = 0
+	var mat = mesh.surface_get_material(0)
+	if mat: 
+		mat.albedo_texture = frames[frame_index]

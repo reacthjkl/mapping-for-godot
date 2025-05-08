@@ -75,9 +75,9 @@ func _run_sequence():
 	
 	# end, reset values
 	$"../pinboard3_with_notes".reset_position()
-	
-	
-	
+	$"../pinboard3_with_notes/Plane".reset_drawing()
+	$"../pinboard3_with_notes/Plane_002".reset_drawing()
+	$"../pinboard3_with_notes/Plane_001".reset_drawing()
 	
 	
 	
