@@ -12,7 +12,7 @@ func _process(delta: float) -> void:
 func _input(event):
 	if event is InputEventKey and event.pressed and not event.echo:
 		match event.keycode:
-			KEY_SPACE:#
+			KEY_SPACE:
 				if not isPlayingSequence:
 					_run_sequence()
 					isPlayingSequence = true
@@ -50,6 +50,9 @@ func _run_sequence():
 	# start path following für 4 tauben: die 3 tauben setzten sich auf die steine, 1 taube fliegt
 	
 	# 8 tauben fliegen aus dem portal rein und bewegen sich im kreis await
+	$"../Pigeons/Path3D/PathFollow3D".start_flying()
+	
+	await get_tree().create_timer(2.0).timeout
 	
 	# tauben turteln, spot light auf dieses paar, particles anmachen
 	
@@ -57,7 +60,10 @@ func _run_sequence():
 	
 	# x3 await
 	
-	# folow path: rausfliegen, await
+	# rausfliegen
+	$"../Pigeons/Path3D/PathFollow3D".request_stop_flying()
+	await $"../Pigeons/Path3D/PathFollow3D".flying_stoped
+	
 	
 	# close wall
 	$"../Wall__OpeningController".close()
@@ -66,8 +72,11 @@ func _run_sequence():
 	# start idle animation
 	$"../Wall__IdleWaveController".play()
 	
+	isPlayingSequence = false
 	
-	# end
+	# end, reset values
+	$"../Pinboard".reset_position()
+	
 	
 	
 	
