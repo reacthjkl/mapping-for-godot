@@ -19,7 +19,7 @@ func _input(event):
 					
 				
 func _run_sequence():
-	# stop idle animation
+	 #stop idle animation
 	$"../Wall__IdleWaveController".stop()
 	await $"../Wall__IdleWaveController".stoped
 	
@@ -29,12 +29,18 @@ func _run_sequence():
 	$"../Wall__OpeningController".open()
 	await $"../Wall__OpeningController".pinboard_signal
 	
-	# bring the empty pinboard
-	$"../Pinboard".showUp()
-	await $"../Pinboard".transition_completed
+	 #bring the empty pinboard
+	$"../pinboard3_with_notes".showUp()
+	await $"../pinboard3_with_notes".transition_completed
 	
 	# draw images, play drawing sounds
 	# await 
+	$"../pinboard3_with_notes/Plane_002".start_drawing()
+	await $"../pinboard3_with_notes/Plane_002".start_next_picture
+	$"../pinboard3_with_notes/Plane_001".start_drawing()
+	await $"../pinboard3_with_notes/Plane_001".start_next_picture
+	$"../pinboard3_with_notes/Plane".start_drawing()
+	await $"../pinboard3_with_notes/Plane".pictures_done
 	
 	# origami Faltungen, zeitversetzt
 	# await
