@@ -117,13 +117,12 @@ func _process(delta: float) -> void:
 	if _state == 0.0 or _state == 1.0:
 		_dir     = 0
 		_is_open = _state > 0.5
+		emit_signal("finished")
+		
 		
 	if(_state > 0.5):
 		emit_signal("pinboard_signal")
 		
-	if(_state >= 1):
-		emit_signal("finished")
-
 # ------------------------------------------------------------
 #           Apply rotation & translation this frame
 # ------------------------------------------------------------
