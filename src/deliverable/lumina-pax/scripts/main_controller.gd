@@ -12,14 +12,14 @@ func _process(delta: float) -> void:
 func _input(event):
 	if event is InputEventKey and event.pressed and not event.echo:
 		match event.keycode:
-			KEY_SPACE:#
+			KEY_SPACE:
 				if not isPlayingSequence:
 					_run_sequence()
 					isPlayingSequence = true
 					
 				
 func _run_sequence():
-	# stop idle animation
+	 #stop idle animation
 	$"../Wall__IdleWaveController".stop()
 	await $"../Wall__IdleWaveController".stoped
 	
@@ -29,12 +29,18 @@ func _run_sequence():
 	$"../Wall__OpeningController".open()
 	await $"../Wall__OpeningController".pinboard_signal
 	
-	# bring the empty pinboard
-	$"../Pinboard".showUp()
-	await $"../Pinboard".transition_completed
+	 #bring the empty pinboard
+	$"../pinboard3_with_notes".showUp()
+	await $"../pinboard3_with_notes".transition_completed
 	
 	# draw images, play drawing sounds
 	# await 
+	$"../pinboard3_with_notes/Plane_002".start_drawing()
+	await $"../pinboard3_with_notes/Plane_002".start_next_picture
+	$"../pinboard3_with_notes/Plane_001".start_drawing()
+	await $"../pinboard3_with_notes/Plane_001".start_next_picture
+	$"../pinboard3_with_notes/Plane".start_drawing()
+	await $"../pinboard3_with_notes/Plane".pictures_done
 	
 	# origami Faltungen, zeitversetzt
 	# await
@@ -44,6 +50,9 @@ func _run_sequence():
 	# start path following für 4 tauben: die 3 tauben setzten sich auf die steine, 1 taube fliegt
 	
 	# 8 tauben fliegen aus dem portal rein und bewegen sich im kreis await
+	$"../Pigeons/Path3D/PathFollow3D".start_flying()
+	
+	await get_tree().create_timer(2.0).timeout
 	
 	# tauben turteln, spot light auf dieses paar, particles anmachen
 	
@@ -51,7 +60,9 @@ func _run_sequence():
 	
 	# x3 await
 	
-	# folow path: rausfliegen, await
+	# rausfliegen
+	$"../Pigeons/Path3D/PathFollow3D".request_stop_flying()
+	await $"../Pigeons/Path3D/PathFollow3D".flying_stoped
 	
 	# close wall
 	$"../Wall__OpeningController".close()
@@ -60,15 +71,10 @@ func _run_sequence():
 	# start idle animation
 	$"../Wall__IdleWaveController".play()
 	
+	isPlayingSequence = false
 	
-	# end
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	# end, reset values
+	$"../pinboard3_with_notes".reset_position()
+	$"../pinboard3_with_notes/Plane".reset_drawing()
+	$"../pinboard3_with_notes/Plane_002".reset_drawing()
+	$"../pinboard3_with_notes/Plane_001".reset_drawing()
