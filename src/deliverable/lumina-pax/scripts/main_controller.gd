@@ -17,6 +17,8 @@ func _input(event):
 					_run_sequence()
 					isPlayingSequence = true
 					
+			KEY_B: 
+				$"../branch_falling".start_falling()
 				
 func _run_sequence():
 	 #stop idle animation
@@ -56,6 +58,18 @@ func _run_sequence():
 	
 	# tauben turteln, spot light auf dieses paar, particles anmachen
 	
+	# branch fällt
+	
+	# branch fällt
+	print("Zweig fällt...")
+	$"../branch_falling".start_falling()  # Hier starten wir den Fall
+	await $"../branch_falling".fall_completed
+	print("Zweig ist unten angekommen.")
+
+	
+	
+	
+	
 	# eine taube, die fliegt, fängt ein branch, setzt sich und pickt
 	
 	# x3 await
@@ -78,3 +92,4 @@ func _run_sequence():
 	$"../pinboard3_with_notes/Plane".reset_drawing()
 	$"../pinboard3_with_notes/Plane_002".reset_drawing()
 	$"../pinboard3_with_notes/Plane_001".reset_drawing()
+	$"../branch_falling".reset_position()
