@@ -64,7 +64,6 @@ func _run_sequence():
 	$"../Pigeons/Path3D/PathFollow3D".request_stop_flying()
 	await $"../Pigeons/Path3D/PathFollow3D".flying_stoped
 	
-	
 	# close wall
 	$"../Wall__OpeningController".close()
 	await $"../Wall__OpeningController".finished
@@ -75,7 +74,7 @@ func _run_sequence():
 	isPlayingSequence = false
 	
 	# end, reset values
-	$"../Pinboard".reset_position()
+	$"../pinboard3_with_notes".reset_position()
 	
 	
 	

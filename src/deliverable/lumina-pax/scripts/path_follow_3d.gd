@@ -7,8 +7,7 @@ var flying = false
 var stop_requested = false
 
 signal flying_stoped
-
-
+	
 func _process(delta):
 	if flying: 
 		var current_state = progress_ratio + 0.03 * delta
