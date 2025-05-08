@@ -4,7 +4,9 @@ extends Node3D
 @export var max_distance: float = 3.0
 @export var lower_limit: float = -10.0
 @export var fall_curve_amplitude: float = 1.5
-@export var move_speed: float = 1.5  # Geschwindigkeit der Bewegung zur Zielposition
+@export var move_speed: float = 1.3  # Geschwindigkeit der Bewegung zur Zielposition
+@export var wind_strength: float = 0.02  # Viel geringere Stärke der Windbewegung
+@export var oscillation_frequency: float = 7  # Frequenz der Schwingung des Zweigs im Wind
 
 var isFalling = false
 var inTransition = false
@@ -38,6 +40,16 @@ func start_falling() -> void:
 # Update für den Fall
 func _update_fall(delta: float) -> void:
 	if inTransition:
+		# Zeitbasis für die Schwingung (um eine natürliche Bewegung zu erzeugen)
+		time_in_air += delta
+
+		# Berechne den Schwingungseffekt für die X- und Z-Achse (jetzt viel schwächer)
+		var wind_offset = Vector3(
+			sin(time_in_air * oscillation_frequency) * wind_strength,
+			0,  # Keine Schwingung in Y
+			sin(time_in_air * oscillation_frequency) * wind_strength
+		)
+
 		# Bewegungsrichtung berechnen
 		var direction = (targetPosition - position).normalized()
 		var distance = position.distance_to(targetPosition)
@@ -45,9 +57,9 @@ func _update_fall(delta: float) -> void:
 
 		# Wenn der Zweig nahe genug am Ziel ist, stoppe die Bewegung
 		if step >= distance:
-			position = targetPosition
+			position = targetPosition + wind_offset  # Ziel + Windoffset
 			inTransition = false
 			emit_signal("fall_completed")  # Signal senden, wenn die Bewegung abgeschlossen ist
 		else:
-			# Der Zweig bewegt sich in Richtung Ziel
-			position += direction * step
+			# Der Zweig bewegt sich in Richtung Ziel unter Berücksichtigung der Schwingung
+			position += direction * step + wind_offset
