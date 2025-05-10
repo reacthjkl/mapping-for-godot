@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://3bmiinqlosad"
+path="res://.godot/imported/Picken 2.mp3-24873e8a1130119c4fa13e67178cabf4.mp3str"
+
+[deps]
+
+source_file="res://audio/soundeffects/Picken/Picken 2.mp3"
+dest_files=["res://.godot/imported/Picken 2.mp3-24873e8a1130119c4fa13e67178cabf4.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

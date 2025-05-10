@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://dbt806btk1fdt"
-path="res://.godot/imported/stone-wave.mp3-f602f5c040b58420fd84d54f4530c53c.mp3str"
+path="res://.godot/imported/stone-wave.mp3-3ae52eed82f3e3f3b538f2b5cfb1b648.mp3str"
 
 [deps]
 
-source_file="res://audio/stone-wave.mp3"
-dest_files=["res://.godot/imported/stone-wave.mp3-f602f5c040b58420fd84d54f4530c53c.mp3str"]
+source_file="res://audio/soundeffects/stones/stone-wave.mp3"
+dest_files=["res://.godot/imported/stone-wave.mp3-3ae52eed82f3e3f3b538f2b5cfb1b648.mp3str"]
 
 [params]
 
