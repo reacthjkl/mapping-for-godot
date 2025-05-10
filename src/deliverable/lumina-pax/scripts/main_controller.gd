@@ -20,6 +20,9 @@ func _input(event):
 			KEY_B: 
 				$"../branch_falling".start_falling()
 				
+			KEY_F:
+				$"../pigeon_folding_new".start_folding()
+				
 func _run_sequence():
 	 #stop idle animation
 	$"../Wall__IdleWaveController".stop()
@@ -45,6 +48,15 @@ func _run_sequence():
 	await $"../pinboard3_with_notes/Plane".pictures_done
 	
 	# origami Faltungen, zeitversetzt
+	#Herz
+	$"../pinboard3_with_notes/Plane_001".reset_drawing()
+	$"../pigeon_folding_new/Plane".visible = true	
+	$"../pigeon_folding_new".start_folding()
+	await $"../pigeon_folding_new".animation_finished
+
+
+
+	
 	# await
 	
 	# replace tauben (transiotion not prio nr. 1)
