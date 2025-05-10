@@ -9,7 +9,7 @@ signal lights_in_completed
 @onready var main_light = $"../Lights/MainLight"
 @onready var top_light = $"../Lights/TopLight"
 var original_light_energies: Dictionary = {}
-const FADE_DURATION = 3.0
+const FADE_DURATION = 2.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
