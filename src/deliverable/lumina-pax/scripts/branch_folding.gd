@@ -4,8 +4,8 @@ extends Node3D
 @export var max_distance: float = 3.0
 @export var lower_limit: float = -10.0
 @export var fall_curve_amplitude: float = 1.5
-@export var move_speed: float = 1.3  # Geschwindigkeit der Bewegung zur Zielposition
-@export var wind_strength: float = 0.02  # Viel geringere Stärke der Windbewegung
+@export var move_speed: float = 0.3  # Geschwindigkeit der Bewegung zur Zielposition
+@export var wind_strength: float = 0.003  # Viel geringere Stärke der Windbewegung
 @export var oscillation_frequency: float = 7  # Frequenz der Schwingung des Zweigs im Wind
 
 var isFalling = false
