@@ -4,10 +4,7 @@ var isPlayingSequence = false
 
 
 func _ready() -> void:
-	pass
-	
-func _process(delta: float) -> void:
-	pass
+	$"../Wall__IdleWaveController".play()
 	
 func _input(event):
 	if event is InputEventKey and event.pressed and not event.echo:
@@ -15,13 +12,11 @@ func _input(event):
 			KEY_SPACE:
 				if not isPlayingSequence:
 					_run_sequence()
-					isPlayingSequence = true
-					
-			KEY_B: 
-				$"../branch_falling".start_falling()
 				
 func _run_sequence():
-	 #stop idle animation
+	isPlayingSequence = true
+	
+	#stop idle animation
 	$"../Wall__IdleWaveController".stop()
 	await $"../Wall__IdleWaveController".stoped
 	
@@ -52,31 +47,24 @@ func _run_sequence():
 	# start path following für 4 tauben: die 3 tauben setzten sich auf die steine, 1 taube fliegt
 	
 	# 8 tauben fliegen aus dem portal rein und bewegen sich im kreis await
-	$"../Pigeons/Path3D/PathFollow3D".start_flying()
 	
-	await get_tree().create_timer(2.0).timeout
+	$"../SimplePigeons".start_flying()
 	
 	# tauben turteln, spot light auf dieses paar, particles anmachen
 	
 	# branch fällt
 	
 	# branch fällt
-	print("Zweig fällt...")
 	$"../branch_falling".start_falling()  # Hier starten wir den Fall
 	await $"../branch_falling".fall_completed
-	print("Zweig ist unten angekommen.")
-
-	
-	
-	
-	
+		
 	# eine taube, die fliegt, fängt ein branch, setzt sich und pickt
 	
 	# x3 await
 	
 	# rausfliegen
-	$"../Pigeons/Path3D/PathFollow3D".request_stop_flying()
-	await $"../Pigeons/Path3D/PathFollow3D".flying_stoped
+	$"../SimplePigeons".stop_flying()
+	await $"../SimplePigeons".stopped
 	
 	# close wall
 	$"../Wall__OpeningController".close()
@@ -85,7 +73,6 @@ func _run_sequence():
 	# start idle animation
 	$"../Wall__IdleWaveController".play()
 	
-	isPlayingSequence = false
 	
 	# end, reset values
 	$"../pinboard3_with_notes".reset_position()
@@ -93,3 +80,8 @@ func _run_sequence():
 	$"../pinboard3_with_notes/Plane_002".reset_drawing()
 	$"../pinboard3_with_notes/Plane_001".reset_drawing()
 	$"../branch_falling".reset_position()
+	
+	isPlayingSequence = false
+	
+
+	

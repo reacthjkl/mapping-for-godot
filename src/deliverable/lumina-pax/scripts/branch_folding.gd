@@ -51,3 +51,8 @@ func _update_fall(delta: float) -> void:
 		else:
 			# Der Zweig bewegt sich in Richtung Ziel
 			position += direction * step
+			
+func reset_position():
+	position = starting_position
+	isFalling = false
+	inTransition = false
