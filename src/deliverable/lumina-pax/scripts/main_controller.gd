@@ -24,8 +24,17 @@ func _run_sequence():
 	await $"../Wall__IdleWaveController".stoped
 	
 	# wait for 10 sec, music fade out, lights down
+	#await get_tree().create_timer(10.0).timeout
+	$"../Fade_Controller".start_fade_out()
+	await $"../Fade_Controller".lights_out_completed
 	
-	# open wall, TODO: lights up, start music
+	# TODO: turn on lights, start music
+	await get_tree().create_timer(5.0).timeout
+	$"../Fade_Controller".start_fade_in()
+	await $"../Fade_Controller".lights_in_completed
+	
+	# open wall
+	await get_tree().create_timer(3.0).timeout
 	$"../Wall__OpeningController".open()
 	await $"../Wall__OpeningController".pinboard_signal
 	
