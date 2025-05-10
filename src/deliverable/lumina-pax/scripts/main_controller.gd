@@ -38,6 +38,7 @@ func _run_sequence():
 	 #bring the empty pinboard
 	$"../pinboard3_with_notes".showUp()
 	await $"../pinboard3_with_notes".transition_completed
+	await get_tree().create_timer(3.0).timeout
 	
 	# draw images, play drawing sounds
 	# await 
