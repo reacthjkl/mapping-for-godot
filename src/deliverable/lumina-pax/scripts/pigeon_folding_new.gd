@@ -7,12 +7,25 @@ extends Node3D
 signal animation_finished
 
 func _ready() -> void:
-	plane.visible = false  # Plane unsichtbar machen
+	plane.visible = false
 	animation_player.connect("animation_finished", Callable(self, "_on_animation_finished"))
-	
 
 func start_folding() -> void:
 	plane_board.visible = false
+	plane.visible = true
+	
+	var start_pos = plane.position
+	var pos_right_up = start_pos + Vector3(0.9, 0.9, 0)  # nach rechts und oben
+	var pos_forward = pos_right_up + Vector3(0, 0, 2)  # danach nach vorne
+
+	var tween = get_tree().create_tween()
+	tween.tween_property(plane, "position", pos_right_up, 2)  # Schritt 1
+	#tween.tween_interval(2.0)  # Schritt 2: Wartezeit
+	tween.tween_property(plane, "position", pos_forward, 2)  # Schritt 3
+	tween.tween_interval(2.0)  # Schritt 4: Wartezeit
+	tween.connect("finished", Callable(self, "_start_animation"))  # Schritt 5: Start Animation
+
+func _start_animation() -> void:
 	if animation_player.has_animation("KeyAction"):
 		animation_player.play("KeyAction")
 	else:

@@ -49,7 +49,7 @@ func _run_sequence():
 	
 	# origami Faltungen, zeitversetzt
 	#Herz
-	$"../pinboard3_with_notes/Plane_001".reset_drawing()
+	
 	$"../pigeon_folding_new/Plane".visible = true	
 	$"../pigeon_folding_new".start_folding()
 	await $"../pigeon_folding_new".animation_finished
