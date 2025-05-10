@@ -36,3 +36,8 @@ func _updatePosition(delta: float) -> void:
 func reset_position():
 	global_position = starting_position
 	isUp = false
+	
+func disappear():
+	if isUp and not inTransition:
+		inTransition = true
+		targetPosition = starting_position

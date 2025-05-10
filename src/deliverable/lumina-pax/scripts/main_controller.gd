@@ -22,13 +22,13 @@ func _run_sequence():
 	
 	# wait for 10 sec, music fade out, lights down
 	#await get_tree().create_timer(10.0).timeout
-	$"../Fade_Controller".start_fade_out()
-	await $"../Fade_Controller".lights_out_completed
+	#$"../Fade_Controller".start_fade_out()
+	#await $"../Fade_Controller".lights_out_completed
 	
 	# TODO: turn on lights, start music
-	await get_tree().create_timer(10.0).timeout
-	$"../Fade_Controller".start_fade_in()
-	await $"../Fade_Controller".lights_in_completed
+	#await get_tree().create_timer(10.0).timeout
+	#$"../Fade_Controller".start_fade_in()
+	#await $"../Fade_Controller".lights_in_completed
 	
 	# open wall
 	await get_tree().create_timer(3.0).timeout
@@ -50,6 +50,10 @@ func _run_sequence():
 	
 	# origami Faltungen, zeitversetzt
 	# await
+	
+	# pinboard diappears
+	$"../pinboard3_with_notes".disappear()
+	await $"../pinboard3_with_notes".transition_completed
 	
 	# replace tauben (transiotion not prio nr. 1)
 	
