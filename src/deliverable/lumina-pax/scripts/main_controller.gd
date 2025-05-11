@@ -21,7 +21,7 @@ func _run_sequence():
 	await $"../Wall__IdleWaveController".stoped
 	
 	# wait for 10 sec, music fade out, lights down
-	#await get_tree().create_timer(10.0).timeout
+	#await get_tree().create_timer(7.0).timeout
 	#$"../Fade_Controller".start_fade_out()
 	#await $"../Fade_Controller".lights_out_completed
 	
