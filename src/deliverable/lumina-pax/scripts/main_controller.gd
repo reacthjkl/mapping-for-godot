@@ -2,7 +2,6 @@ extends Node3D
 
 var isPlayingSequence = false
 
-
 func _ready() -> void:
 	$"../Wall__IdleWaveController".play()
 	
@@ -41,7 +40,6 @@ func _run_sequence():
 	await get_tree().create_timer(3.0).timeout
 	
 	# draw images, play drawing sounds
-	# await 
 	$"../pinboard3_with_notes/Plane_002".start_drawing()
 	await $"../pinboard3_with_notes/Plane_002".start_next_picture
 	$"../pinboard3_with_notes/Plane_001".start_drawing()
@@ -50,7 +48,6 @@ func _run_sequence():
 	await $"../pinboard3_with_notes/Plane".pictures_done
 	
 	# origami Faltungen, zeitversetzt
-	# await
 	
 	# pinboard diappears
 	$"../pinboard3_with_notes".disappear()
@@ -77,8 +74,9 @@ func _run_sequence():
 	# x3 await
 	
 	# rausfliegen
-	$"../SimplePigeons".stop_flying()
-	await $"../SimplePigeons".stopped
+	await get_tree().create_timer(15.0).timeout
+	$"../SimplePigeons".request_stop_flying()
+	await $"../SimplePigeons".flying_stoped
 	
 	# close wall
 	$"../Wall__OpeningController".close()
