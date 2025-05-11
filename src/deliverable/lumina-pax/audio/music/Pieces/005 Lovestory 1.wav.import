@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://e4xnoq8xlx71"
-path="res://.godot/imported/005 Lovestory 1.wav-0f532d107e892e2efdac61a504df9b56.sample"
+path="res://.godot/imported/005 Lovestory 1.wav-9545c44d5379fd018c7622114b6775f1.sample"
 
 [deps]
 
-source_file="res://audio/music/005 Lovestory 1.wav"
-dest_files=["res://.godot/imported/005 Lovestory 1.wav-0f532d107e892e2efdac61a504df9b56.sample"]
+source_file="res://audio/music/Pieces/005 Lovestory 1.wav"
+dest_files=["res://.godot/imported/005 Lovestory 1.wav-9545c44d5379fd018c7622114b6775f1.sample"]
 
 [params]
 
