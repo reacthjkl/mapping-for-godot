@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://djopbu0ogacmn"
+path="res://.godot/imported/Gurren Komplett.mp3-f610519edeb54a4cb8d29c802418c2a9.mp3str"
+
+[deps]
+
+source_file="res://audio/soundeffects/Gurren/Gurren Komplett.mp3"
+dest_files=["res://.godot/imported/Gurren Komplett.mp3-f610519edeb54a4cb8d29c802418c2a9.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

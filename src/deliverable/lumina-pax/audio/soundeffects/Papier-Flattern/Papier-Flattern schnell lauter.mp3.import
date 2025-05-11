@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dc8x162ockf71"
+path="res://.godot/imported/Papier-Flattern schnell lauter.mp3-e64f3f56a6de1c4f70e2741117530a23.mp3str"
+
+[deps]
+
+source_file="res://audio/soundeffects/Papier-Flattern/Papier-Flattern schnell lauter.mp3"
+dest_files=["res://.godot/imported/Papier-Flattern schnell lauter.mp3-e64f3f56a6de1c4f70e2741117530a23.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

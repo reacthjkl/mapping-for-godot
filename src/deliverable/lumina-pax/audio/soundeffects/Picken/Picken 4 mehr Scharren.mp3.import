@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bjcni2criwh83"
+path="res://.godot/imported/Picken 4 mehr Scharren.mp3-fbc93390591c51e1961c6a8cecdd93dd.mp3str"
+
+[deps]
+
+source_file="res://audio/soundeffects/Picken/Picken 4 mehr Scharren.mp3"
+dest_files=["res://.godot/imported/Picken 4 mehr Scharren.mp3-fbc93390591c51e1961c6a8cecdd93dd.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

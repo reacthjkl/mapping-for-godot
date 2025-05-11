@@ -24,6 +24,7 @@ func _process(delta):
 		if current_state >= 1.0 and stop_requested:
 			stop_flying()
 			
+			
 func start_flying():
 	flying = true
 	pigeon.visible = true

@@ -1,12 +1,13 @@
 extends Node3D
 
+@export var positionWhenUp = Vector3(1.3, 1.2, -0.14)
+
+#state
 var isUp = false
 var inTransition = false
-var initial_target_position = Vector3(1.5, 1.2, -0.14)
-var targetPosition = initial_target_position
 var moveSpeed = 0.75
 var starting_position
-
+var targetPosition
 var transition_elapsed := 0.0
 var transition_time := 4.0  # duration in seconds
 var transition_start := Vector3.ZERO
@@ -15,18 +16,18 @@ signal transition_completed
 
 
 func _ready() -> void:
-	starting_position = global_position
+	starting_position = position
 	
 func _process(delta: float) -> void:
-	_updatePosition(delta)
+	if inTransition:
+		_updatePosition(delta)
 	
 func showUp():
 	if not isUp and not inTransition:
 		inTransition = true
 		transition_elapsed = 0.0
 		transition_start = global_position
-		targetPosition = initial_target_position
-	
+		targetPosition = positionWhenUp
 	
 func _updatePosition(delta: float) -> void:
 	if inTransition:
@@ -47,11 +48,10 @@ func _updatePosition(delta: float) -> void:
 			global_position = transition_start.lerp(targetPosition, eased_t)
 			
 func reset_position():
-	global_position = starting_position
+	position = starting_position
 	isUp = false
-	inTransition = false
-	targetPosition = initial_target_position
 	
+
 func disappear():
 	if isUp and not inTransition:
 		inTransition = true
