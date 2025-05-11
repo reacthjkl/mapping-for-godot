@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://djgq3mplqq6h"
+path="res://.godot/imported/Papier-Flattern langsam.mp3-e52ca3ae66a406a3b5d4a5373635e9da.mp3str"
+
+[deps]
+
+source_file="res://audio/soundeffects/Papier-Flattern/Papier-Flattern langsam.mp3"
+dest_files=["res://.godot/imported/Papier-Flattern langsam.mp3-e52ca3ae66a406a3b5d4a5373635e9da.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b0felj4bofji8"
+path="res://.godot/imported/Gurren 1.mp3-7df64e09e845a8cc4b30ff75dc45bc15.mp3str"
+
+[deps]
+
+source_file="res://audio/soundeffects/Gurren/Gurren 1.mp3"
+dest_files=["res://.godot/imported/Gurren 1.mp3-7df64e09e845a8cc4b30ff75dc45bc15.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
