@@ -16,43 +16,43 @@ func _run_sequence():
 	isPlayingSequence = true
 	
 	#stop idle animation
-	$"../Wall__IdleWaveController".stop()
-	await $"../Wall__IdleWaveController".stoped
+	#$"../Wall__IdleWaveController".stop()
+	#await $"../Wall__IdleWaveController".stoped
 	
 	# lights down
-	$"../Fade_Controller".start_fade_out(2)
-	await $"../Fade_Controller".lights_out_completed
+	#$"../Fade_Controller".start_fade_out(2)
+	#await $"../Fade_Controller".lights_out_completed
 	
-	await get_tree().create_timer(5.0).timeout
+	#await get_tree().create_timer(5.0).timeout
 	
 	# turn on lights, TODO: start music + wait 2 sec
-	$"../Fade_Controller".start_fade_in(5)
-	await $"../Fade_Controller".lights_in_completed
-	await get_tree().create_timer(2.0).timeout
+	#$"../Fade_Controller".start_fade_in(5)
+	#await $"../Fade_Controller".lights_in_completed
+	#await get_tree().create_timer(2.0).timeout
 	
 	# open wall
 	$"../Wall__OpeningController".open()
 	await $"../Wall__OpeningController".pinboard_signal
 	
 	 #bring the empty pinboard + wait 2 sec
-	$"../pinboard3_with_notes".showUp()
-	await $"../pinboard3_with_notes".transition_completed
-	await get_tree().create_timer(2.0).timeout
+	#$"../pinboard3_with_notes".showUp()
+	#await $"../pinboard3_with_notes".transition_completed
+	#await get_tree().create_timer(2.0).timeout
 	
 	# draw images, play drawing sounds + wait 2 sec
-	$"../pinboard3_with_notes/Plane_002".start_drawing()
-	await $"../pinboard3_with_notes/Plane_002".start_next_picture
-	$"../pinboard3_with_notes/Plane_001".start_drawing()
-	await $"../pinboard3_with_notes/Plane_001".start_next_picture
-	$"../pinboard3_with_notes/Plane".start_drawing()
-	await $"../pinboard3_with_notes/Plane".pictures_done
-	await get_tree().create_timer(2.0).timeout
+	#$"../pinboard3_with_notes/Plane_002".start_drawing()
+	#await $"../pinboard3_with_notes/Plane_002".start_next_picture
+	#$"../pinboard3_with_notes/Plane_001".start_drawing()
+	#await $"../pinboard3_with_notes/Plane_001".start_next_picture
+	#$"../pinboard3_with_notes/Plane".start_drawing()
+	#await $"../pinboard3_with_notes/Plane".pictures_done
+	#await get_tree().create_timer(2.0).timeout
 	
 	# origami Faltungen, zeitversetzt
 	
 	# pinboard diappears
-	$"../pinboard3_with_notes".disappear()
-	await $"../pinboard3_with_notes".transition_completed
+	#$"../pinboard3_with_notes".disappear()
+	#await $"../pinboard3_with_notes".transition_completed
 	
 	# replace tauben (transiotion not prio nr. 1)
 	
@@ -67,6 +67,8 @@ func _run_sequence():
 	# branch fällt
 	$"../branch_falling".start_falling()  # Hier starten wir den Fall
 	await $"../branch_falling".fall_completed
+	
+	$"../TurtrelPigeonPath/TurtrelPigeonPathFollow3D".start_flying()
 		
 	# eine taube, die fliegt, fängt ein branch, setzt sich und pickt
 	
