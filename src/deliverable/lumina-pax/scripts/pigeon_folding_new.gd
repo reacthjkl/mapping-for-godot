@@ -7,7 +7,7 @@ extends Node3D
 signal animation_finished
 
 func _ready() -> void:
-	plane.visible = false
+	#plane.visible = false
 	animation_player.connect("animation_finished", Callable(self, "_on_animation_finished"))
 
 func start_folding() -> void:

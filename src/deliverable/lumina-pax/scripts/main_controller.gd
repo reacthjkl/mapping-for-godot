@@ -24,6 +24,8 @@ func _input(event):
 				$"../pigeon_folding_new".start_folding()
 				
 func _run_sequence():
+	Engine.time_scale = 100.0
+
 	 #stop idle animation
 	$"../Wall__IdleWaveController".stop()
 	await $"../Wall__IdleWaveController".stoped
@@ -46,15 +48,22 @@ func _run_sequence():
 	await $"../pinboard3_with_notes/Plane_001".start_next_picture
 	$"../pinboard3_with_notes/Plane".start_drawing()
 	await $"../pinboard3_with_notes/Plane".pictures_done
-	
+	Engine.time_scale = 1.0
 	# origami Faltungen, zeitversetzt
 	#Herz
+
 	
-	$"../pigeon_folding_new/Plane".visible = true	
-	$"../pigeon_folding_new".start_folding()
-	await $"../pigeon_folding_new".animation_finished
-
-
+	$"../pigeon_folding_branch/Plane".visible = true	
+	$"../pigeon_folding_branch".start_folding()
+	await $"../pigeon_folding_branch".animation_finished
+	
+	$"../pigeon_folding_heart/Plane".visible = true	
+	$"../pigeon_folding_heart".start_folding()
+	await $"../pigeon_folding_heart".animation_finished
+	
+	$"../pigeon_folding_pidgeon/Plane".visible = true	
+	$"../pigeon_folding_pidgeon".start_folding()
+	await $"../pigeon_folding_pidgeon".animation_finished
 
 	
 	# await
