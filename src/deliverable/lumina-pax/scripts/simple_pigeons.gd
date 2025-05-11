@@ -9,7 +9,7 @@ var controllers = []
 
 func _ready():
 	controllers = get_children()
-
+	
 func start_flying():
 	for controller in controllers:
 		controller.start_flying()

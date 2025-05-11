@@ -18,15 +18,19 @@ func _run_sequence():
 	#stop idle animation
 	$"../Wall__IdleWaveController".stop()
 	await $"../Wall__IdleWaveController".stoped
-	
+	#
 	# lights down
-	$"../Fade_Controller".start_fade_out(2)
+	$"../Fade_Controller".lights_fade_out(2)
+	$"../Fade_Controller".music_fade_out(2)
 	await $"../Fade_Controller".lights_out_completed
+	
+	# waiting music fade out
 	
 	await get_tree().create_timer(5.0).timeout
 	
 	# turn on lights, TODO: start music + wait 2 sec
-	$"../Fade_Controller".start_fade_in(5)
+	$"../Fade_Controller".lights_fade_in(5)
+	$"../Fade_Controller".music_start()
 	await $"../Fade_Controller".lights_in_completed
 	await get_tree().create_timer(2.0).timeout
 	
@@ -40,11 +44,11 @@ func _run_sequence():
 	await get_tree().create_timer(2.0).timeout
 	
 	# draw images, play drawing sounds + wait 2 sec
-	$"../pinboard3_with_notes/Plane_002".start_drawing()
+	$"../pinboard3_with_notes/Plane_002".start_drawing($"../Audio/Soundeffects/Draw Branch")
 	await $"../pinboard3_with_notes/Plane_002".start_next_picture
-	$"../pinboard3_with_notes/Plane_001".start_drawing()
+	$"../pinboard3_with_notes/Plane_001".start_drawing($"../Audio/Soundeffects/Draw Heart")
 	await $"../pinboard3_with_notes/Plane_001".start_next_picture
-	$"../pinboard3_with_notes/Plane".start_drawing()
+	$"../pinboard3_with_notes/Plane".start_drawing($"../Audio/Soundeffects/Draw Pigeon")
 	await $"../pinboard3_with_notes/Plane".pictures_done
 	await get_tree().create_timer(2.0).timeout
 	
@@ -80,12 +84,13 @@ func _run_sequence():
 	# close wall, lights down + wait 5 sec
 	$"../Wall__OpeningController".close()
 	await $"../Wall__OpeningController".finished
-	$"../Fade_Controller".start_fade_out(1.0)
+	$"../Fade_Controller".lights_fade_out(1.0)
 	await $"../Fade_Controller".lights_out_completed
+	$"../Fade_Controller".music_fade_out(3.0)
 	await get_tree().create_timer(5.0).timeout
 	
 	# turn on lights
-	$"../Fade_Controller".start_fade_in(1.0)
+	$"../Fade_Controller".lights_fade_in(1.0)
 	await $"../Fade_Controller".lights_in_completed
 	
 	# end, reset values
