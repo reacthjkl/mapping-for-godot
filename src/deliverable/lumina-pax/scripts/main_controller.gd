@@ -69,7 +69,7 @@ func _run_sequence():
 	await $"../branch_falling".fall_completed
 	
 	$"../TurtrelPigeonPath/TurtrelPigeonPathFollow3D".start_flying()
-		
+	$"../TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".start_flying()
 	# eine taube, die fliegt, fängt ein branch, setzt sich und pickt
 	
 	# x3 await
