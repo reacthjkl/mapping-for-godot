@@ -7,6 +7,8 @@ var flying
 var stop_requested
 var flyingIn
 
+var pause_before_circle_fly = 0.0
+
 signal flyingStopped
 
 func _process(delta: float) -> void:

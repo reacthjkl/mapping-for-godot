@@ -64,8 +64,6 @@ func _run_sequence():
 	# tauben turteln, spot light auf dieses paar, particles anmachen
 	
 	# branch fällt
-	
-	# branch fällt
 	$"../branch_falling".start_falling()  # Hier starten wir den Fall
 	await $"../branch_falling".fall_completed
 		
