@@ -1,8 +1,9 @@
-shader_type spatial;
-render_mode unshaded;
+ shader_type spatial;
+//render_mode unshaded;
+//render_mode  ;
 
 uniform sampler2D albedo_texture;
-uniform float emission_strength : hint_range(0.0, 5.0) = 0.1;
+uniform float emission_strength : hint_range(0.0, 5.0) = 0.0;
 
 void fragment() {
     vec2 uv = UV;

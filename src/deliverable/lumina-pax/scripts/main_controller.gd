@@ -48,23 +48,55 @@ func _run_sequence():
 	await $"../pinboard3_with_notes/Plane_001".start_next_picture
 	$"../pinboard3_with_notes/Plane".start_drawing()
 	await $"../pinboard3_with_notes/Plane".pictures_done
-	Engine.time_scale = 1.0
-	# origami Faltungen, zeitversetzt
-	#Herz
+	
+	
+	# origami Faltungen, zeitversetzt TODO: BELEUCHTUNG ORIGAMI FUNKT. NICHT RICHTIG. SHADER?
 
 	
+
+	Engine.time_scale = 3.0
+######
+	#Faltung der Taube
 	$"../pigeon_folding_branch/Plane".visible = true	
 	$"../pigeon_folding_branch".start_folding()
 	await $"../pigeon_folding_branch".animation_finished
+
+	# Gefaltete Origami-Taube ausblenden
+	$"../pigeon_folding_branch/Plane".visible = false
 	
+	# Animierte Taube anzeigen und abfliegen lassen
+	$"../Pigeons/pigeon-black/Armature/Skeleton3D/Plane".visible = true
+	$"../Pigeons/pigeon-black".fly_away()
+######
+
+
+
+
+
+
+	#Faltung des Herzen
 	$"../pigeon_folding_heart/Plane".visible = true	
 	$"../pigeon_folding_heart".start_folding()
 	await $"../pigeon_folding_heart".animation_finished
+	# Gefaltete Origami-Taube ausblenden
+	$"../pigeon_folding_heart/Plane".visible = false
+	# Animierte Taube anzeigen und abfliegen lassen
+	$"../Pigeons/pigeon-black/Armature/Skeleton3D/Plane".visible = true
+	$"../Pigeons/pigeon-black".fly_away()
 	
+
+	#Faltung der Taube
 	$"../pigeon_folding_pidgeon/Plane".visible = true	
 	$"../pigeon_folding_pidgeon".start_folding()
 	await $"../pigeon_folding_pidgeon".animation_finished
 
+	# Gefaltete Origami-Taube ausblenden
+	$"../pigeon_folding_pidgeon/Plane".visible = false
+	
+	# Animierte Taube anzeigen und abfliegen lassen
+	$"../Pigeons/pigeon-red/Armature/Skeleton3D/Plane".visible = true
+	$"../Pigeons/pigeon-red".fly_away()
+	
 	
 	# await
 	
