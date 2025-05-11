@@ -16,14 +16,14 @@ func _run_sequence():
 	isPlayingSequence = true
 	
 	#stop idle animation
-	#$"../Wall__IdleWaveController".stop()
-	#await $"../Wall__IdleWaveController".stoped
+	$"../Wall__IdleWaveController".stop()
+	await $"../Wall__IdleWaveController".stoped
 	
 	# lights down
-	#$"../Fade_Controller".start_fade_out(2)
-	#await $"../Fade_Controller".lights_out_completed
+	$"../Fade_Controller".start_fade_out(2)
+	await $"../Fade_Controller".lights_out_completed
 	
-	#await get_tree().create_timer(5.0).timeout
+	await get_tree().create_timer(5.0).timeout
 	
 	# turn on lights, TODO: start music + wait 2 sec
 	#$"../Fade_Controller".start_fade_in(5)
