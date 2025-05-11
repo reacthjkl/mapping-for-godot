@@ -19,33 +19,34 @@ func _run_sequence():
 	$"../Wall__IdleWaveController".stop()
 	await $"../Wall__IdleWaveController".stoped
 	
-	# wait for 10 sec, music fade out, lights down
-	await get_tree().create_timer(10.0).timeout
-	$"../Fade_Controller".start_fade_out()
+	# lights down
+	$"../Fade_Controller".start_fade_out(2)
 	await $"../Fade_Controller".lights_out_completed
 	
-	# TODO: turn on lights, start music
-	await get_tree().create_timer(10.0).timeout
-	$"../Fade_Controller".start_fade_in()
+	await get_tree().create_timer(5.0).timeout
+	
+	# turn on lights, TODO: start music + wait 2 sec
+	$"../Fade_Controller".start_fade_in(5)
 	await $"../Fade_Controller".lights_in_completed
+	await get_tree().create_timer(2.0).timeout
 	
 	# open wall
-	await get_tree().create_timer(3.0).timeout
 	$"../Wall__OpeningController".open()
 	await $"../Wall__OpeningController".pinboard_signal
 	
-	 #bring the empty pinboard
+	 #bring the empty pinboard + wait 2 sec
 	$"../pinboard3_with_notes".showUp()
 	await $"../pinboard3_with_notes".transition_completed
-	await get_tree().create_timer(3.0).timeout
+	await get_tree().create_timer(2.0).timeout
 	
-	# draw images, play drawing sounds
+	# draw images, play drawing sounds + wait 2 sec
 	$"../pinboard3_with_notes/Plane_002".start_drawing()
 	await $"../pinboard3_with_notes/Plane_002".start_next_picture
 	$"../pinboard3_with_notes/Plane_001".start_drawing()
 	await $"../pinboard3_with_notes/Plane_001".start_next_picture
 	$"../pinboard3_with_notes/Plane".start_drawing()
 	await $"../pinboard3_with_notes/Plane".pictures_done
+	await get_tree().create_timer(2.0).timeout
 	
 	# origami Faltungen, zeitversetzt
 	
@@ -76,13 +77,16 @@ func _run_sequence():
 	$"../SimplePigeons".request_stop_flying()
 	await $"../SimplePigeons".flying_stoped
 	
-	# close wall
+	# close wall, lights down + wait 5 sec
 	$"../Wall__OpeningController".close()
 	await $"../Wall__OpeningController".finished
+	$"../Fade_Controller".start_fade_out(1.0)
+	await $"../Fade_Controller".lights_out_completed
+	await get_tree().create_timer(5.0).timeout
 	
-	# start idle animation
-	$"../Wall__IdleWaveController".play()
-	
+	# turn on lights
+	$"../Fade_Controller".start_fade_in(1.0)
+	await $"../Fade_Controller".lights_in_completed
 	
 	# end, reset values
 	$"../pinboard3_with_notes".reset_position()
@@ -90,6 +94,9 @@ func _run_sequence():
 	$"../pinboard3_with_notes/Plane_002".reset_drawing()
 	$"../pinboard3_with_notes/Plane_001".reset_drawing()
 	$"../branch_falling".reset_position()
+	
+	# start idle animation
+	$"../Wall__IdleWaveController".play()
 	
 	isPlayingSequence = false
 	

@@ -9,7 +9,9 @@ signal lights_in_completed
 @onready var main_light = $"../Lights/MainLight"
 @onready var top_light = $"../Lights/TopLight"
 var original_light_energies: Dictionary = {}
-const FADE_DURATION = 2.0
+
+var fade_out_duration = 2.0
+var fade_in_duration = 5.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -19,11 +21,13 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func start_fade_out():
+func start_fade_out(duration):
+	fade_out_duration = duration
 	music_fade_out()
 	lights_fade_out()
 	
-func start_fade_in():
+func start_fade_in(duration):
+	fade_in_duration = duration
 	music_fade_in()
 	lights_fade_in()
 	
@@ -43,8 +47,8 @@ func lights_fade_out():
 		if light is SpotLight3D or light is OmniLight3D:
 			original_light_energies[light] = light.light_energy
 			var start_lights = float(light.light_energy)  # Sicherstellen, dass der Wert als float behandelt wird
-			while time < FADE_DURATION:
-				var t = time / FADE_DURATION  # t geht von 0 bis 1
+			while time < fade_out_duration:
+				var t = time / fade_out_duration  # t geht von 0 bis 1
 				light.light_energy = lerp(start_lights, target_lights[light], t)  # Verwende lerp mit float
 				await get_tree().process_frame
 				time += get_process_delta_time()
@@ -60,8 +64,8 @@ func lights_fade_in():
 		if light is SpotLight3D or light is OmniLight3D:
 			var target_lights = original_light_energies.get(light, 1.0)
 			var start_lights = float(light.light_energy)  # Sicherstellen, dass der Wert als float behandelt wird
-			while time < FADE_DURATION:
-				var t = time / FADE_DURATION  # t geht von 0 bis 1
+			while time < fade_in_duration:
+				var t = time / fade_in_duration  # t geht von 0 bis 1
 				light.light_energy = lerp(start_lights, target_lights, t)  # Verwende lerp mit float
 				await get_tree().process_frame
 				time += get_process_delta_time()
