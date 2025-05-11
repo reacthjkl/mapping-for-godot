@@ -1,43 +1,48 @@
 extends Node3D
 
+@export var positionWhenUp = Vector3(1.3, 1.2, -0.14)
+
+#state
 var isUp = false
 var inTransition = false
-var targetPosition = Vector3(1.5, 1.2, -0.14)
 var moveSpeed = 0.75
 var starting_position
+var targetPosition
 
 signal transition_completed
 
 
 func _ready() -> void:
-	starting_position = global_position
+	starting_position = position
 	
 func _process(delta: float) -> void:
-	_updatePosition(delta)
+	if inTransition:
+		_updatePosition(delta)
 	
 func showUp():
 	if not isUp and not inTransition:
 		inTransition = true
-	
-func _updatePosition(delta: float) -> void:
-	if inTransition:
-		var direction = (targetPosition - global_position).normalized()
-		var distance = global_position.distance_to(targetPosition)
-		var step = moveSpeed * delta
-
-		if step >= distance:
-			global_position = targetPosition
-			isUp = true
-			inTransition = false
-			emit_signal("transition_completed")
-		else:
-			global_position += direction * step
-			
-func reset_position():
-	global_position = starting_position
-	isUp = false
-	
+		targetPosition = positionWhenUp
+		
 func disappear():
 	if isUp and not inTransition:
 		inTransition = true
 		targetPosition = starting_position
+	
+func _updatePosition(delta: float) -> void:
+	var direction = (targetPosition - position).normalized()
+	var distance = position.distance_to(targetPosition)
+	var step = moveSpeed * delta
+
+	if step >= distance:
+		position = targetPosition
+		isUp = true
+		inTransition = false
+		emit_signal("transition_completed")
+	else:
+		position += direction * step
+			
+func reset_position():
+	position = starting_position
+	isUp = false
+	
