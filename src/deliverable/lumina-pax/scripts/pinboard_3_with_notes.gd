@@ -8,6 +8,9 @@ var inTransition = false
 var moveSpeed = 0.75
 var starting_position
 var targetPosition
+var transition_elapsed := 0.0
+var transition_time := 4.0  # duration in seconds
+var transition_start := Vector3.ZERO
 
 signal transition_completed
 
@@ -22,27 +25,36 @@ func _process(delta: float) -> void:
 func showUp():
 	if not isUp and not inTransition:
 		inTransition = true
+		transition_elapsed = 0.0
+		transition_start = global_position
 		targetPosition = positionWhenUp
-		
-func disappear():
-	if isUp and not inTransition:
-		inTransition = true
-		targetPosition = starting_position
 	
 func _updatePosition(delta: float) -> void:
-	var direction = (targetPosition - position).normalized()
-	var distance = position.distance_to(targetPosition)
-	var step = moveSpeed * delta
-
-	if step >= distance:
-		position = targetPosition
-		isUp = true
-		inTransition = false
-		emit_signal("transition_completed")
-	else:
-		position += direction * step
+	if inTransition:
+		transition_elapsed += delta
+		var t = transition_elapsed / transition_time
+		if t >= 1.0:
+			global_position = targetPosition
+			isUp = (targetPosition != starting_position)
+			inTransition = false
+			emit_signal("transition_completed")
+		else:
+			var eased_t = 0.0
+			if targetPosition == starting_position:
+				# Ease-in (disappearing): t²
+				eased_t = t * t
+			else:
+				eased_t = -t * (t - 2.0)  # Quadratic ease-out
+			global_position = transition_start.lerp(targetPosition, eased_t)
 			
 func reset_position():
 	position = starting_position
 	isUp = false
 	
+
+func disappear():
+	if isUp and not inTransition:
+		inTransition = true
+		transition_elapsed = 0.0
+		transition_start = global_position
+		targetPosition = starting_position

@@ -26,6 +26,8 @@ func _input(event):
 func _run_sequence():
 	isPlayingSequence = true
 	
+	Engine.time_scale = 6.0
+	
 	#stop idle animation
 	$"../Wall__IdleWaveController".stop()
 	await $"../Wall__IdleWaveController".stoped
@@ -37,7 +39,7 @@ func _run_sequence():
 	await $"../Fade_Controller".lights_out_completed
 	# waiting music fade out
 	
-	await get_tree().create_timer(5.0).timeout
+	#await get_tree().create_timer(5.0).timeout
 	
 	# turn on lights, TODO: start music + wait 2 sec
 	$"../Fade_Controller".music_start(bg_music_default_volume)
@@ -49,7 +51,7 @@ func _run_sequence():
 	$"../Wall__OpeningController".open()
 	await $"../Wall__OpeningController".pinboard_signal
 	
-	 #bring the empty pinboard + wait 2 sec
+	#bring the empty pinboard + wait 2 sec
 	$"../pinboard3_with_notes".showUp()
 	await $"../pinboard3_with_notes".transition_completed
 	await get_tree().create_timer(2.0).timeout
@@ -71,22 +73,27 @@ func _run_sequence():
 	
 	# replace tauben (transiotion not prio nr. 1)
 	
-	# start path following für 4 tauben: die 3 tauben setzten sich auf die steine, 1 taube fliegt
-	
-	# 8 tauben fliegen aus dem portal rein und bewegen sich im kreis await
-	
 	#TODO: control flying volume 
+	# 8 tauben fliegen aus dem portal rein und bewegen sich im kreis await
 	$"../SimplePigeons".start_flying()
 	
 	# tauben turteln, spot light auf dieses paar, particles anmachen
 	
-	# branch fällt
-	$"../branch_falling".start_falling()  # Hier starten wir den Fall
-	await $"../branch_falling".fall_completed
-		
-	# eine taube, die fliegt, fängt ein branch, setzt sich und pickt
+	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".start_flying()
+	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".start_flying()
 	
-	# x3 await
+	#second pigeon started sitting, emmiting hearts
+	await $"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".started_sitting
+	$"../ParticleController".emitParticles(10.0)
+	await $"../ParticleController".stopped
+	
+	await $"../FlashController".request_flash()
+	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".fly_away()
+	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".fly_away()
+	
+	# branch fällt
+	#$"../branch_falling".start_falling()  # Hier starten wir den Fall
+	#await $"../branch_falling".fall_completed
 	
 	# rausfliegen
 	await get_tree().create_timer(15.0).timeout
@@ -105,12 +112,20 @@ func _run_sequence():
 	$"../Fade_Controller".lights_fade_in(1.0)
 	await $"../Fade_Controller".lights_in_completed
 	
-	# end, reset values
+	# -----------------end, reset values----------------------
+	
+	#pinboard
 	$"../pinboard3_with_notes".reset_position()
 	$"../pinboard3_with_notes/Plane".reset_drawing()
 	$"../pinboard3_with_notes/Plane_002".reset_drawing()
 	$"../pinboard3_with_notes/Plane_001".reset_drawing()
+	
+	#branch
 	$"../branch_falling".reset_position()
+	
+	#loving pigeons
+	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".reset()
+	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".reset()
 	
 	#reset volume
 	#TODO: reset flying volume @lena
