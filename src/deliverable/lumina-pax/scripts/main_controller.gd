@@ -14,16 +14,17 @@ func _input(event):
 				
 func _run_sequence():
 	isPlayingSequence = true
+	Engine.time_scale = 100.0
 	
 	#stop idle animation
 	$"../Wall__IdleWaveController".stop()
 	await $"../Wall__IdleWaveController".stoped
 	
 	# lights down
-	$"../Fade_Controller".start_fade_out(2)
-	await $"../Fade_Controller".lights_out_completed
+	#$"../Fade_Controller".start_fade_out(2)
+	#await $"../Fade_Controller".lights_out_completed
 	
-	await get_tree().create_timer(5.0).timeout
+	#await get_tree().create_timer(5.0).timeout
 	
 	# turn on lights, TODO: start music + wait 2 sec
 	#$"../Fade_Controller".start_fade_in(5)
@@ -46,7 +47,7 @@ func _run_sequence():
 	#await $"../pinboard3_with_notes/Plane_001".start_next_picture
 	#$"../pinboard3_with_notes/Plane".start_drawing()
 	#await $"../pinboard3_with_notes/Plane".pictures_done
-	#await get_tree().create_timer(2.0).timeout
+	await get_tree().create_timer(2.0).timeout
 	
 	# origami Faltungen, zeitversetzt
 	
@@ -65,9 +66,9 @@ func _run_sequence():
 	# tauben turteln, spot light auf dieses paar, particles anmachen
 	
 	# branch fällt
-	$"../branch_falling".start_falling()  # Hier starten wir den Fall
-	await $"../branch_falling".fall_completed
-	
+	#$"../branch_falling".start_falling()  # Hier starten wir den Fall
+	#await $"../branch_falling".fall_completed
+	Engine.time_scale = 1.0
 	$"../TurtrelPigeonPath/TurtrelPigeonPathFollow3D".start_flying()
 	$"../TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".start_flying()
 	# eine taube, die fliegt, fängt ein branch, setzt sich und pickt

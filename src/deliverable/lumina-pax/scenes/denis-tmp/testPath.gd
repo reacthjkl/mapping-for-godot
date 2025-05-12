@@ -1,9 +1,15 @@
 extends Node3D
 
 @onready var animationPlayer = $AnimationPlayer
+@export var rotation_for_turteln: float
+@export var offset_for_turteln: float
 
 # Function to play animations in sequence with loops
 func turteln() -> void:
+	var current_position = $Armature/Skeleton3D/Plane.global_position
+	$Armature/Skeleton3D/Plane.global_position = Vector3(current_position.x + offset_for_turteln, current_position.y, current_position.z)
+	$Armature/Skeleton3D/Plane.rotation = Vector3(0.0, rotation_for_turteln, 0.0)
+	
 	while true:
 		# head-left‐right 3×
 		for i in range(3):

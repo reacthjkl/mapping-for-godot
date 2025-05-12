@@ -19,6 +19,9 @@ func _process(delta):
 			animationPlayer.play("Flying")
 
 	var path_length = get_parent().get_curve().get_baked_length()
+	if progress >= path_length - 0.7 and not started_sitting_emitted:
+		animationPlayer.play("TakingOff1")  # Start landing earlier
+	
 	if progress >= path_length - 0.1:
 		if not started_sitting_emitted:
 			flying = false
