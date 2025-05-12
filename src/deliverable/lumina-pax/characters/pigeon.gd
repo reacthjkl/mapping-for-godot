@@ -12,18 +12,21 @@ func fly_away():
 
 	if origami_plane:
 		# Übernehme Position und Ausrichtung der Origami-Taube
-		global_transform = origami_plane.global_transform
+		global_position = origami_plane.global_position
 	else:
 		push_warning("Origami-Taube nicht gefunden! Prüfe den Pfad.")
+		
+	global_position += Vector3(-0.46, -0.02, 0.0)  # Position korrigieren	
+
 	
 	# Diese Taube sichtbar machen
 	visible = true
 
 	# Verstecke Origami-Mesh innerhalb dieses Objekts (falls vorhanden)
-	if plane:
-		plane.visible = false
-	else:
-		push_warning("Mesh 'Plane' im animierten Objekt nicht gefunden!")
+	#if plane:
+	#	plane.visible = false
+	#else:
+	#	push_warning("Mesh 'Plane' im animierten Objekt nicht gefunden!")
 
 	# Animation abspielen
 	if anim.has_animation("ArmatureAction"):

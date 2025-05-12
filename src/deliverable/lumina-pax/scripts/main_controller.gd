@@ -24,7 +24,7 @@ func _input(event):
 				$"../pigeon_folding_new".start_folding()
 				
 func _run_sequence():
-	Engine.time_scale = 100.0
+	
 
 	 #stop idle animation
 	$"../Wall__IdleWaveController".stop()
@@ -52,26 +52,17 @@ func _run_sequence():
 	
 	# origami Faltungen, zeitversetzt TODO: BELEUCHTUNG ORIGAMI FUNKT. NICHT RICHTIG. SHADER?
 
-	
 
-	Engine.time_scale = 3.0
-######
-	#Faltung der Taube
+
+	#Faltung des Zweigs
 	$"../pigeon_folding_branch/Plane".visible = true	
 	$"../pigeon_folding_branch".start_folding()
 	await $"../pigeon_folding_branch".animation_finished
-
 	# Gefaltete Origami-Taube ausblenden
 	$"../pigeon_folding_branch/Plane".visible = false
-	
 	# Animierte Taube anzeigen und abfliegen lassen
-	$"../Pigeons/pigeon-black/Armature/Skeleton3D/Plane".visible = true
-	$"../Pigeons/pigeon-black".fly_away()
-######
-
-
-
-
+	$"../Pigeons/pigeon-pink/Armature/Skeleton3D/Plane".visible = true
+	$"../Pigeons/pigeon-pink".fly_away()
 
 
 	#Faltung des Herzen
@@ -89,13 +80,18 @@ func _run_sequence():
 	$"../pigeon_folding_pidgeon/Plane".visible = true	
 	$"../pigeon_folding_pidgeon".start_folding()
 	await $"../pigeon_folding_pidgeon".animation_finished
-
 	# Gefaltete Origami-Taube ausblenden
 	$"../pigeon_folding_pidgeon/Plane".visible = false
-	
 	# Animierte Taube anzeigen und abfliegen lassen
 	$"../Pigeons/pigeon-red/Armature/Skeleton3D/Plane".visible = true
 	$"../Pigeons/pigeon-red".fly_away()
+	
+
+	
+	
+	# Abflug Taube (branch)
+
+	
 	
 	
 	# await

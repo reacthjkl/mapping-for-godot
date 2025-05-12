@@ -11,10 +11,13 @@ func _ready() -> void:
 	animation_player.connect("animation_finished", Callable(self, "_on_animation_finished"))
 
 func start_folding() -> void:
+
 	plane_board.visible = false
 	plane.visible = true
 	
 	# Bewegung in Weltkoordinaten (also absolut nach rechts/oben und danach nach vorne)
+	
+
 	var start_pos = plane.global_transform.origin
 	
 	var dir_right_up = Vector3(0, -0.2 , 0)   # rechts und oben in Welt
