@@ -11,21 +11,11 @@ signal lights_in_completed
 var original_light_energies: Dictionary = {}
 
 @export var _origami_love_player: AudioStreamPlayer3D
-@export var default_music_vol: float
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Ersetze dies mit dem Funktionskörper
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 func music_fade_out(duration):
 	var target_volume = -80.0
 	var time = 0.0
 	var volume_now = _origami_love_player.volume_db
-	default_music_vol = volume_now
 	while time < duration:
 		var t = time / duration  # t geht von 0 bis 1
 		_origami_love_player.volume_db = lerp(volume_now, target_volume, t)  # Verwende lerp mit float
@@ -55,8 +45,8 @@ func lights_fade_out(duration):
 			time = 0.0
 	emit_signal("lights_out_completed")
 	
-func music_start():
-	_origami_love_player.volume_db = default_music_vol
+func music_start(value):
+	reset_music(value)
 	_origami_love_player.play()
 	
 func lights_fade_in(duration):
@@ -72,3 +62,6 @@ func lights_fade_in(duration):
 				time += get_process_delta_time()
 			time = 0.0
 	emit_signal("lights_in_completed")
+	
+func reset_music(value):
+	_origami_love_player.volume_db = value
