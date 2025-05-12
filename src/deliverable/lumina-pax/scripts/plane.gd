@@ -37,11 +37,14 @@ func _process(delta):
 				emit_signal("pictures_done")
 
 			
-func start_drawing():
+func start_drawing(sound_player):
 	drawing = true
+	
+	sound_player.play()
 
 func reset_drawing():
 	frame_index = 0
 	var mat = mesh.surface_get_material(0)
 	if mat: 
 		mat.albedo_texture = frames[frame_index]
+		
