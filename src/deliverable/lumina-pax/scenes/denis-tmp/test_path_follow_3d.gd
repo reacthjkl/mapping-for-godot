@@ -13,7 +13,8 @@ signal started_sitting
 
 func _process(delta):
 	if flying: 
-		progress += speed * delta  # Move along the path
+		# Move along the path
+		progress += speed * delta
 		
 		if not animationPlayer.is_playing():
 			animationPlayer.play("Flying")
@@ -39,9 +40,17 @@ func _process(delta):
 			
 			
 func start_flying():
+	visible = true
 	flying = true
 	started_sitting_emitted = false 
 	animationPlayer.play("Flying")
+	
+func fly_away():
+	visible = false
 
 func request_stop_flying():
 	stop_requested = true
+	
+func reset():
+	progress = 0
+	pigeon.stopTurteln()

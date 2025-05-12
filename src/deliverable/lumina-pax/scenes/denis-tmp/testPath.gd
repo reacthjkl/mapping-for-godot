@@ -3,6 +3,7 @@ extends Node3D
 @onready var animationPlayer = $AnimationPlayer
 @export var rotation_for_turteln: float
 @export var offset_for_turteln: float
+@export var stop_turteln_requested: bool
 
 # Function to play animations in sequence with loops
 func turteln() -> void:
@@ -11,6 +12,10 @@ func turteln() -> void:
 	$Armature/Skeleton3D/Plane.rotation = Vector3(0.0, rotation_for_turteln, 0.0)
 	
 	while true:
+		if stop_turteln_requested:
+			stop_turteln_requested = false
+			break
+		
 		# head-left‐right 3×
 		for i in range(3):
 			animationPlayer.play("HeadLeftRight")
@@ -32,7 +37,10 @@ func turteln() -> void:
 			animationPlayer.play("HeadLeftRight")
 		await get_tree().create_timer(1.0).timeout
 		# loop back to top automatically
-
+		
+func stopTurteln():
+	stop_turteln_requested = true
+	
 	
 func fliegenUndPicken():
 	animationPlayer.play("FliegenUndPicken")
