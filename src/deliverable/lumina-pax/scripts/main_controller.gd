@@ -3,14 +3,17 @@ extends Node3D
 var isPlayingSequence = false
 
 var bg_music_default_volume: float
+var waiting_music_default_vol: float
 
 func _ready() -> void:
 	
 	#---------set default values-----------
 	bg_music_default_volume = $"../Audio/Music/Origami Love 1".volume_db
+	waiting_music_default_vol = $"../Audio/Music/WaitingMode".volume_db
 	
 	#--------------------------------------
 	$"../Wall__IdleWaveController".play()
+	$"../Fade_Controller".waiting_music_start(waiting_music_default_vol)
 	#TODO: start idle music @lena
 	
 func _input(event):
@@ -29,16 +32,16 @@ func _run_sequence():
 	#
 	# lights down
 	$"../Fade_Controller".lights_fade_out(2)
+	$"../Fade_Controller".waiting_music_fade_out(4.0)
 	#TODO: add fade out for idle music @lena
 	await $"../Fade_Controller".lights_out_completed
-	
 	# waiting music fade out
 	
 	await get_tree().create_timer(5.0).timeout
 	
 	# turn on lights, TODO: start music + wait 2 sec
-	$"../Fade_Controller".lights_fade_in(5)
 	$"../Fade_Controller".music_start(bg_music_default_volume)
+	$"../Fade_Controller".lights_fade_in(5)
 	await $"../Fade_Controller".lights_in_completed
 	await get_tree().create_timer(2.0).timeout
 	
@@ -114,6 +117,7 @@ func _run_sequence():
 	
 	# start idle animation
 	$"../Wall__IdleWaveController".play()
+	$"../Fade_Controller".waiting_music_start(waiting_music_default_vol)
 	
 	isPlayingSequence = false
 	
