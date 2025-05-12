@@ -15,7 +15,7 @@ var time_in_air: float = 0.0
 var starting_position: Vector3
 
 # Zielposition, an die der Zweig fallen soll
-var targetPosition = Vector3(0.831, 0.7, 0.215)
+var targetPosition = Vector3(0.91, 0.71, 0.18)
 
 signal fall_completed
 
