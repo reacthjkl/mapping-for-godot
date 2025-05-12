@@ -5,7 +5,7 @@ extends Node3D
 @onready var plane_board = $"../pinboard3_with_notes/Plane_001"
 
 signal animation_finished
-
+var starting_position: Vector3  # Anfangsposition der Plane
 func _ready() -> void:
 	plane.visible = false
 	animation_player.connect("animation_finished", Callable(self, "_on_animation_finished"))
@@ -38,3 +38,10 @@ func _start_animation() -> void:
 
 func _on_animation_finished(anim_name: String) -> void:
 	emit_signal("animation_finished")
+	
+func reset_position() -> void:
+	plane.global_transform.origin = starting_position
+	plane.visible = false
+	plane_board.visible = true
+	if animation_player.is_playing():
+		animation_player.stop()

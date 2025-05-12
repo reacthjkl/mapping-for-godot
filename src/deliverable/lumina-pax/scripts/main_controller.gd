@@ -25,6 +25,7 @@ func _input(event):
 				
 func _run_sequence():
 	
+	Engine.time_scale = 100.0
  
 	 #stop idle animation
 	$"../Wall__IdleWaveController".stop()
@@ -74,7 +75,7 @@ func _run_sequence():
 	# Animierte Taube anzeigen und abfliegen lassen
 	$"../Pigeons/pigeon-black/Armature/Skeleton3D/Plane".visible = true
 	$"../Pigeons/pigeon-black".fly_away()
-	
+	Engine.time_scale = 1.0
 
 	#Faltung der Taube
 	$"../pigeon_folding_pidgeon/Plane".visible = true	
@@ -112,11 +113,15 @@ func _run_sequence():
 	# branch fällt
 	print("Zweig fällt...")
 	$"../branch_falling".start_falling()  # Hier starten wir den Fall
+	
 	await $"../branch_falling".fall_completed
 	print("Zweig ist unten angekommen.")
+	
+	#Taube kommt und holt den Branch 
 
-	
-	
+	$"../pigeon_picking".start_fliegen()
+
+   
 	
 	
 	# eine taube, die fliegt, fängt ein branch, setzt sich und pickt
@@ -142,3 +147,7 @@ func _run_sequence():
 	$"../pinboard3_with_notes/Plane_002".reset_drawing()
 	$"../pinboard3_with_notes/Plane_001".reset_drawing()
 	$"../branch_falling".reset_position()
+	$"../pigeon_folding_heart".reset_position()
+	$"../pigeon_folding_pidgeon".reset_position()
+	$"../pigeon_folding_branch".reset_position()
+	$"../pigeon_picking".reset_position()
