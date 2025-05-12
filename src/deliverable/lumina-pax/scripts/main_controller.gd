@@ -24,7 +24,7 @@ func _input(event):
 				$"../pigeon_folding_new".start_folding()
 				
 func _run_sequence():
-	Engine.time_scale = 100.0
+	
  
 	 #stop idle animation
 	$"../Wall__IdleWaveController".stop()
@@ -106,7 +106,7 @@ func _run_sequence():
 	await get_tree().create_timer(2.0).timeout
 	
 	# tauben turteln, spot light auf dieses paar, particles anmachen
-	Engine.time_scale = 1.0
+
 	# branch fällt
 	
 	# branch fällt
