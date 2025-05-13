@@ -6,8 +6,6 @@ var bg_music_default_volume: float
 var waiting_music_default_vol: float
 
 func _ready() -> void:
-	Engine.time_scale = 2.0
-	
 	#---------set default values-----------
 	bg_music_default_volume = $"../Audio/Music/Origami Love 1".volume_db
 	waiting_music_default_vol = $"../Audio/Music/WaitingMode".volume_db
@@ -24,10 +22,6 @@ func _input(event):
 			KEY_SPACE:
 				if not isPlayingSequence:
 					_run_sequence()
-				
-			KEY_F:
-				$"../action_pigeons/pigeon_folding_new".start_folding()
-				
 				
 func _run_sequence():
 	isPlayingSequence = true
@@ -133,11 +127,8 @@ func _run_sequence():
 	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".fly_away()
 
 	# branch fällt
-	print("Zweig fällt...")
 	$"../action_pigeons/branch_falling".start_falling()  # Hier starten wir den Fall
-	
 	await $"../action_pigeons/branch_falling".fall_completed
-	print("Zweig ist unten angekommen.")
 	
 	#Taube kommt und holt den Branch 
 	$"../action_pigeons/pigeon_picking".start_fliegen()
@@ -187,6 +178,8 @@ func _run_sequence():
 	
 	# start idle animation
 	$"../Wall__IdleWaveController".play()
+	
+	#TODO: fix light playing here @marina, @illia
 	$"../Light_Controller".play()
 	$"../Fade_Controller".waiting_music_start(waiting_music_default_vol)
 	
