@@ -28,6 +28,7 @@ func _input(event):
 			KEY_F:
 				$"../action_pigeons/pigeon_folding_new".start_folding()
 				
+				
 func _run_sequence():
 	isPlayingSequence = true
 	

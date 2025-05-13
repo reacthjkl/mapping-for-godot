@@ -747,12 +747,11 @@ libraries = {
 "": SubResource("AnimationLibrary_2x6xr")
 }
 
-[node name="pigeon-pink" type="Node3D" parent="." node_paths=PackedStringArray("plane", "origami_plane")]
+[node name="pigeon-pink" type="Node3D" parent="." node_paths=PackedStringArray("plane")]
 transform = Transform3D(-1.15746, 0, 0.316689, 0, 1.2, 0, -0.316689, 0, -1.15746, 1.19972, 1.44328, 1.97186)
 visible = false
 script = ExtResource("2_tn7o5")
 plane = NodePath("Armature/Skeleton3D/Plane")
-origami_plane = NodePath("")
 
 [node name="Armature" type="Node3D" parent="pigeon-pink"]
 transform = Transform3D(0.108294, 0, 0, 0, 0.108294, 0, 0, 0, 0.108294, -0.325512, -0.141046, 0)
@@ -804,12 +803,11 @@ libraries = {
 "": SubResource("AnimationLibrary_2x6xr")
 }
 
-[node name="pigeon-black" type="Node3D" parent="." node_paths=PackedStringArray("plane", "origami_plane")]
+[node name="pigeon-black" type="Node3D" parent="." node_paths=PackedStringArray("plane")]
 transform = Transform3D(-1.15746, 0, 0.316689, 0, 1.2, 0, -0.316689, 0, -1.15746, 1.5923, 1.44328, 0.771309)
 visible = false
 script = ExtResource("2_tn7o5")
 plane = NodePath("Armature/Skeleton3D/Plane")
-origami_plane = NodePath("")
 
 [node name="Armature" type="Node3D" parent="pigeon-black"]
 transform = Transform3D(0.108294, 0, 0, 0, 0.108294, 0, 0, 0, 0.108294, -0.325512, -0.141046, 0)
@@ -861,12 +859,11 @@ libraries = {
 "": SubResource("AnimationLibrary_2x6xr")
 }
 
-[node name="pigeon-red" type="Node3D" parent="." node_paths=PackedStringArray("plane", "origami_plane")]
+[node name="pigeon-red" type="Node3D" parent="." node_paths=PackedStringArray("plane")]
 transform = Transform3D(-1.15746, 0, 0.316689, 0, 1.2, 0, -0.316689, 0, -1.15746, 0.903363, 1.29767, 0.805675)
 visible = false
 script = ExtResource("2_tn7o5")
 plane = NodePath("Armature/Skeleton3D/Plane")
-origami_plane = NodePath("")
 
 [node name="Armature" type="Node3D" parent="pigeon-red"]
 transform = Transform3D(0.108294, 0, 0, 0, 0.108294, 0, 0, 0, 0.108294, -0.325512, -0.141046, 0)
