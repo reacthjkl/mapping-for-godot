@@ -1,6 +1,7 @@
 extends PathFollow3D
 
 @export var speed = 0.08
+@export var anim: AnimationPlayer
 
 #state
 var flying
@@ -38,6 +39,7 @@ func _process(delta: float) -> void:
 
 	
 func start_flying():
+	anim.play("ArmatureAction")
 	flying = true
 	flyingIn = true
 	

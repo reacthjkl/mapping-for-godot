@@ -108,9 +108,6 @@ func _run_sequence():
 	$"../Pigeons/pigeon-red/Armature/Skeleton3D/Plane".visible = true
 	$"../Pigeons/pigeon-red".fly_away()
 	
-
-	
-	
 	# pinboard diappears
 	$"../pinboard3_with_notes".disappear()
 	await $"../pinboard3_with_notes".transition_completed
@@ -118,6 +115,9 @@ func _run_sequence():
 	#TODO: control flying volume 
 	# 8 tauben fliegen aus dem portal rein und bewegen sich im kreis await
 	$"../SimplePigeons".start_flying()
+	
+	await get_tree().create_timer(8.0).timeout
+	
 	
 	# tauben turteln, spot light auf dieses paar, particles anmachen
 	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".start_flying()
@@ -145,7 +145,7 @@ func _run_sequence():
 
 
 	# rausfliegen
-	await get_tree().create_timer(15.0).timeout
+	await get_tree().create_timer(10.0).timeout
 	$"../SimplePigeons".request_stop_flying()
 	await $"../SimplePigeons".flying_stoped
 	
