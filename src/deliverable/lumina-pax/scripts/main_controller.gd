@@ -6,7 +6,7 @@ var bg_music_default_volume: float
 var waiting_music_default_vol: float
 
 func _ready() -> void:
-	Engine.time_scale = 5.0
+	Engine.time_scale = 2.0
 	
 	#---------set default values-----------
 	bg_music_default_volume = $"../Audio/Music/Origami Love 1".volume_db
@@ -78,7 +78,8 @@ func _run_sequence():
 	$"../action_pigeons/pigeon_folding_branch/Plane".visible = true	
 	$"../action_pigeons/pigeon_folding_branch".start_folding()
 	await $"../action_pigeons/pigeon_folding_branch".animation_finished
-	# Gefaltete Origami-Taube ausblenden
+	# Gefaltete Origami-Taube ausblenden + flash
+	$"../FlashController".request_flash()
 	$"../action_pigeons/pigeon_folding_branch/Plane".visible = false
 	# Animierte Taube anzeigen und abfliegen lassen
 	$"../Pigeons/pigeon-pink/Armature/Skeleton3D/Plane".visible = true
@@ -89,7 +90,8 @@ func _run_sequence():
 	$"../action_pigeons/pigeon_folding_heart/Plane".visible = true	
 	$"../action_pigeons/pigeon_folding_heart".start_folding()
 	await $"../action_pigeons/pigeon_folding_heart".animation_finished
-	# Gefaltete Origami-Taube ausblenden
+	# Gefaltete Origami-Taube ausblenden + flash
+	$"../FlashController".request_flash()
 	$"../action_pigeons/pigeon_folding_heart/Plane".visible = false
 	# Animierte Taube anzeigen und abfliegen lassen
 	$"../Pigeons/pigeon-black/Armature/Skeleton3D/Plane".visible = true
@@ -99,7 +101,8 @@ func _run_sequence():
 	$"../action_pigeons/pigeon_folding_pidgeon/Plane".visible = true	
 	$"../action_pigeons/pigeon_folding_pidgeon".start_folding()
 	await $"../action_pigeons/pigeon_folding_pidgeon".animation_finished
-	# Gefaltete Origami-Taube ausblenden
+	# Gefaltete Origami-Taube ausblenden + flash
+	$"../FlashController".request_flash()
 	$"../action_pigeons/pigeon_folding_pidgeon/Plane".visible = false
 	# Animierte Taube anzeigen und abfliegen lassen
 	$"../Pigeons/pigeon-red/Armature/Skeleton3D/Plane".visible = true
@@ -108,21 +111,15 @@ func _run_sequence():
 
 	
 	
-	# Abflug Taube (branch)
-
-	
-	
-	
-	# await
-	
-	# replace tauben (transiotion not prio nr. 1)
+	# pinboard diappears
+	$"../pinboard3_with_notes".disappear()
+	await $"../pinboard3_with_notes".transition_completed
 	
 	#TODO: control flying volume 
 	# 8 tauben fliegen aus dem portal rein und bewegen sich im kreis await
 	$"../SimplePigeons".start_flying()
 	
 	# tauben turteln, spot light auf dieses paar, particles anmachen
-	
 	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".start_flying()
 	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".start_flying()
 	
@@ -131,14 +128,10 @@ func _run_sequence():
 	$"../ParticleController".emitParticles(10.0)
 	await $"../ParticleController".stopped
 	
-	await $"../FlashController".request_flash()
+	$"../FlashController".request_flash()
 	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".fly_away()
 	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".fly_away()
-	
 
-
-	# branch fällt
-	
 	# branch fällt
 	print("Zweig fällt...")
 	$"../action_pigeons/branch_falling".start_falling()  # Hier starten wir den Fall
@@ -147,18 +140,9 @@ func _run_sequence():
 	print("Zweig ist unten angekommen.")
 	
 	#Taube kommt und holt den Branch 
-
 	$"../action_pigeons/pigeon_picking".start_fliegen()
-	
-	
-	# eine taube, die fliegt, fängt ein branch, setzt sich und pickt
-	
-	# x3 await
-	
 
-	# pinboard diappears
-	$"../pinboard3_with_notes".disappear()
-	await $"../pinboard3_with_notes".transition_completed
+
 
 	# rausfliegen
 	await get_tree().create_timer(15.0).timeout
