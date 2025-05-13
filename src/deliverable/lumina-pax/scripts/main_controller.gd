@@ -6,6 +6,7 @@ var bg_music_default_volume: float
 var waiting_music_default_vol: float
 
 func _ready() -> void:
+	Engine.time_scale = 5.0
 	
 	#---------set default values-----------
 	bg_music_default_volume = $"../Audio/Music/Origami Love 1".volume_db
@@ -92,7 +93,6 @@ func _run_sequence():
 	# Animierte Taube anzeigen und abfliegen lassen
 	$"../Pigeons/pigeon-black/Armature/Skeleton3D/Plane".visible = true
 	$"../Pigeons/pigeon-black".fly_away()
-	Engine.time_scale = 1.0
 
 	#Faltung der Taube
 	$"../pigeon_folding_pidgeon/Plane".visible = true	
