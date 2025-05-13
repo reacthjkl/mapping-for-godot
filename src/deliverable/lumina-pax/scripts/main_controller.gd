@@ -13,6 +13,7 @@ func _ready() -> void:
 	
 	#--------------------------------------
 	$"../Wall__IdleWaveController".play()
+	$"../Light_Controller".play()
 	$"../Fade_Controller".waiting_music_start(waiting_music_default_vol)
 	#TODO: start idle music @lena
 	
@@ -26,11 +27,12 @@ func _input(event):
 func _run_sequence():
 	isPlayingSequence = true
 	
-	Engine.time_scale = 6.0
-	
 	#stop idle animation
 	$"../Wall__IdleWaveController".stop()
+	$"../Light_Controller".stop()
+	
 	await $"../Wall__IdleWaveController".stoped
+	$"../Light_Controller".stopped
 	#
 	# lights down
 	$"../Fade_Controller".lights_fade_out(2)
@@ -132,6 +134,7 @@ func _run_sequence():
 	
 	# start idle animation
 	$"../Wall__IdleWaveController".play()
+	$"../Light_Controller".play()
 	$"../Fade_Controller".waiting_music_start(waiting_music_default_vol)
 	
 	isPlayingSequence = false
