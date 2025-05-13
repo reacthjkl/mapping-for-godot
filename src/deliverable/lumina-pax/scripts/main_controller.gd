@@ -185,15 +185,13 @@ func _run_sequence():
 	$"../pinboard3_with_notes/Plane_002".reset_drawing()
 	$"../pinboard3_with_notes/Plane_001".reset_drawing()
 	
-	#branch
-	$"../action_pigeons/branch_falling".reset_position()
-	
 	#loving pigeons
 	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".reset()
 	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".reset()
 
-	#picking pigeon
+	#picking pigeon and branch
 	$"../action_pigeons/pigeon_picking".reset_position()
+	$"../action_pigeons/branch_falling".reset_position()
 
 	#folding drawings
 	$"../action_pigeons/pigeon_folding_heart".reset_position()
