@@ -6,7 +6,6 @@ var bg_music_default_volume: float
 var waiting_music_default_vol: float
 
 func _ready() -> void:
-	
 	#---------set default values-----------
 	bg_music_default_volume = $"../Audio/Music/Origami Love 1".volume_db
 	waiting_music_default_vol = $"../Audio/Music/WaitingMode".volume_db
@@ -67,20 +66,54 @@ func _run_sequence():
 	await $"../pinboard3_with_notes/Plane".pictures_done
 	await get_tree().create_timer(2.0).timeout
 	
-	# origami Faltungen, zeitversetzt
+	# origami Faltungen, zeitversetzt TODO: BELEUCHTUNG ORIGAMI FUNKT. NICHT RICHTIG. SHADER?
+
+	#Faltung des Zweigs
+	$"../action_pigeons/pigeon_folding_branch/Plane".visible = true	
+	$"../action_pigeons/pigeon_folding_branch".start_folding()
+	await $"../action_pigeons/pigeon_folding_branch".animation_finished
+	# Gefaltete Origami-Taube ausblenden + flash
+	$"../FlashController".request_flash()
+	$"../action_pigeons/pigeon_folding_branch/Plane".visible = false
+	# Animierte Taube anzeigen und abfliegen lassen
+	$"../Pigeons/pigeon-pink/Armature/Skeleton3D/Plane".visible = true
+	$"../Pigeons/pigeon-pink".fly_away()
+
+
+	#Faltung des Herzen
+	$"../action_pigeons/pigeon_folding_heart/Plane".visible = true	
+	$"../action_pigeons/pigeon_folding_heart".start_folding()
+	await $"../action_pigeons/pigeon_folding_heart".animation_finished
+	# Gefaltete Origami-Taube ausblenden + flash
+	$"../FlashController".request_flash()
+	$"../action_pigeons/pigeon_folding_heart/Plane".visible = false
+	# Animierte Taube anzeigen und abfliegen lassen
+	$"../Pigeons/pigeon-black/Armature/Skeleton3D/Plane".visible = true
+	$"../Pigeons/pigeon-black".fly_away()
+
+	#Faltung der Taube
+	$"../action_pigeons/pigeon_folding_pidgeon/Plane".visible = true	
+	$"../action_pigeons/pigeon_folding_pidgeon".start_folding()
+	await $"../action_pigeons/pigeon_folding_pidgeon".animation_finished
+	# Gefaltete Origami-Taube ausblenden + flash
+	$"../FlashController".request_flash()
+	$"../action_pigeons/pigeon_folding_pidgeon/Plane".visible = false
+	# Animierte Taube anzeigen und abfliegen lassen
+	$"../Pigeons/pigeon-red/Armature/Skeleton3D/Plane".visible = true
+	$"../Pigeons/pigeon-red".fly_away()
 	
 	# pinboard diappears
 	$"../pinboard3_with_notes".disappear()
 	await $"../pinboard3_with_notes".transition_completed
 	
-	# replace tauben (transiotion not prio nr. 1)
-	
 	#TODO: control flying volume 
 	# 8 tauben fliegen aus dem portal rein und bewegen sich im kreis await
 	$"../SimplePigeons".start_flying()
 	
-	# tauben turteln, spot light auf dieses paar, particles anmachen
+	await get_tree().create_timer(8.0).timeout
 	
+	
+	# tauben turteln, spot light auf dieses paar, particles anmachen
 	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".start_flying()
 	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".start_flying()
 	
@@ -89,16 +122,21 @@ func _run_sequence():
 	$"../ParticleController".emitParticles(10.0)
 	await $"../ParticleController".stopped
 	
-	await $"../FlashController".request_flash()
+	$"../FlashController".request_flash()
 	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".fly_away()
 	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".fly_away()
-	
+
 	# branch fällt
-	#$"../branch_falling".start_falling()  # Hier starten wir den Fall
-	#await $"../branch_falling".fall_completed
+	$"../action_pigeons/branch_falling".start_falling()  # Hier starten wir den Fall
+	await $"../action_pigeons/branch_falling".fall_completed
 	
+	#Taube kommt und holt den Branch 
+	$"../action_pigeons/pigeon_picking".start_fliegen()
+
+
+
 	# rausfliegen
-	await get_tree().create_timer(15.0).timeout
+	await get_tree().create_timer(10.0).timeout
 	$"../SimplePigeons".request_stop_flying()
 	await $"../SimplePigeons".flying_stoped
 	
@@ -122,22 +160,27 @@ func _run_sequence():
 	$"../pinboard3_with_notes/Plane_002".reset_drawing()
 	$"../pinboard3_with_notes/Plane_001".reset_drawing()
 	
-	#branch
-	$"../branch_falling".reset_position()
-	
 	#loving pigeons
 	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".reset()
 	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".reset()
-	
+
+	#picking pigeon and branch
+	$"../action_pigeons/pigeon_picking".reset_position()
+	$"../action_pigeons/branch_falling".reset_position()
+
+	#folding drawings
+	$"../action_pigeons/pigeon_folding_heart".reset_position()
+	$"../action_pigeons/pigeon_folding_pidgeon".reset_position()
+	$"../action_pigeons/pigeon_folding_branch".reset_position()
+
 	#reset volume
 	#TODO: reset flying volume @lena
 	
 	# start idle animation
 	$"../Wall__IdleWaveController".play()
+	
+	#TODO: fix light playing here @marina, @illia
 	$"../Light_Controller".play()
 	$"../Fade_Controller".waiting_music_start(waiting_music_default_vol)
 	
 	isPlayingSequence = false
-	
-
-	

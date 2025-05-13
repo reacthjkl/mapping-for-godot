@@ -14,8 +14,7 @@ var velocity: Vector3 = Vector3.ZERO
 var time_in_air: float = 0.0
 var starting_position: Vector3
 
-# Zielposition, an die der Zweig fallen soll
-var targetPosition = Vector3(0.831, 0.7, 0.215)
+var targetPosition = Vector3(0.91, 0.62, 0.18)
 
 signal fall_completed
 
@@ -23,12 +22,11 @@ signal fall_completed
 
 func _ready() -> void:
 	starting_position = position
-	animation_player.play("ArmatureAction")  # Animation starten
+	animation_player.play("ArmatureAction")
 
 func _process(delta: float) -> void:
 	_update_fall(delta)
 
-# Fall starten
 func start_falling() -> void:
 	if not isFalling and not inTransition:
 		isFalling = true
@@ -37,34 +35,31 @@ func start_falling() -> void:
 		time_in_air = 0.0
 		position = starting_position
 
-# Update für den Fall
 func _update_fall(delta: float) -> void:
 	if inTransition:
-		# Zeitbasis für die Schwingung (um eine natürliche Bewegung zu erzeugen)
 		time_in_air += delta
 
-		# Berechne den Schwingungseffekt für die X- und Z-Achse (jetzt viel schwächer)
 		var wind_offset = Vector3(
 			sin(time_in_air * oscillation_frequency) * wind_strength,
-			0,  # Keine Schwingung in Y
+			0,
 			sin(time_in_air * oscillation_frequency) * wind_strength
 		)
 
-		# Bewegungsrichtung berechnen
 		var direction = (targetPosition - position).normalized()
 		var distance = position.distance_to(targetPosition)
 		var step = move_speed * delta
 
-		# Wenn der Zweig nahe genug am Ziel ist, stoppe die Bewegung
 		if step >= distance:
-			position = targetPosition + wind_offset  # Ziel + Windoffset
+			position = targetPosition + wind_offset
 			inTransition = false
-			emit_signal("fall_completed")  # Signal senden, wenn die Bewegung abgeschlossen ist
+			emit_signal("fall_completed")
 		else:
-			# Der Zweig bewegt sich in Richtung Ziel unter Berücksichtigung der Schwingung
 			position += direction * step + wind_offset
-			
-func reset_position():
-	position = starting_position
+
+
+func reset_position() -> void:
 	isFalling = false
 	inTransition = false
+	time_in_air = 0.0
+	velocity = Vector3.ZERO
+	position = starting_position
