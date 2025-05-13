@@ -26,7 +26,7 @@ func _input(event):
 					_run_sequence()
 				
 			KEY_F:
-				$"../pigeon_folding_new".start_folding()
+				$"../action_pigeons/pigeon_folding_new".start_folding()
 				
 func _run_sequence():
 	isPlayingSequence = true
@@ -74,32 +74,32 @@ func _run_sequence():
 	# origami Faltungen, zeitversetzt TODO: BELEUCHTUNG ORIGAMI FUNKT. NICHT RICHTIG. SHADER?
 
 	#Faltung des Zweigs
-	$"../pigeon_folding_branch/Plane".visible = true	
-	$"../pigeon_folding_branch".start_folding()
-	await $"../pigeon_folding_branch".animation_finished
+	$"../action_pigeons/pigeon_folding_branch/Plane".visible = true	
+	$"../action_pigeons/pigeon_folding_branch".start_folding()
+	await $"../action_pigeons/pigeon_folding_branch".animation_finished
 	# Gefaltete Origami-Taube ausblenden
-	$"../pigeon_folding_branch/Plane".visible = false
+	$"../action_pigeons/pigeon_folding_branch/Plane".visible = false
 	# Animierte Taube anzeigen und abfliegen lassen
 	$"../Pigeons/pigeon-pink/Armature/Skeleton3D/Plane".visible = true
 	$"../Pigeons/pigeon-pink".fly_away()
 
 
 	#Faltung des Herzen
-	$"../pigeon_folding_heart/Plane".visible = true	
-	$"../pigeon_folding_heart".start_folding()
-	await $"../pigeon_folding_heart".animation_finished
+	$"../action_pigeons/pigeon_folding_heart/Plane".visible = true	
+	$"../action_pigeons/pigeon_folding_heart".start_folding()
+	await $"../action_pigeons/pigeon_folding_heart".animation_finished
 	# Gefaltete Origami-Taube ausblenden
-	$"../pigeon_folding_heart/Plane".visible = false
+	$"../action_pigeons/pigeon_folding_heart/Plane".visible = false
 	# Animierte Taube anzeigen und abfliegen lassen
 	$"../Pigeons/pigeon-black/Armature/Skeleton3D/Plane".visible = true
 	$"../Pigeons/pigeon-black".fly_away()
 
 	#Faltung der Taube
-	$"../pigeon_folding_pidgeon/Plane".visible = true	
-	$"../pigeon_folding_pidgeon".start_folding()
-	await $"../pigeon_folding_pidgeon".animation_finished
+	$"../action_pigeons/pigeon_folding_pidgeon/Plane".visible = true	
+	$"../action_pigeons/pigeon_folding_pidgeon".start_folding()
+	await $"../action_pigeons/pigeon_folding_pidgeon".animation_finished
 	# Gefaltete Origami-Taube ausblenden
-	$"../pigeon_folding_pidgeon/Plane".visible = false
+	$"../action_pigeons/pigeon_folding_pidgeon/Plane".visible = false
 	# Animierte Taube anzeigen und abfliegen lassen
 	$"../Pigeons/pigeon-red/Armature/Skeleton3D/Plane".visible = true
 	$"../Pigeons/pigeon-red".fly_away()
@@ -140,14 +140,14 @@ func _run_sequence():
 	
 	# branch fällt
 	print("Zweig fällt...")
-	$"../branch_falling".start_falling()  # Hier starten wir den Fall
+	$"../action_pigeons/branch_falling".start_falling()  # Hier starten wir den Fall
 	
-	await $"../branch_falling".fall_completed
+	await $"../action_pigeons/branch_falling".fall_completed
 	print("Zweig ist unten angekommen.")
 	
 	#Taube kommt und holt den Branch 
 
-	$"../pigeon_picking".start_fliegen()
+	$"../action_pigeons/pigeon_picking".start_fliegen()
 	
 	
 	# eine taube, die fliegt, fängt ein branch, setzt sich und pickt
@@ -185,19 +185,19 @@ func _run_sequence():
 	$"../pinboard3_with_notes/Plane_001".reset_drawing()
 	
 	#branch
-	$"../branch_falling".reset_position()
+	$"../action_pigeons/branch_falling".reset_position()
 	
 	#loving pigeons
 	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".reset()
 	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".reset()
 
 	#picking pigeon
-	$"../pigeon_picking".reset_position()
+	$"../action_pigeons/pigeon_picking".reset_position()
 
 	#folding drawings
-	$"../pigeon_folding_heart".reset_position()
-	$"../pigeon_folding_pidgeon".reset_position()
-	$"../pigeon_folding_branch".reset_position()
+	$"../action_pigeons/pigeon_folding_heart".reset_position()
+	$"../action_pigeons/pigeon_folding_pidgeon".reset_position()
+	$"../action_pigeons/pigeon_folding_branch".reset_position()
 
 	#reset volume
 	#TODO: reset flying volume @lena
