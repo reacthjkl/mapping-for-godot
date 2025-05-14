@@ -157,8 +157,6 @@ func _run_sequence():
 	#loving pigeons
 	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".reset()
 	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".reset()
-	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D/pigeon-lightRose".reset()
-	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D/pigeon-lightRose".reset()
 
 	#picking pigeon and branch
 	$"../action_pigeons/pigeon_picking".reset_position()

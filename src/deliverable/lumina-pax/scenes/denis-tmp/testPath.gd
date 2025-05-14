@@ -5,13 +5,6 @@ extends Node3D
 @export var offset_for_turteln: float
 @export var stop_turteln_requested: bool
 
-@export var initial_position: Vector3
-@export var initial_rotation: Vector3
-
-func _ready():
-	initial_position = global_position
-	initial_rotation = rotation
-
 # Function to play animations in sequence with loops
 func turteln() -> void:
 	var current_position = $Armature/Skeleton3D/Plane.global_position
@@ -70,7 +63,3 @@ func sitting1():
 func sitting2():
 	animationPlayer.get_animation("sitting2").loop = false
 	animationPlayer.play("sitting2")
-	
-func reset():
-	global_position = initial_position
-	rotation = initial_rotation
