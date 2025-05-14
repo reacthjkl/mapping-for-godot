@@ -152,7 +152,7 @@ func _run_sequence():
 	$"../pinboard3_with_notes".reset_position()
 	$"../pinboard3_with_notes/Branch_Drawing".reset_drawing()
 	$"../pinboard3_with_notes/Heart_Drawing".reset_drawing()
-	$"../pinboard3_with_notes/Pigeon_Drawing"s.reset_drawing()
+	$"../pinboard3_with_notes/Pigeon_Drawing".reset_drawing()
 	
 	#loving pigeons
 	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".reset()
