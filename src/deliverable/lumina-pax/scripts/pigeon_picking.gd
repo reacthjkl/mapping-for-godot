@@ -6,10 +6,16 @@ extends Node3D
 @onready var marker_zweig = $"../branch_falling/Marker3D"  # Marker am Zweig
 @onready var animation_player = $"AnimationPlayer"
 
+#-----Audio-----------
+@export var _picking_player: AudioStreamPlayer3D
+@export var _picken_gurren_player: AudioStreamPlayer3D
+
 var taube_start_position: Vector3
 var zweig_original_parent: Node
 var zweig_start_position: Vector3
 var zweig_start_rotation: Vector3
+
+signal _taube_hat_zweig_erreicht_signal
 
 func _ready() -> void:
 	taube_start_position = taube.position
@@ -28,6 +34,7 @@ func start_fliegen():
 	tween.connect("finished", Callable(self, "_taube_hat_zweig_erreicht"))
 
 func _taube_hat_zweig_erreicht():
+	emit_signal("_taube_hat_zweig_erreicht_signal")
 	var marker_global = marker_zweig.global_transform
 	var schnabel_global = schnabel.global_transform
 
@@ -37,6 +44,8 @@ func _taube_hat_zweig_erreicht():
 	zweig.global_position = neue_position
 	zweig.reparent(schnabel)
 	zweig.rotation = Vector3.ZERO
+	_picking_player.play()
+	_picken_gurren_player.play()
 
 	var weiter_position = taube.position + Vector3(5, 2, 5)
 	var tween = create_tween()

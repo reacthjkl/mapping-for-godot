@@ -31,7 +31,7 @@ func _run_sequence():
 	$"../Light_Controller".stop()
 	
 	await $"../Wall__IdleWaveController".stoped
-	$"../Light_Controller".stopped
+	
 	#
 	# lights down
 	$"../Fade_Controller".lights_fade_out(2)
@@ -40,13 +40,11 @@ func _run_sequence():
 	await $"../Fade_Controller".lights_out_completed
 	# waiting music fade out
 	
-	#await get_tree().create_timer(5.0).timeout
 	
 	# turn on lights, TODO: start music + wait 2 sec
 	$"../Fade_Controller".music_start(bg_music_default_volume)
-	$"../Fade_Controller".lights_fade_in(5)
+	$"../Fade_Controller".lights_fade_in(2)
 	await $"../Fade_Controller".lights_in_completed
-	await get_tree().create_timer(2.0).timeout
 	
 	# open wall
 	$"../Wall__OpeningController".open()
@@ -72,8 +70,7 @@ func _run_sequence():
 	$"../action_pigeons/pigeon_folding_branch/Plane".visible = true	
 	$"../action_pigeons/pigeon_folding_branch".start_folding()
 	await $"../action_pigeons/pigeon_folding_branch".animation_finished
-	# Gefaltete Origami-Taube ausblenden + flash
-	$"../FlashController".request_flash()
+	# Gefaltete Origami-Taube ausblenden
 	$"../action_pigeons/pigeon_folding_branch/Plane".visible = false
 	# Animierte Taube anzeigen und abfliegen lassen
 	$"../Pigeons/pigeon-pink/Armature/Skeleton3D/Plane".visible = true
@@ -84,8 +81,7 @@ func _run_sequence():
 	$"../action_pigeons/pigeon_folding_heart/Plane".visible = true	
 	$"../action_pigeons/pigeon_folding_heart".start_folding()
 	await $"../action_pigeons/pigeon_folding_heart".animation_finished
-	# Gefaltete Origami-Taube ausblenden + flash
-	$"../FlashController".request_flash()
+	# Gefaltete Origami-Taube ausblenden
 	$"../action_pigeons/pigeon_folding_heart/Plane".visible = false
 	# Animierte Taube anzeigen und abfliegen lassen
 	$"../Pigeons/pigeon-black/Armature/Skeleton3D/Plane".visible = true
@@ -95,8 +91,7 @@ func _run_sequence():
 	$"../action_pigeons/pigeon_folding_pidgeon/Plane".visible = true	
 	$"../action_pigeons/pigeon_folding_pidgeon".start_folding()
 	await $"../action_pigeons/pigeon_folding_pidgeon".animation_finished
-	# Gefaltete Origami-Taube ausblenden + flash
-	$"../FlashController".request_flash()
+	# Gefaltete Origami-Taube ausblenden
 	$"../action_pigeons/pigeon_folding_pidgeon/Plane".visible = false
 	# Animierte Taube anzeigen und abfliegen lassen
 	$"../Pigeons/pigeon-red/Armature/Skeleton3D/Plane".visible = true
@@ -120,25 +115,26 @@ func _run_sequence():
 	#second pigeon started sitting, emmiting hearts
 	await $"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".started_sitting
 	$"../ParticleController".emitParticles(10.0)
+	$"../Audio/Soundeffects/Gurren 1".play()
+	$"../Audio/Soundeffects/Gurren 2".play()
 	await $"../ParticleController".stopped
 	
-	$"../FlashController".request_flash()
 	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".fly_away()
 	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".fly_away()
+	$"../Audio/Soundeffects/Gurren 1".stop()
+	$"../Audio/Soundeffects/Gurren 2".stop()
 
+	# rausfliegen
+	$"../SimplePigeons".request_stop_flying()
+	await $"../SimplePigeons".flying_stoped
+	
 	# branch fällt
 	$"../action_pigeons/branch_falling".start_falling()  # Hier starten wir den Fall
 	await $"../action_pigeons/branch_falling".fall_completed
 	
 	#Taube kommt und holt den Branch 
 	$"../action_pigeons/pigeon_picking".start_fliegen()
-
-
-
-	# rausfliegen
-	await get_tree().create_timer(10.0).timeout
-	$"../SimplePigeons".request_stop_flying()
-	await $"../SimplePigeons".flying_stoped
+	await $"../action_pigeons/pigeon_picking"._taube_hat_zweig_erreicht_signal
 	
 	# close wall, lights down + wait 5 sec
 	$"../Wall__OpeningController".close()
