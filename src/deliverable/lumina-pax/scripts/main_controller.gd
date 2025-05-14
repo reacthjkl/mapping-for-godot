@@ -43,7 +43,7 @@ func _run_sequence():
 	
 	# turn on lights, TODO: start music + wait 2 sec
 	$"../Fade_Controller".music_start(bg_music_default_volume)
-	$"../Fade_Controller".lights_fade_in(5)
+	$"../Fade_Controller".lights_fade_in(2)
 	await $"../Fade_Controller".lights_in_completed
 	
 	# open wall
@@ -121,7 +121,6 @@ func _run_sequence():
 	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".fly_away()
 
 	# rausfliegen
-	await get_tree().create_timer(10.0).timeout
 	$"../SimplePigeons".request_stop_flying()
 	await $"../SimplePigeons".flying_stoped
 	
