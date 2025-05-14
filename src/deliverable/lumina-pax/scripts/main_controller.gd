@@ -48,7 +48,7 @@ func _run_sequence():
 	
 	# open walls
 	$"../Wall__OpeningController".open()
-	await $"../Wall__OpeningController".pinboard_signal
+	await $"../Wall__OpeningController".finished
 	
 	#bring the empty pinboard + wait 2 sec
 	await get_tree().create_timer(2.0).timeout
