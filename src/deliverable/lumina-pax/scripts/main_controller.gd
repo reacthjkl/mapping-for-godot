@@ -46,11 +46,12 @@ func _run_sequence():
 	$"../Fade_Controller".lights_fade_in(5)
 	await $"../Fade_Controller".lights_in_completed
 	
-	# open wall
+	# open walls
 	$"../Wall__OpeningController".open()
 	await $"../Wall__OpeningController".pinboard_signal
 	
 	#bring the empty pinboard + wait 2 sec
+	await get_tree().create_timer(2.0).timeout
 	$"../pinboard3_with_notes".showUp()
 	await $"../pinboard3_with_notes".transition_completed
 	await get_tree().create_timer(2.0).timeout
