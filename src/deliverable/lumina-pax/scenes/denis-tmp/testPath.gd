@@ -5,6 +5,7 @@ extends Node3D
 @export var offset_for_turteln: float
 @export var stop_turteln_requested: bool
 
+
 # Function to play animations in sequence with loops
 func turteln() -> void:
 	var current_position = $Armature/Skeleton3D/Plane.global_position
@@ -20,26 +21,40 @@ func turteln() -> void:
 		for i in range(3):
 			animationPlayer.play("HeadLeftRight")
 			await get_tree().create_timer(1.0).timeout
+		if stop_turteln_requested:
+			stop_turteln_requested = false
+			break
 		await get_tree().create_timer(1.0).timeout
-
+		
 		# head-up‐down 3×
 		for i in range(3):
 			animationPlayer.play("HeadUpDown")
 			await get_tree().create_timer(1.0).timeout
+		if stop_turteln_requested:
+			stop_turteln_requested = false
+			break
 		await get_tree().create_timer(1.0).timeout
 
 		# moving wings once
 		animationPlayer.play("MovingWings")
+		if stop_turteln_requested:
+			stop_turteln_requested = false
+			break
 		await get_tree().create_timer(2.0).timeout
 
 		# head-left‐right 3× again
 		for i in range(3):
 			animationPlayer.play("HeadLeftRight")
+		if stop_turteln_requested:
+			stop_turteln_requested = false
+			break
 		await get_tree().create_timer(1.0).timeout
 		# loop back to top automatically
+	print("raus aus der Schleife")
 		
 func stopTurteln():
 	stop_turteln_requested = true
+	
 	
 	
 func fliegenUndPicken():

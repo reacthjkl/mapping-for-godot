@@ -115,10 +115,14 @@ func _run_sequence():
 	#second pigeon started sitting, emmiting hearts
 	await $"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".started_sitting
 	$"../ParticleController".emitParticles(10.0)
+	$"../Audio/Soundeffects/Gurren 1".play()
+	$"../Audio/Soundeffects/Gurren 2".play()
 	await $"../ParticleController".stopped
 	
 	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".fly_away()
 	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".fly_away()
+	$"../Audio/Soundeffects/Gurren 1".stop()
+	$"../Audio/Soundeffects/Gurren 2".stop()
 
 	# branch fällt
 	$"../action_pigeons/branch_falling".start_falling()  # Hier starten wir den Fall
