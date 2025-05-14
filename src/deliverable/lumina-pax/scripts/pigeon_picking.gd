@@ -11,6 +11,8 @@ var zweig_original_parent: Node
 var zweig_start_position: Vector3
 var zweig_start_rotation: Vector3
 
+signal _taube_hat_zweig_erreicht_signal
+
 func _ready() -> void:
 	taube_start_position = taube.position
 	zweig_start_position = zweig.global_position
@@ -28,6 +30,7 @@ func start_fliegen():
 	tween.connect("finished", Callable(self, "_taube_hat_zweig_erreicht"))
 
 func _taube_hat_zweig_erreicht():
+	emit_signal("_taube_hat_zweig_erreicht_signal")
 	var marker_global = marker_zweig.global_transform
 	var schnabel_global = schnabel.global_transform
 
