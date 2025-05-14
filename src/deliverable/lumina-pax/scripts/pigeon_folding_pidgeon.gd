@@ -4,6 +4,9 @@ extends Node3D
 @onready var plane = $Plane
 @onready var plane_board = $"../../pinboard3_with_notes/Plane"
 
+#-----Audio----------------
+@export var _folding_player: AudioStreamPlayer3D
+
 signal animation_finished
 
 var starting_position: Vector3  # Anfangsposition der Plane
@@ -33,11 +36,13 @@ func start_folding() -> void:
 func _start_animation() -> void:
 	if animation_player.has_animation("KeyAction"):
 		animation_player.play("KeyAction")
+		_folding_player.play()
 	else:
 		push_warning("Animation 'KeyAction' nicht gefunden!")
 
 func _on_animation_finished(anim_name: String) -> void:
 	emit_signal("animation_finished")
+	_folding_player.stop()
 
 func reset_position() -> void:
 	plane.global_transform.origin = starting_position
