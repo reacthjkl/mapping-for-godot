@@ -66,7 +66,7 @@ func _run_sequence():
 	await get_tree().create_timer(2.0).timeout
 	
 	# origami Faltungen, zeitversetzt TODO: BELEUCHTUNG ORIGAMI FUNKT. NICHT RICHTIG. SHADER?
-	Engine.time_scale = 1.0
+	#Engine.time_scale = 1.0
 		#Faltung des Zweigs
 	$"../action_pigeons/pigeon_folding_branch/Plane".visible = true	
 	$"../action_pigeons/pigeon_folding_branch".start_folding()
@@ -77,7 +77,7 @@ func _run_sequence():
 	$"../Pigeons/pigeon-pink/Armature/Skeleton3D/Plane".visible = true
 	$"../Pigeons/pigeon-pink".fly_away()
 
-	
+	Engine.time_scale = 1.0
 	#Faltung des Herzen
 	$"../action_pigeons/pigeon_folding_heart/Plane".visible = true	
 	$"../action_pigeons/pigeon_folding_heart".start_folding()
