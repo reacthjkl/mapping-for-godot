@@ -77,7 +77,7 @@ func _run_sequence():
 	$"../Pigeons/pigeon-pink/Armature/Skeleton3D/Plane".visible = true
 	$"../Pigeons/pigeon-pink".fly_away()
 
-	Engine.time_scale = 1.0
+	
 	#Faltung des Herzen
 	$"../action_pigeons/pigeon_folding_heart/Plane".visible = true	
 	$"../action_pigeons/pigeon_folding_heart".start_folding()
@@ -120,7 +120,7 @@ func _run_sequence():
 	
 	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".fly_away()
 	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".fly_away()
-
+	Engine.time_scale = 1.0
 	# branch fällt
 	$"../action_pigeons/branch_falling".start_falling()  # Hier starten wir den Fall
 	await $"../action_pigeons/branch_falling".fall_completed

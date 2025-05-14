@@ -4,9 +4,10 @@ extends Node3D
 @export var max_distance: float = 3.0
 @export var lower_limit: float = -10.0
 @export var fall_curve_amplitude: float = 1.5
-@export var move_speed: float = 0.3  # Geschwindigkeit der Bewegung zur Zielposition
-@export var wind_strength: float = 0.003  # Viel geringere Stärke der Windbewegung
-@export var oscillation_frequency: float = 7  # Frequenz der Schwingung des Zweigs im Wind
+@export var move_speed: float = 0.19  # Geschwindigkeit der Bewegung zur Zielposition
+@export var wind_strength: float = 0.006  # Stärke der Windbewegung
+@export var oscillation_frequency: float = 5  # Frequenz der Schwingung des Zweigs im Wind
+
 
 var isFalling = false
 var inTransition = false
@@ -14,7 +15,7 @@ var velocity: Vector3 = Vector3.ZERO
 var time_in_air: float = 0.0
 var starting_position: Vector3
 
-var targetPosition = Vector3(0.91, 0.62, 0.18)
+var targetPosition = Vector3(0.91, 0.67, 0.18)
 
 signal fall_completed
 
@@ -50,7 +51,7 @@ func _update_fall(delta: float) -> void:
 		var step = move_speed * delta
 
 		if step >= distance:
-			position = targetPosition + wind_offset
+			position = targetPosition
 			inTransition = false
 			emit_signal("fall_completed")
 		else:
