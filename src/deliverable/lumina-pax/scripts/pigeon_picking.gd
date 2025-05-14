@@ -8,6 +8,7 @@ extends Node3D
 
 #-----Audio-----------
 @export var _picking_player: AudioStreamPlayer3D
+@export var _picken_gurren_player: AudioStreamPlayer3D
 
 var taube_start_position: Vector3
 var zweig_original_parent: Node
@@ -41,6 +42,7 @@ func _taube_hat_zweig_erreicht():
 	zweig.reparent(schnabel)
 	zweig.rotation = Vector3.ZERO
 	_picking_player.play()
+	_picken_gurren_player.play()
 
 	var weiter_position = taube.position + Vector3(5, 2, 5)
 	var tween = create_tween()
