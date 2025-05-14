@@ -78,4 +78,3 @@ func sitting1():
 func sitting2():
 	animationPlayer.get_animation("sitting2").loop = false
 	animationPlayer.play("sitting2")
-	
