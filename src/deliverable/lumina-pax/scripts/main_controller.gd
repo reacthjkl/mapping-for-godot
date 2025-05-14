@@ -26,6 +26,7 @@ func _input(event):
 func _run_sequence():
 	isPlayingSequence = true
 	
+	Engine.time_scale = 100.0
 	#stop idle animation
 	$"../Wall__IdleWaveController".stop()
 	$"../Light_Controller".stop()
@@ -65,8 +66,8 @@ func _run_sequence():
 	await get_tree().create_timer(2.0).timeout
 	
 	# origami Faltungen, zeitversetzt TODO: BELEUCHTUNG ORIGAMI FUNKT. NICHT RICHTIG. SHADER?
-
-	#Faltung des Zweigs
+	Engine.time_scale = 1.0
+		#Faltung des Zweigs
 	$"../action_pigeons/pigeon_folding_branch/Plane".visible = true	
 	$"../action_pigeons/pigeon_folding_branch".start_folding()
 	await $"../action_pigeons/pigeon_folding_branch".animation_finished
@@ -76,7 +77,7 @@ func _run_sequence():
 	$"../Pigeons/pigeon-pink/Armature/Skeleton3D/Plane".visible = true
 	$"../Pigeons/pigeon-pink".fly_away()
 
-
+	
 	#Faltung des Herzen
 	$"../action_pigeons/pigeon_folding_heart/Plane".visible = true	
 	$"../action_pigeons/pigeon_folding_heart".start_folding()

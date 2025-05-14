@@ -23,6 +23,7 @@ func start_folding() -> void:
 
 	var pos_right_up = start_pos + dir_right_up
 	var pos_forward = pos_right_up + dir_forward
+	
 
 	var tween = get_tree().create_tween()
 	tween.tween_property(plane, "global_transform:origin", pos_right_up, 2)  # Schritt 1
