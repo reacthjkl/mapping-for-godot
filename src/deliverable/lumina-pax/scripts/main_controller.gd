@@ -26,7 +26,6 @@ func _input(event):
 func _run_sequence():
 	isPlayingSequence = true
 	
-	Engine.time_scale = 100.0
 	#stop idle animation
 	$"../Wall__IdleWaveController".stop()
 	$"../Light_Controller".stop()
@@ -120,15 +119,12 @@ func _run_sequence():
 	
 	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".fly_away()
 	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".fly_away()
-	Engine.time_scale = 1.0
 	# branch fällt
 	$"../action_pigeons/branch_falling".start_falling()  # Hier starten wir den Fall
 	await $"../action_pigeons/branch_falling".fall_completed
 	
 	#Taube kommt und holt den Branch 
 	$"../action_pigeons/pigeon_picking".start_fliegen()
-
-
 
 	# rausfliegen
 	await get_tree().create_timer(10.0).timeout
