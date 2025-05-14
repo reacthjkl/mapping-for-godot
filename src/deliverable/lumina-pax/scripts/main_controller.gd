@@ -120,19 +120,18 @@ func _run_sequence():
 	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".fly_away()
 	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".fly_away()
 
+	# rausfliegen
+	await get_tree().create_timer(10.0).timeout
+	$"../SimplePigeons".request_stop_flying()
+	await $"../SimplePigeons".flying_stoped
+	
 	# branch fällt
 	$"../action_pigeons/branch_falling".start_falling()  # Hier starten wir den Fall
 	await $"../action_pigeons/branch_falling".fall_completed
 	
 	#Taube kommt und holt den Branch 
 	$"../action_pigeons/pigeon_picking".start_fliegen()
-
-
-
-	# rausfliegen
-	await get_tree().create_timer(10.0).timeout
-	$"../SimplePigeons".request_stop_flying()
-	await $"../SimplePigeons".flying_stoped
+	await $"../action_pigeons/pigeon_picking"._taube_hat_zweig_erreicht_signal
 	
 	# close wall, lights down + wait 5 sec
 	$"../Wall__OpeningController".close()
