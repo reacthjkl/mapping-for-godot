@@ -21,7 +21,6 @@ func _process(delta: float) -> void:
 		if $"../..".unsingInOutPath and (progress_ratio + increment) >= 0.5 and not stop_requested:
 			$"../..".switchPath()
 			progress_ratio = 0.0
-			$"../../../../FlashController".request_flash()
 		#means pigeon is flying in the circle and needs to stop, so switch the path 
 		elif (not $"../..".unsingInOutPath) and ((progress_ratio + increment) >= 1.0) and stop_requested:
 			$"../..".switchPath()
