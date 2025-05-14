@@ -1,11 +1,8 @@
-[gd_scene load_steps=30 format=4 uid="uid://dwkvy6hnkifh7"]
+[gd_scene load_steps=27 format=4 uid="uid://dwkvy6hnkifh7"]
 
 [ext_resource type="Script" path="res://scripts/path_follow_3d.gd" id="1_fi8uf"]
 [ext_resource type="Script" path="res://characters/pigeon.gd" id="2_tn7o5"]
 [ext_resource type="Texture2D" uid="uid://bc6kgfwheo88g" path="res://textures/zweig_animation_neu/0001.png0001.png" id="3_vcqeb"]
-[ext_resource type="Shader" path="res://shaders/pigeon.gdshader" id="4_acvej"]
-[ext_resource type="Texture2D" uid="uid://bxbbft5q1usr7" path="res://textures/tauben_animation/0001.png" id="5_ms38l"]
-[ext_resource type="Texture2D" uid="uid://bvp8qo6momxe4" path="res://textures/herz_animation_neu/0001.png" id="6_khbv5"]
 
 [sub_resource type="GDScript" id="GDScript_0j2al"]
 
@@ -172,29 +169,21 @@ albedo_color = Color(0.454902, 0.105882, 0.278431, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4i5b8"]
 albedo_color = Color(0.996078, 0.65098, 0.501961, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_en4gs"]
-render_priority = 0
-shader = ExtResource("4_acvej")
-shader_parameter/emission_strength = 0.0
-shader_parameter/albedo_texture = ExtResource("5_ms38l")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gaupv"]
+albedo_color = Color(0.113725, 0.168627, 0.533333, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sjuvt"]
-render_priority = 0
-shader = ExtResource("4_acvej")
-shader_parameter/emission_strength = 0.0
-shader_parameter/albedo_texture = ExtResource("6_khbv5")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k3okt"]
+albedo_color = Color(0.113725, 0.168627, 0.533333, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pj38t"]
-render_priority = 0
-shader = ExtResource("4_acvej")
-shader_parameter/emission_strength = 0.0
-shader_parameter/albedo_texture = ExtResource("5_ms38l")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t6eix"]
+albedo_color = Color(0.115196, 0.1699, 0.53325, 1)
 
 [node name="Pigeons" type="Node3D"]
 script = SubResource("GDScript_0j2al")
 
 [node name="Path3D" type="Path3D" parent="."]
 transform = Transform3D(-1.15746, 0, 0.316689, 0, 1.2, 0, -0.316689, 0, -1.15746, 0.563629, 1.44328, -3.68591)
+visible = false
 curve = SubResource("Curve3D_v7ty0")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
@@ -263,6 +252,7 @@ libraries = {
 
 [node name="pigeon-lightRose" type="Node3D" parent="."]
 transform = Transform3D(-1.15746, 0, 0.316689, 0, 1.2, 0, -0.316689, 0, -1.15746, 0.365271, 1.96462, 7.10888)
+visible = false
 script = ExtResource("2_tn7o5")
 
 [node name="Armature" type="Node3D" parent="pigeon-lightRose"]
@@ -317,6 +307,7 @@ libraries = {
 
 [node name="pigeon-brown" type="Node3D" parent="."]
 transform = Transform3D(-1.15746, 0, 0.316689, 0, 1.2, 0, -0.316689, 0, -1.15746, 0.779566, 1.96462, 7.10888)
+visible = false
 script = ExtResource("2_tn7o5")
 
 [node name="Armature" type="Node3D" parent="pigeon-brown"]
@@ -371,6 +362,7 @@ libraries = {
 
 [node name="pigeon-lightBlue" type="Node3D" parent="."]
 transform = Transform3D(-1.15746, 0, 0.316689, 0, 1.2, 0, -0.316689, 0, -1.15746, 0.365271, 0.87549, 7.10888)
+visible = false
 script = ExtResource("2_tn7o5")
 
 [node name="Armature" type="Node3D" parent="pigeon-lightBlue"]
@@ -425,6 +417,7 @@ libraries = {
 
 [node name="pigeon-yellow" type="Node3D" parent="."]
 transform = Transform3D(-1.15746, 0, 0.316689, 0, 1.2, 0, -0.316689, 0, -1.15746, 0.850291, 0.87549, 7.10888)
+visible = false
 script = ExtResource("2_tn7o5")
 
 [node name="Armature" type="Node3D" parent="pigeon-yellow"]
@@ -479,6 +472,7 @@ libraries = {
 
 [node name="pigeon-blue" type="Node3D" parent="."]
 transform = Transform3D(-1.15746, 0, 0.316689, 0, 1.2, 0, -0.316689, 0, -1.15746, 1.26833, 0.87549, 7.10888)
+visible = false
 script = ExtResource("2_tn7o5")
 
 [node name="Armature" type="Node3D" parent="pigeon-blue"]
@@ -533,6 +527,7 @@ libraries = {
 
 [node name="pigeon-gray" type="Node3D" parent="."]
 transform = Transform3D(-1.15746, 0, 0.316689, 0, 1.2, 0, -0.316689, 0, -1.15746, 1.26833, 0.87549, 7.10888)
+visible = false
 script = ExtResource("2_tn7o5")
 
 [node name="Armature" type="Node3D" parent="pigeon-gray"]
@@ -587,6 +582,7 @@ libraries = {
 
 [node name="pigeon-darkRose" type="Node3D" parent="."]
 transform = Transform3D(-1.15746, 0, 0.316689, 0, 1.2, 0, -0.316689, 0, -1.15746, 1.64445, 0.87549, 7.10888)
+visible = false
 script = ExtResource("2_tn7o5")
 
 [node name="Armature" type="Node3D" parent="pigeon-darkRose"]
@@ -641,6 +637,7 @@ libraries = {
 
 [node name="pigeon-white" type="Node3D" parent="."]
 transform = Transform3D(-1.15746, 0, 0.316689, 0, 1.2, 0, -0.316689, 0, -1.15746, 2.07239, 0.87549, 7.10888)
+visible = false
 script = ExtResource("2_tn7o5")
 
 [node name="Armature" type="Node3D" parent="pigeon-white"]
@@ -695,6 +692,7 @@ libraries = {
 
 [node name="pigeon-peach" type="Node3D" parent="."]
 transform = Transform3D(-1.15746, 0, 0.316689, 0, 1.2, 0, -0.316689, 0, -1.15746, 0.759524, 1.44328, 7.10888)
+visible = false
 script = ExtResource("2_tn7o5")
 
 [node name="Armature" type="Node3D" parent="pigeon-peach"]
@@ -747,11 +745,12 @@ libraries = {
 "": SubResource("AnimationLibrary_2x6xr")
 }
 
-[node name="pigeon-pink" type="Node3D" parent="." node_paths=PackedStringArray("plane")]
+[node name="pigeon-pink" type="Node3D" parent="." node_paths=PackedStringArray("plane", "origami_plane")]
 transform = Transform3D(-1.15746, 0, 0.316689, 0, 1.2, 0, -0.316689, 0, -1.15746, 1.19972, 1.44328, 1.97186)
 visible = false
 script = ExtResource("2_tn7o5")
 plane = NodePath("Armature/Skeleton3D/Plane")
+origami_plane = NodePath("")
 
 [node name="Armature" type="Node3D" parent="pigeon-pink"]
 transform = Transform3D(0.108294, 0, 0, 0, 0.108294, 0, 0, 0, 0.108294, -0.325512, -0.141046, 0)
@@ -794,7 +793,7 @@ bones/4/rotation = Quaternion(-0.35691, -0.610422, -0.0866011, 0.701784)
 bones/4/scale = Vector3(1, 1, 1)
 
 [node name="Plane" type="MeshInstance3D" parent="pigeon-pink/Armature/Skeleton3D"]
-material_override = SubResource("ShaderMaterial_en4gs")
+material_override = SubResource("StandardMaterial3D_gaupv")
 mesh = SubResource("ArrayMesh_u7ef5")
 skin = SubResource("Skin_5mtv2")
 
@@ -803,11 +802,12 @@ libraries = {
 "": SubResource("AnimationLibrary_2x6xr")
 }
 
-[node name="pigeon-black" type="Node3D" parent="." node_paths=PackedStringArray("plane")]
+[node name="pigeon-black" type="Node3D" parent="." node_paths=PackedStringArray("plane", "origami_plane")]
 transform = Transform3D(-1.15746, 0, 0.316689, 0, 1.2, 0, -0.316689, 0, -1.15746, 1.5923, 1.44328, 0.771309)
 visible = false
 script = ExtResource("2_tn7o5")
 plane = NodePath("Armature/Skeleton3D/Plane")
+origami_plane = NodePath("")
 
 [node name="Armature" type="Node3D" parent="pigeon-black"]
 transform = Transform3D(0.108294, 0, 0, 0, 0.108294, 0, 0, 0, 0.108294, -0.325512, -0.141046, 0)
@@ -850,7 +850,7 @@ bones/4/rotation = Quaternion(-0.35691, -0.610422, -0.086601, 0.701784)
 bones/4/scale = Vector3(1, 1, 1)
 
 [node name="Plane" type="MeshInstance3D" parent="pigeon-black/Armature/Skeleton3D"]
-material_override = SubResource("ShaderMaterial_sjuvt")
+material_override = SubResource("StandardMaterial3D_k3okt")
 mesh = SubResource("ArrayMesh_u7ef5")
 skin = SubResource("Skin_5mtv2")
 
@@ -859,11 +859,12 @@ libraries = {
 "": SubResource("AnimationLibrary_2x6xr")
 }
 
-[node name="pigeon-red" type="Node3D" parent="." node_paths=PackedStringArray("plane")]
+[node name="pigeon-red" type="Node3D" parent="." node_paths=PackedStringArray("plane", "origami_plane")]
 transform = Transform3D(-1.15746, 0, 0.316689, 0, 1.2, 0, -0.316689, 0, -1.15746, 0.903363, 1.29767, 0.805675)
 visible = false
 script = ExtResource("2_tn7o5")
 plane = NodePath("Armature/Skeleton3D/Plane")
+origami_plane = NodePath("")
 
 [node name="Armature" type="Node3D" parent="pigeon-red"]
 transform = Transform3D(0.108294, 0, 0, 0, 0.108294, 0, 0, 0, 0.108294, -0.325512, -0.141046, 0)
@@ -908,7 +909,7 @@ bones/4/scale = Vector3(1, 1, 1)
 [node name="Plane" type="MeshInstance3D" parent="pigeon-red/Armature/Skeleton3D"]
 mesh = SubResource("ArrayMesh_u7ef5")
 skin = SubResource("Skin_5mtv2")
-surface_material_override/0 = SubResource("ShaderMaterial_pj38t")
+surface_material_override/0 = SubResource("StandardMaterial3D_t6eix")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="pigeon-red"]
 libraries = {
