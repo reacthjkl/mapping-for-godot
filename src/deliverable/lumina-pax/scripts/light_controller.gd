@@ -58,3 +58,6 @@ func _process(delta):
 			red_done = true
 		if blue_follow.progress >= max_progress_blue:
 			blue_done = true
+
+func reset():
+	pass
