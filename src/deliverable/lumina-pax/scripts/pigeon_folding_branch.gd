@@ -2,7 +2,7 @@ extends Node3D
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var plane = $Plane
-@onready var plane_board = $"../../pinboard3_with_notes/Plane_002"
+@onready var plane_board = $"../../pinboard3_with_notes/Branch_Drawing"
 
 #----Audio--------------
 @export var _folding_player: AudioStreamPlayer3D

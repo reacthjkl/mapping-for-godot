@@ -56,12 +56,12 @@ func _run_sequence():
 	await get_tree().create_timer(2.0).timeout
 	
 	# draw images, play drawing sounds + wait 2 sec
-	$"../pinboard3_with_notes/Plane_002".start_drawing($"../Audio/Soundeffects/Draw Branch")
-	await $"../pinboard3_with_notes/Plane_002".start_next_picture
-	$"../pinboard3_with_notes/Plane_001".start_drawing($"../Audio/Soundeffects/Draw Heart")
-	await $"../pinboard3_with_notes/Plane_001".start_next_picture
-	$"../pinboard3_with_notes/Plane".start_drawing($"../Audio/Soundeffects/Draw Pigeon")
-	await $"../pinboard3_with_notes/Plane".pictures_done
+	$"../pinboard3_with_notes/Branch_Drawing".start_drawing($"../Audio/Soundeffects/Draw Branch")
+	await $"../pinboard3_with_notes/Branch_Drawing".start_next_picture
+	$"../pinboard3_with_notes/Heart_Drawing".start_drawing($"../Audio/Soundeffects/Draw Heart")
+	await $"../pinboard3_with_notes/Heart_Drawing".start_next_picture
+	$"../pinboard3_with_notes/Pigeon_Drawing".start_drawing($"../Audio/Soundeffects/Draw Pigeon")
+	await $"../pinboard3_with_notes/Pigeon_Drawing".pictures_done
 	await get_tree().create_timer(2.0).timeout
 	
 	# origami Faltungen, zeitversetzt
@@ -159,9 +159,9 @@ func _run_sequence():
 	
 	#pinboard
 	$"../pinboard3_with_notes".reset_position()
-	$"../pinboard3_with_notes/Plane".reset_drawing()
-	$"../pinboard3_with_notes/Plane_002".reset_drawing()
-	$"../pinboard3_with_notes/Plane_001".reset_drawing()
+	$"../pinboard3_with_notes/Branch_Drawing".reset_drawing()
+	$"../pinboard3_with_notes/Heart_Drawing".reset_drawing()
+	$"../pinboard3_with_notes/Pigeon_Drawing"s.reset_drawing()
 	
 	#loving pigeons
 	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".reset()
