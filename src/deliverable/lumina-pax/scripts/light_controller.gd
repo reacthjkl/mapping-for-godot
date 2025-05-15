@@ -34,6 +34,7 @@ func _process(delta):
 	if red_done and blue_done:
 		is_playing = false
 		emit_signal("stopped")
+		reset()
 		
 	if not is_playing:
 		return
@@ -58,3 +59,23 @@ func _process(delta):
 			red_done = true
 		if blue_follow.progress >= max_progress_blue:
 			blue_done = true
+
+func reset():
+	# Reset progre
+	# Reset position and progress
+	red_follow.progress = 0.0
+	blue_follow.progress = 0.0
+
+	red_light.global_position = red_follow.global_position
+	blue_light.global_position = blue_follow.global_position
+
+	# Reset other states
+	red_done = false
+	blue_done = false
+	is_playing = false
+	should_stop = false
+
+	red_follow.loop = true
+	blue_follow.loop = true
+	
+	

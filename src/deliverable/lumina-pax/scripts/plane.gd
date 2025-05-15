@@ -2,7 +2,6 @@ extends MeshInstance3D
 
 @export var frames : Array[Texture2D]
 @export var frame_rate : float = 12.0
-@export var drawing_offset : float = 0.3
 
 signal pictures_done
 signal start_next_picture
@@ -27,13 +26,10 @@ func _process(delta):
 
 			if frame_index < frames.size():
 				$".".mesh.surface_get_material(0).albedo_texture = frames[frame_index]
-
-				# Signal zum Start des nächsten Bildes
-				if float(frame_index) / float(frames.size()) >= drawing_offset:
-					emit_signal("start_next_picture")
+			
 			else:
-				# Letzter Frame erreicht → Animation beenden
 				drawing = false
+				emit_signal("start_next_picture")
 				emit_signal("pictures_done")
 
 			

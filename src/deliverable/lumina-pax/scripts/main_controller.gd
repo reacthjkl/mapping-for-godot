@@ -6,6 +6,9 @@ var bg_music_default_volume: float
 var waiting_music_default_vol: float
 
 func _ready() -> void:
+	
+	Engine.time_scale = 10
+	
 	#---------set default values-----------
 	bg_music_default_volume = $"../Audio/Music/Origami Love 1".volume_db
 	waiting_music_default_vol = $"../Audio/Music/WaitingMode".volume_db
@@ -46,26 +49,27 @@ func _run_sequence():
 	$"../Fade_Controller".lights_fade_in(2)
 	await $"../Fade_Controller".lights_in_completed
 	
-	# open wall
+	# open walls
 	$"../Wall__OpeningController".open()
-	await $"../Wall__OpeningController".pinboard_signal
+	await $"../Wall__OpeningController".finished
 	
 	#bring the empty pinboard + wait 2 sec
+	await get_tree().create_timer(2.0).timeout
 	$"../pinboard3_with_notes".showUp()
 	await $"../pinboard3_with_notes".transition_completed
 	await get_tree().create_timer(2.0).timeout
 	
 	# draw images, play drawing sounds + wait 2 sec
-	$"../pinboard3_with_notes/Plane_002".start_drawing($"../Audio/Soundeffects/Draw Branch")
-	await $"../pinboard3_with_notes/Plane_002".start_next_picture
-	$"../pinboard3_with_notes/Plane_001".start_drawing($"../Audio/Soundeffects/Draw Heart")
-	await $"../pinboard3_with_notes/Plane_001".start_next_picture
-	$"../pinboard3_with_notes/Plane".start_drawing($"../Audio/Soundeffects/Draw Pigeon")
-	await $"../pinboard3_with_notes/Plane".pictures_done
+	$"../pinboard3_with_notes/Branch_Drawing".start_drawing($"../Audio/Soundeffects/Draw Branch")
+	await $"../pinboard3_with_notes/Branch_Drawing".start_next_picture
+	$"../pinboard3_with_notes/Heart_Drawing".start_drawing($"../Audio/Soundeffects/Draw Heart")
+	await $"../pinboard3_with_notes/Heart_Drawing".start_next_picture
+	$"../pinboard3_with_notes/Pigeon_Drawing".start_drawing($"../Audio/Soundeffects/Draw Pigeon")
+	await $"../pinboard3_with_notes/Pigeon_Drawing".pictures_done
 	await get_tree().create_timer(2.0).timeout
 	
-	# origami Faltungen, zeitversetzt TODO: BELEUCHTUNG ORIGAMI FUNKT. NICHT RICHTIG. SHADER?
-
+	# origami Faltungen, zeitversetzt
+	Engine.time_scale = 1
 	#Faltung des Zweigs
 	$"../action_pigeons/pigeon_folding_branch/Plane".visible = true	
 	$"../action_pigeons/pigeon_folding_branch".start_folding()
@@ -74,6 +78,8 @@ func _run_sequence():
 	$"../action_pigeons/pigeon_folding_branch/Plane".visible = false
 	# Animierte Taube anzeigen und abfliegen lassen
 	$"../Pigeons/pigeon-pink/Armature/Skeleton3D/Plane".visible = true
+	$"../Pigeons/pigeon-pink/Armature/Skeleton3D/Plane".global_position = $"../action_pigeons/pigeon_folding_branch/Plane".global_position
+	$"../Pigeons/pigeon-pink/Armature/Skeleton3D/Plane".global_position.x += 0.4
 	$"../Pigeons/pigeon-pink".fly_away()
 
 
@@ -85,6 +91,9 @@ func _run_sequence():
 	$"../action_pigeons/pigeon_folding_heart/Plane".visible = false
 	# Animierte Taube anzeigen und abfliegen lassen
 	$"../Pigeons/pigeon-black/Armature/Skeleton3D/Plane".visible = true
+	$"../Pigeons/pigeon-black/Armature/Skeleton3D/Plane".global_position = $"../action_pigeons/pigeon_folding_heart/Plane".global_position
+	$"../Pigeons/pigeon-black/Armature/Skeleton3D/Plane".global_position.x += 0.4
+	
 	$"../Pigeons/pigeon-black".fly_away()
 
 	#Faltung der Taube
@@ -95,13 +104,15 @@ func _run_sequence():
 	$"../action_pigeons/pigeon_folding_pidgeon/Plane".visible = false
 	# Animierte Taube anzeigen und abfliegen lassen
 	$"../Pigeons/pigeon-red/Armature/Skeleton3D/Plane".visible = true
+	$"../Pigeons/pigeon-red/Armature/Skeleton3D/Plane".global_position = $"../action_pigeons/pigeon_folding_pidgeon/Plane".global_position
+	$"../Pigeons/pigeon-red/Armature/Skeleton3D/Plane".global_position.x += 0.4
 	$"../Pigeons/pigeon-red".fly_away()
 	
 	# pinboard diappears
 	$"../pinboard3_with_notes".disappear()
 	await $"../pinboard3_with_notes".transition_completed
 	
-	#TODO: control flying volume 
+	#TODO: control flying volume @lena
 	# 8 tauben fliegen aus dem portal rein und bewegen sich im kreis await
 	$"../SimplePigeons".start_flying()
 	
@@ -152,9 +163,9 @@ func _run_sequence():
 	
 	#pinboard
 	$"../pinboard3_with_notes".reset_position()
-	$"../pinboard3_with_notes/Plane".reset_drawing()
-	$"../pinboard3_with_notes/Plane_002".reset_drawing()
-	$"../pinboard3_with_notes/Plane_001".reset_drawing()
+	$"../pinboard3_with_notes/Branch_Drawing".reset_drawing()
+	$"../pinboard3_with_notes/Heart_Drawing".reset_drawing()
+	$"../pinboard3_with_notes/Pigeon_Drawing".reset_drawing()
 	
 	#loving pigeons
 	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".reset()
