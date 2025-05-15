@@ -9,14 +9,15 @@ extends Node3D
 
 signal animation_finished
 
-var starting_position: Vector3  # Anfangsposition der Plane
+var starting_transform: Transform3D
 
 func _ready() -> void:
-	starting_position = plane.global_transform.origin  # Position merken
+	starting_transform = plane.global_transform
 	plane.visible = false
 	animation_player.connect("animation_finished", Callable(self, "_on_animation_finished"))
 
 func start_folding() -> void:
+	reset_position()
 	plane_board.visible = false
 	plane.visible = true
 
@@ -45,8 +46,13 @@ func _on_animation_finished(anim_name: String) -> void:
 	_folding_player.stop()
 
 func reset_position() -> void:
-	plane.global_transform.origin = starting_position
+	plane.global_transform = starting_transform
 	plane.visible = false
+	plane.transparency = 0.0
+	plane.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+	
 	plane_board.visible = true
+	
 	if animation_player.is_playing():
 		animation_player.stop()
+	animation_player.seek(0.0, true)
