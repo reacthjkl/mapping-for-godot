@@ -21,7 +21,7 @@ func start_folding() -> void:
 	# Bewegung in Weltkoordinaten (also absolut nach rechts/oben und danach nach vorne)
 	var start_pos = plane.global_transform.origin
 	
-	var dir_right_up = Vector3(-0.5, 0.2 , 0)   # rechts und oben in Welt
+	var dir_right_up = Vector3(-0.3, 0 , 0)   # rechts und oben in Welt
 	var dir_forward = Vector3(0, 0, 1)    # vorne in Welt
 
 	var pos_right_up = start_pos + dir_right_up
