@@ -2,6 +2,7 @@ extends OmniLight3D
 
 @export var fired = false
 
+
 func request_flash():
 	if not fired:
 		fired = true
