@@ -42,7 +42,7 @@ func lights_fade_out(duration):
 		blue_spot: 2.5,
 		red_spot: 1.0,
 		main_light: 0.3,
-		top_light: 0.3
+		top_light: 0.1
 	}
 	var time = 0.0
 	original_light_energies.clear()
