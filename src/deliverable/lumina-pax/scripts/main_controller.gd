@@ -23,6 +23,16 @@ func _input(event):
 			KEY_SPACE:
 				if not isPlayingSequence:
 					_run_sequence()
+	
+	if event is InputEventKey and event.pressed:
+		match  event.keycode:
+			KEY_CTRL:
+				Engine.time_scale = 10
+		
+	if event is InputEventKey and event.is_released():
+		match  event.keycode:
+			KEY_CTRL:
+				Engine.time_scale = 1
 				
 func _run_sequence():
 	isPlayingSequence = true
