@@ -76,45 +76,40 @@ func _run_sequence():
 	await $"../pinboard3_with_notes/Pigeon_Drawing".pictures_done
 	await get_tree().create_timer(2.0).timeout
 	
-	# origami Faltungen, zeitversetzt
-	Engine.time_scale = 1
 	#Faltung des Zweigs
 	$"../action_pigeons/pigeon_folding_branch/Plane".visible = true	
 	$"../action_pigeons/pigeon_folding_branch".start_folding()
 	await $"../action_pigeons/pigeon_folding_branch".animation_finished
-	# Gefaltete Origami-Taube ausblenden
-	$"../action_pigeons/pigeon_folding_branch/Plane".visible = false
-	# Animierte Taube anzeigen und abfliegen lassen
-	$"../Pigeons/pigeon-pink/Armature/Skeleton3D/Plane".visible = true
-	$"../Pigeons/pigeon-pink/Armature/Skeleton3D/Plane".global_position = $"../action_pigeons/pigeon_folding_branch/Plane".global_position
-	$"../Pigeons/pigeon-pink/Armature/Skeleton3D/Plane".global_position.x += 0.4
-	$"../Pigeons/pigeon-pink".fly_away()
+
+	
+	# Gefaltete Origami-Taube ausblenden, Animierte Taube anzeigen und abfliegen lassen
+	var current_pigeon = $"../Pigeons/pigeon-pink"
+	current_pigeon.request_transition()
+	await current_pigeon.transition_finished
+	current_pigeon.fly_away()
 
 
 	#Faltung des Herzen
 	$"../action_pigeons/pigeon_folding_heart/Plane".visible = true	
 	$"../action_pigeons/pigeon_folding_heart".start_folding()
 	await $"../action_pigeons/pigeon_folding_heart".animation_finished
-	# Gefaltete Origami-Taube ausblenden
-	$"../action_pigeons/pigeon_folding_heart/Plane".visible = false
-	# Animierte Taube anzeigen und abfliegen lassen
-	$"../Pigeons/pigeon-black/Armature/Skeleton3D/Plane".visible = true
-	$"../Pigeons/pigeon-black/Armature/Skeleton3D/Plane".global_position = $"../action_pigeons/pigeon_folding_heart/Plane".global_position
-	$"../Pigeons/pigeon-black/Armature/Skeleton3D/Plane".global_position.x += 0.4
 	
-	$"../Pigeons/pigeon-black".fly_away()
+	# Gefaltete Origami-Taube ausblenden, Animierte Taube anzeigen und abfliegen lassen
+	current_pigeon = $"../Pigeons/pigeon-black"
+	current_pigeon.request_transition()
+	await current_pigeon.transition_finished
+	current_pigeon.fly_away()
 
 	#Faltung der Taube
 	$"../action_pigeons/pigeon_folding_pidgeon/Plane".visible = true	
 	$"../action_pigeons/pigeon_folding_pidgeon".start_folding()
 	await $"../action_pigeons/pigeon_folding_pidgeon".animation_finished
-	# Gefaltete Origami-Taube ausblenden
-	$"../action_pigeons/pigeon_folding_pidgeon/Plane".visible = false
-	# Animierte Taube anzeigen und abfliegen lassen
-	$"../Pigeons/pigeon-red/Armature/Skeleton3D/Plane".visible = true
-	$"../Pigeons/pigeon-red/Armature/Skeleton3D/Plane".global_position = $"../action_pigeons/pigeon_folding_pidgeon/Plane".global_position
-	$"../Pigeons/pigeon-red/Armature/Skeleton3D/Plane".global_position.x += 0.4
-	$"../Pigeons/pigeon-red".fly_away()
+	
+	# Gefaltete Origami-Taube ausblenden, Animierte Taube anzeigen und abfliegen lassen
+	current_pigeon = $"../Pigeons/pigeon-red"
+	current_pigeon.request_transition()
+	await current_pigeon.transition_finished
+	current_pigeon.fly_away()
 	
 	# pinboard diappears
 	$"../pinboard3_with_notes".disappear()

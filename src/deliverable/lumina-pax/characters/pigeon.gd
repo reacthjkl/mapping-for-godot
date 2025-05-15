@@ -1,39 +1,41 @@
 extends Node3D
 
-@export var plane: MeshInstance3D
+@export var pigeon: MeshInstance3D
 @export var origami_plane: MeshInstance3D
+@export var light: OmniLight3D
 
 @onready var anim = $AnimationPlayer
 
+signal transition_finished
 
-func fly_away():
-	# Hole die Origami-Taube
-	#var origami_plane = get_node_or_null("../../../../pigeon_folding_branch")
-
-	if origami_plane:
-		# Übernehme Position und Ausrichtung der Origami-Taube
-		global_position = origami_plane.global_position
-	else:
-		push_warning("Origami-Taube nicht gefunden! Prüfe den Pfad.")
-		
-	global_position += Vector3(-0.46, -0.02, 0.0)  # Position korrigieren	
+func request_transition():
 
 	
-	# Diese Taube sichtbar machen
-	visible = true
+	# fade out folded pigeon
+	var tween = create_tween()
+	tween.tween_property(origami_plane, "transparency", 1.0, 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	
+	pigeon.visible = true
+	pigeon.transparency = 1.0
+	pigeon.global_position = origami_plane.global_position
+	pigeon.global_position += Vector3(-0.1, -0.1, 0.0)
+	#start animation
+	anim.get_animation("ArmatureAction").loop = true
+	anim.play("ArmatureAction")
+	
+	tween = create_tween()
+	var tween2 = create_tween()
+	tween.tween_property(pigeon, "transparency", 0.0, 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween2.tween_property(light, "light_energy", 5.0, 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	await tween.finished
+	var tween3 = create_tween()
+	tween3.tween_property(light, "light_energy", 0.0, 3.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	
+	emit_signal("transition_finished")
 
-	# Verstecke Origami-Mesh innerhalb dieses Objekts (falls vorhanden)
-	#if plane:
-	#	plane.visible = false
-	#else:
-	#	push_warning("Mesh 'Plane' im animierten Objekt nicht gefunden!")
+func fly_away():
 
-	# Animation abspielen
-	if anim.has_animation("ArmatureAction"):
-		anim.play("ArmatureAction")
-	else:
-		push_warning("Animation 'ArmatureAction' nicht gefunden!")
-		
+	
 	# Kurze Wartezeit vor dem Abflug
 	await get_tree().create_timer(0.3).timeout
 
