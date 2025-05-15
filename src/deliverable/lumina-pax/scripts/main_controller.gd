@@ -163,34 +163,4 @@ func _run_sequence():
 	await $"../Fade_Controller".lights_in_completed
 	
 	# -----------------end, reset values----------------------
-	
-	#pinboard
-	$"../pinboard3_with_notes".reset_position()
-	$"../pinboard3_with_notes/Branch_Drawing".reset_drawing()
-	$"../pinboard3_with_notes/Heart_Drawing".reset_drawing()
-	$"../pinboard3_with_notes/Pigeon_Drawing".reset_drawing()
-	
-	#loving pigeons
-	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".reset()
-	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".reset()
-
-	#picking pigeon and branch
-	$"../action_pigeons/pigeon_picking".reset_position()
-	$"../action_pigeons/branch_falling".reset_position()
-
-	#folding drawings
-	$"../action_pigeons/pigeon_folding_heart".reset_position()
-	$"../action_pigeons/pigeon_folding_pidgeon".reset_position()
-	$"../action_pigeons/pigeon_folding_branch".reset_position()
-
-	#reset volume
-	#TODO: reset flying volume @lena
-	
-	# start idle animation
-	$"../Wall__IdleWaveController".play()
-	
-	#TODO: fix light playing here @marina, @illia
-	$"../Light_Controller".play()
-	$"../Fade_Controller".waiting_music_start(waiting_music_default_vol)
-	
-	isPlayingSequence = false
+	get_tree().reload_current_scene()
