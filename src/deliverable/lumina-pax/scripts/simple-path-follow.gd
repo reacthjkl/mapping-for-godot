@@ -19,6 +19,7 @@ func _process(delta: float) -> void:
 		
 		# means pigeon is flying in and has to start to fly in the circle
 		if $"../..".unsingInOutPath and (progress_ratio + increment) >= 0.5 and not stop_requested:
+			$"../../../../ShockWaveLens/ShockWaveColorRect".reset()
 			$"../../../../ShockWaveLens/ShockWaveColorRect".request_shock_wave()
 			$"../../../../FlashLight".request_flash()
 			$"../..".switchPath()
@@ -27,7 +28,7 @@ func _process(delta: float) -> void:
 		elif (not $"../..".unsingInOutPath) and ((progress_ratio + increment) >= 1.0) and stop_requested:
 			$"../../../../ShockWaveLens/ShockWaveColorRect".reset()
 			$"../../../../ShockWaveLens/ShockWaveColorRect".request_shock_wave()
-			$"../../../../FlashLight2".request_flash()
+			$"../../../../FlashLight".request_flash()
 			$"../..".switchPath()
 			progress_ratio = 0.5
 		# means pegeon is flying out and needs to stop
