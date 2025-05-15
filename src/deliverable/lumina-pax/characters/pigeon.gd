@@ -19,6 +19,7 @@ func request_transition():
 	pigeon.transparency = 1.0
 	pigeon.global_position = origami_plane.global_position
 	pigeon.global_position += Vector3(-0.1, -0.1, 0.0)
+	reset_origami()
 	#start animation
 	anim.get_animation("ArmatureAction").loop = true
 	anim.play("ArmatureAction")
@@ -28,6 +29,7 @@ func request_transition():
 	tween.tween_property(pigeon, "transparency", 0.0, 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween2.tween_property(light, "light_energy", 5.0, 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	await tween.finished
+	origami_plane.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	var tween3 = create_tween()
 	tween3.tween_property(light, "light_energy", 0.0, 3.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	
@@ -44,3 +46,8 @@ func fly_away():
 	var start_pos = global_transform.origin
 	var end_pos = start_pos + Vector3(6, 1, 1)  
 	tween.tween_property(self, "global_transform:origin", end_pos, 5.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	
+func reset_origami():
+	origami_plane.transparency = 0.0
+	origami_plane.visible = true
+	origami_plane.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
