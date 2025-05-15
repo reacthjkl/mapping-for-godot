@@ -7,8 +7,6 @@ var waiting_music_default_vol: float
 
 func _ready() -> void:
 	
-	Engine.time_scale = 10
-	
 	#---------set default values-----------
 	bg_music_default_volume = $"../Audio/Music/Origami Love 1".volume_db
 	waiting_music_default_vol = $"../Audio/Music/WaitingMode".volume_db
