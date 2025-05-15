@@ -64,8 +64,8 @@ func _run_sequence():
 	await $"../pinboard3_with_notes/Plane".pictures_done
 	await get_tree().create_timer(2.0).timeout
 	
-	# origami Faltungen, zeitversetzt TODO: BELEUCHTUNG ORIGAMI FUNKT. NICHT RICHTIG. SHADER?
-
+	# origami Faltungen, zeitversetzt
+	
 	#Faltung des Zweigs
 	$"../action_pigeons/pigeon_folding_branch/Plane".visible = true	
 	$"../action_pigeons/pigeon_folding_branch".start_folding()
@@ -74,6 +74,8 @@ func _run_sequence():
 	$"../action_pigeons/pigeon_folding_branch/Plane".visible = false
 	# Animierte Taube anzeigen und abfliegen lassen
 	$"../Pigeons/pigeon-pink/Armature/Skeleton3D/Plane".visible = true
+	$"../Pigeons/pigeon-pink/Armature/Skeleton3D/Plane".global_position = $"../action_pigeons/pigeon_folding_branch/Plane".global_position
+	$"../Pigeons/pigeon-pink/Armature/Skeleton3D/Plane".global_position.x += 0.4
 	$"../Pigeons/pigeon-pink".fly_away()
 
 
@@ -85,6 +87,9 @@ func _run_sequence():
 	$"../action_pigeons/pigeon_folding_heart/Plane".visible = false
 	# Animierte Taube anzeigen und abfliegen lassen
 	$"../Pigeons/pigeon-black/Armature/Skeleton3D/Plane".visible = true
+	$"../Pigeons/pigeon-black/Armature/Skeleton3D/Plane".global_position = $"../action_pigeons/pigeon_folding_heart/Plane".global_position
+	$"../Pigeons/pigeon-black/Armature/Skeleton3D/Plane".global_position.x += 0.4
+	
 	$"../Pigeons/pigeon-black".fly_away()
 
 	#Faltung der Taube
@@ -95,13 +100,15 @@ func _run_sequence():
 	$"../action_pigeons/pigeon_folding_pidgeon/Plane".visible = false
 	# Animierte Taube anzeigen und abfliegen lassen
 	$"../Pigeons/pigeon-red/Armature/Skeleton3D/Plane".visible = true
+	$"../Pigeons/pigeon-red/Armature/Skeleton3D/Plane".global_position = $"../action_pigeons/pigeon_folding_pidgeon/Plane".global_position
+	$"../Pigeons/pigeon-red/Armature/Skeleton3D/Plane".global_position.x += 0.4
 	$"../Pigeons/pigeon-red".fly_away()
 	
 	# pinboard diappears
 	$"../pinboard3_with_notes".disappear()
 	await $"../pinboard3_with_notes".transition_completed
 	
-	#TODO: control flying volume 
+	#TODO: control flying volume @lena
 	# 8 tauben fliegen aus dem portal rein und bewegen sich im kreis await
 	$"../SimplePigeons".start_flying()
 	
