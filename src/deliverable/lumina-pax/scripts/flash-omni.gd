@@ -1,6 +1,9 @@
 extends OmniLight3D
 
 
+#----Audio-------------
+@export var _wall_flash_player: AudioStreamPlayer3D
+
 
 func request_flash():
 	var tween = create_tween()
