@@ -55,6 +55,8 @@ func fly_away():
 	var start_pos = global_transform.origin
 	var end_pos = start_pos + Vector3(6, 1, 1)  
 	tween.tween_property(self, "global_transform:origin", end_pos, 5.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	await tween.finished
+	_flying_player.stop()
 	
 func reset_origami():
 	origami_plane.transparency = 0.0
