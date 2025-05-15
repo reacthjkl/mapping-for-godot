@@ -9,7 +9,7 @@ var moveSpeed = 0.75
 var starting_position
 var targetPosition
 var transition_elapsed := 0.0
-var transition_time := 4.0  # duration in seconds
+var transition_time := 6.0  # duration in seconds
 var transition_start := Vector3.ZERO
 
 signal transition_completed
