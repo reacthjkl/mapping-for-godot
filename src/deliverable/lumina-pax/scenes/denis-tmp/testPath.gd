@@ -1,10 +1,22 @@
 extends Node3D
 
 @onready var animationPlayer = $AnimationPlayer
+
 @export var rotation_for_turteln: float
 @export var offset_for_turteln: float
 @export var stop_turteln_requested: bool
 
+@export var initial_plane_rotation: Vector3
+
+signal canStopTurtreln
+var has_flight_happened = false
+func _ready():
+	animationPlayer.animation_finished.connect(_on_animation_finished)
+	initial_plane_rotation = $Armature/Skeleton3D/Plane.rotation
+	
+func reset():
+	$Armature/Skeleton3D/Plane.rotation = initial_plane_rotation
+	
 # Function to play animations in sequence with loops
 func turteln() -> void:
 	var current_position = $Armature/Skeleton3D/Plane.global_position
@@ -19,12 +31,20 @@ func turteln() -> void:
 		# head-left‐right 3×
 		for i in range(3):
 			animationPlayer.play("HeadLeftRight")
+			
+			if stop_turteln_requested:
+				stop_turteln_requested = false
+				return
 			await get_tree().create_timer(1.0).timeout
 		await get_tree().create_timer(1.0).timeout
 
 		# head-up‐down 3×
 		for i in range(3):
 			animationPlayer.play("HeadUpDown")
+			
+			if stop_turteln_requested:
+				stop_turteln_requested = false
+				return
 			await get_tree().create_timer(1.0).timeout
 		await get_tree().create_timer(1.0).timeout
 
@@ -35,11 +55,25 @@ func turteln() -> void:
 		# head-left‐right 3× again
 		for i in range(3):
 			animationPlayer.play("HeadLeftRight")
+			
+			if stop_turteln_requested:
+				stop_turteln_requested = false
+				return
 		await get_tree().create_timer(1.0).timeout
 		# loop back to top automatically
 		
+		
+func _on_animation_finished(anim_name: String):
+	print("Animation finished:", anim_name)
+
+	# Example: Stop flying after "Flying" animation ends
+	if anim_name == "HeadUpDown" or anim_name == "MovingWings" or anim_name == "HeadLeftRight":
+		emit_signal("canStopTurtreln")
+	
 func stopTurteln():
 	stop_turteln_requested = true
+	await canStopTurtreln
+	reset()                                  
 	
 	
 func fliegenUndPicken():
@@ -63,4 +97,6 @@ func sitting1():
 func sitting2():
 	animationPlayer.get_animation("sitting2").loop = false
 	animationPlayer.play("sitting2")
+
+	
 	
