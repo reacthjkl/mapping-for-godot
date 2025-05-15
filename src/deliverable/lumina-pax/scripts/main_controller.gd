@@ -140,7 +140,7 @@ func _run_sequence():
 
 	# rausfliegen
 	$"../SimplePigeons".request_stop_flying()
-	await $"../SimplePigeons".flying_stoped
+	#await $"../SimplePigeons".flying_stoped
 	
 	# branch fällt
 	$"../action_pigeons/branch_falling".start_falling()  # Hier starten wir den Fall
