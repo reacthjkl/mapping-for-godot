@@ -39,7 +39,6 @@ func _input(event):
 				Engine.time_scale = 1
 				
 func _run_sequence():
-	Engine.time_scale = 10
 	isPlayingSequence = true
 	
 	#stop idle animation
@@ -130,7 +129,6 @@ func _run_sequence():
 	# tauben turteln, spot light auf dieses paar, particles anmachen
 	lovingPigonFollower1.start_flying()
 	lovingPigonFollower2.start_flying()
-	Engine.time_scale = 2
 	#second pigeon started sitting, emmiting hearts
 	await lovingPigonFollower2.started_sitting
 	$"../ParticleController".emitParticles(10.0)
