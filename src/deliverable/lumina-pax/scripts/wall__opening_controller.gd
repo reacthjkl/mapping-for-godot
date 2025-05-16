@@ -117,6 +117,7 @@ func _process(delta: float) -> void:
 	if _state == 0.0 or _state == 1.0:
 		_dir     = 0
 		_is_open = _state > 0.5
+		_bricks_player.stop()
 		emit_signal("finished")
 		
 		

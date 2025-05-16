@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bp10l8outqild"
+path="res://.godot/imported/Origami Love 2.wav-6ed853e890386f74bf901ebf96e0b67b.sample"
+
+[deps]
+
+source_file="res://audio/music/Song/Origami Love 2.wav"
+dest_files=["res://.godot/imported/Origami Love 2.wav-6ed853e890386f74bf901ebf96e0b67b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

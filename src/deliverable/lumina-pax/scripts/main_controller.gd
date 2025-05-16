@@ -10,6 +10,7 @@ var waiting_music_default_vol: float
 @onready var lovingPigonFollower2 = $"../TurtelPigeons/TurtrelPigeonController2/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D"
 
 func _ready() -> void:
+	
 	#---------set default values-----------
 	bg_music_default_volume = $"../Audio/Music/Origami Love 1".volume_db
 	waiting_music_default_vol = $"../Audio/Music/WaitingMode".volume_db
@@ -26,6 +27,16 @@ func _input(event):
 			KEY_SPACE:
 				if not isPlayingSequence:
 					_run_sequence()
+	
+	if event is InputEventKey and event.pressed:
+		match  event.keycode:
+			KEY_CTRL:
+				Engine.time_scale = 10
+		
+	if event is InputEventKey and event.is_released():
+		match  event.keycode:
+			KEY_CTRL:
+				Engine.time_scale = 1
 				
 func _run_sequence():
 	Engine.time_scale = 10
@@ -48,65 +59,68 @@ func _run_sequence():
 	global_transform
 	# turn on lights, TODO: start music + wait 2 sec
 	$"../Fade_Controller".music_start(bg_music_default_volume)
-	$"../Fade_Controller".lights_fade_in(5)
+	$"../Fade_Controller".lights_fade_in(2)
 	await $"../Fade_Controller".lights_in_completed
 	
-	# open wall
+	# open walls
 	$"../Wall__OpeningController".open()
-	await $"../Wall__OpeningController".pinboard_signal
+	await $"../Wall__OpeningController".finished
 	
 	#bring the empty pinboard + wait 2 sec
+	await get_tree().create_timer(2.0).timeout
 	$"../pinboard3_with_notes".showUp()
 	await $"../pinboard3_with_notes".transition_completed
 	await get_tree().create_timer(2.0).timeout
 	
 	# draw images, play drawing sounds + wait 2 sec
-	$"../pinboard3_with_notes/Plane_002".start_drawing($"../Audio/Soundeffects/Draw Branch")
-	await $"../pinboard3_with_notes/Plane_002".start_next_picture
-	$"../pinboard3_with_notes/Plane_001".start_drawing($"../Audio/Soundeffects/Draw Heart")
-	await $"../pinboard3_with_notes/Plane_001".start_next_picture
-	$"../pinboard3_with_notes/Plane".start_drawing($"../Audio/Soundeffects/Draw Pigeon")
-	await $"../pinboard3_with_notes/Plane".pictures_done
+	$"../pinboard3_with_notes/Branch_Drawing".start_drawing($"../Audio/Soundeffects/Draw Branch")
+	await $"../pinboard3_with_notes/Branch_Drawing".start_next_picture
+	$"../pinboard3_with_notes/Heart_Drawing".start_drawing($"../Audio/Soundeffects/Draw Heart")
+	await $"../pinboard3_with_notes/Heart_Drawing".start_next_picture
+	$"../pinboard3_with_notes/Pigeon_Drawing".start_drawing($"../Audio/Soundeffects/Draw Pigeon")
+	await $"../pinboard3_with_notes/Pigeon_Drawing".pictures_done
 	await get_tree().create_timer(2.0).timeout
 	
-	# origami Faltungen, zeitversetzt TODO: BELEUCHTUNG ORIGAMI FUNKT. NICHT RICHTIG. SHADER?
-
 	#Faltung des Zweigs
 	$"../action_pigeons/pigeon_folding_branch/Plane".visible = true	
 	$"../action_pigeons/pigeon_folding_branch".start_folding()
 	await $"../action_pigeons/pigeon_folding_branch".animation_finished
-	# Gefaltete Origami-Taube ausblenden
-	$"../action_pigeons/pigeon_folding_branch/Plane".visible = false
-	# Animierte Taube anzeigen und abfliegen lassen
-	$"../Pigeons/pigeon-pink/Armature/Skeleton3D/Plane".visible = true
-	$"../Pigeons/pigeon-pink".fly_away()
+
+	
+	# Gefaltete Origami-Taube ausblenden, Animierte Taube anzeigen und abfliegen lassen
+	var current_pigeon = $"../Pigeons/pigeon-pink"
+	current_pigeon.request_transition()
+	await current_pigeon.transition_finished
+	current_pigeon.fly_away()
 
 
 	#Faltung des Herzen
 	$"../action_pigeons/pigeon_folding_heart/Plane".visible = true	
 	$"../action_pigeons/pigeon_folding_heart".start_folding()
 	await $"../action_pigeons/pigeon_folding_heart".animation_finished
-	# Gefaltete Origami-Taube ausblenden
-	$"../action_pigeons/pigeon_folding_heart/Plane".visible = false
-	# Animierte Taube anzeigen und abfliegen lassen
-	$"../Pigeons/pigeon-black/Armature/Skeleton3D/Plane".visible = true
-	$"../Pigeons/pigeon-black".fly_away()
+	
+	# Gefaltete Origami-Taube ausblenden, Animierte Taube anzeigen und abfliegen lassen
+	current_pigeon = $"../Pigeons/pigeon-black"
+	current_pigeon.request_transition()
+	await current_pigeon.transition_finished
+	current_pigeon.fly_away()
 
 	#Faltung der Taube
 	$"../action_pigeons/pigeon_folding_pidgeon/Plane".visible = true	
 	$"../action_pigeons/pigeon_folding_pidgeon".start_folding()
 	await $"../action_pigeons/pigeon_folding_pidgeon".animation_finished
-	# Gefaltete Origami-Taube ausblenden
-	$"../action_pigeons/pigeon_folding_pidgeon/Plane".visible = false
-	# Animierte Taube anzeigen und abfliegen lassen
-	$"../Pigeons/pigeon-red/Armature/Skeleton3D/Plane".visible = true
-	$"../Pigeons/pigeon-red".fly_away()
+	
+	# Gefaltete Origami-Taube ausblenden, Animierte Taube anzeigen und abfliegen lassen
+	current_pigeon = $"../Pigeons/pigeon-red"
+	current_pigeon.request_transition()
+	await current_pigeon.transition_finished
+	current_pigeon.fly_away()
 	
 	# pinboard diappears
 	$"../pinboard3_with_notes".disappear()
 	await $"../pinboard3_with_notes".transition_completed
 	
-	#TODO: control flying volume 
+	#TODO: control flying volume @lena
 	# 8 tauben fliegen aus dem portal rein und bewegen sich im kreis await
 	$"../SimplePigeons".start_flying()
 	
@@ -120,17 +134,20 @@ func _run_sequence():
 	#second pigeon started sitting, emmiting hearts
 	await lovingPigonFollower2.started_sitting
 	$"../ParticleController".emitParticles(10.0)
+	$"../Audio/Soundeffects/Gurren 1".play()
+	$"../Audio/Soundeffects/Gurren 2".play()
 	await $"../ParticleController".stopped
-	print(lovingPigonFollower1.position)
-	print(lovingPigonFollower2.position)
 	# Stop both pigeons from turteln
 	lovingPigonFollower1.get_child(0).stopTurteln()
 	lovingPigonFollower2.get_child(0).stopTurteln()
 
-# Ensure animations are fully stopped
+	# Ensure animations are fully stopped
 	await get_tree().create_timer(0.5).timeout  
 
-# Force reset their state to prevent glitches
+	$"../Audio/Soundeffects/Gurren 1".stop()
+	$"../Audio/Soundeffects/Gurren 2".stop()
+
+	# Force reset their state to prevent glitches
 	lovingPigonFollower1.get_child(0).reset()
 	lovingPigonFollower2.get_child(0).reset()
 	$"../TurtelPigeons/TurtrelPigeonController".switchPath()
@@ -142,19 +159,19 @@ func _run_sequence():
 	lovingPigonFollower1.start_flying()
 	lovingPigonFollower2.start_flying()
 	
+
+
+	# rausfliegen
+	$"../SimplePigeons".request_stop_flying()
+	#await $"../SimplePigeons".flying_stoped
+	
 	# branch fällt
 	$"../action_pigeons/branch_falling".start_falling()  # Hier starten wir den Fall
 	await $"../action_pigeons/branch_falling".fall_completed
 	
 	#Taube kommt und holt den Branch 
 	$"../action_pigeons/pigeon_picking".start_fliegen()
-
-
-
-	# rausfliegen
-	await get_tree().create_timer(10.0).timeout
-	$"../SimplePigeons".request_stop_flying()
-	await $"../SimplePigeons".flying_stoped
+	await $"../action_pigeons/pigeon_picking"._taube_hat_zweig_erreicht_signal
 	
 	# close wall, lights down + wait 5 sec
 	$"../Wall__OpeningController".close()
@@ -169,35 +186,6 @@ func _run_sequence():
 	await $"../Fade_Controller".lights_in_completed
 	
 	# -----------------end, reset values----------------------
-	
-	#pinboard
-	$"../pinboard3_with_notes".reset_position()
-	$"../pinboard3_with_notes/Plane".reset_drawing()
-	$"../pinboard3_with_notes/Plane_002".reset_drawing()
-	$"../pinboard3_with_notes/Plane_001".reset_drawing()
-	
-	
-	#loving pigeons
-	lovingPigonFollower1.reset()
-	lovingPigonFollower2.reset()
 
-	#picking pigeon and branch
-	$"../action_pigeons/pigeon_picking".reset_position()
-	$"../action_pigeons/branch_falling".reset_position()
-
-	#folding drawings
-	$"../action_pigeons/pigeon_folding_heart".reset_position()
-	$"../action_pigeons/pigeon_folding_pidgeon".reset_position()
-	$"../action_pigeons/pigeon_folding_branch".reset_position()
-
-	#reset volume
-	#TODO: reset flying volume @lena
-	
-	# start idle animation
-	$"../Wall__IdleWaveController".play()
-	
-	#TODO: fix light playing here @marina, @illia
-	$"../Light_Controller".play()
-	$"../Fade_Controller".waiting_music_start(waiting_music_default_vol)
-
+	get_tree().reload_current_scene()
 	isPlayingSequence = false

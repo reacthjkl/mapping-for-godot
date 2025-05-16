@@ -36,8 +36,11 @@ func turteln() -> void:
 				stop_turteln_requested = false
 				return
 			await get_tree().create_timer(1.0).timeout
+		if stop_turteln_requested:
+			stop_turteln_requested = false
+			break
 		await get_tree().create_timer(1.0).timeout
-
+		
 		# head-up‐down 3×
 		for i in range(3):
 			animationPlayer.play("HeadUpDown")
@@ -46,21 +49,27 @@ func turteln() -> void:
 				stop_turteln_requested = false
 				return
 			await get_tree().create_timer(1.0).timeout
+		if stop_turteln_requested:
+			stop_turteln_requested = false
+			break
 		await get_tree().create_timer(1.0).timeout
 
 		# moving wings once
 		animationPlayer.play("MovingWings")
+		if stop_turteln_requested:
+			stop_turteln_requested = false
+			break
 		await get_tree().create_timer(2.0).timeout
 
 		# head-left‐right 3× again
 		for i in range(3):
 			animationPlayer.play("HeadLeftRight")
-			
 			if stop_turteln_requested:
 				stop_turteln_requested = false
 				return
 		await get_tree().create_timer(1.0).timeout
 		# loop back to top automatically
+	print("raus aus der Schleife")
 		
 		
 func _on_animation_finished(anim_name: String):
@@ -74,6 +83,7 @@ func stopTurteln():
 	stop_turteln_requested = true
 	await canStopTurtreln
 	reset()                                  
+	
 	
 	
 func fliegenUndPicken():
@@ -97,6 +107,3 @@ func sitting1():
 func sitting2():
 	animationPlayer.get_animation("sitting2").loop = false
 	animationPlayer.play("sitting2")
-
-	
-	

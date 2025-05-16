@@ -2,26 +2,29 @@ extends Node3D
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var plane = $Plane
-@onready var plane_board = $"../../pinboard3_with_notes/Plane_002"
+@onready var plane_board = $"../../pinboard3_with_notes/Branch_Drawing"
 
 #----Audio--------------
 @export var _folding_player: AudioStreamPlayer3D
 
 signal animation_finished
-var starting_position: Vector3  # Anfangsposition der Plane
+
+var starting_transform: Transform3D
 
 func _ready() -> void:
+	starting_transform = plane.global_transform
 	plane.visible = false
 	animation_player.connect("animation_finished", Callable(self, "_on_animation_finished"))
 
 func start_folding() -> void:
+	reset_position()
 	plane_board.visible = false
 	plane.visible = true
 	
 	# Bewegung in Weltkoordinaten (also absolut nach rechts/oben und danach nach vorne)
 	var start_pos = plane.global_transform.origin
 	
-	var dir_right_up = Vector3(-0.5, 0.2 , 0)   # rechts und oben in Welt
+	var dir_right_up = Vector3(-0.3, 0 , 0)   # rechts und oben in Welt
 	var dir_forward = Vector3(0, 0, 1)    # vorne in Welt
 
 	var pos_right_up = start_pos + dir_right_up
@@ -46,8 +49,13 @@ func _on_animation_finished(anim_name: String) -> void:
 	_folding_player.stop()
 	
 func reset_position() -> void:
-	plane.global_transform.origin = starting_position
+	plane.global_transform = starting_transform
 	plane.visible = false
+	plane.transparency = 0.0
+	plane.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+	
 	plane_board.visible = true
+	
 	if animation_player.is_playing():
 		animation_player.stop()
+	animation_player.seek(0.0, true)

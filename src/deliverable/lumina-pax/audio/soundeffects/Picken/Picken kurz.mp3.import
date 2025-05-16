@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dcge6qhm6ylh0"
+path="res://.godot/imported/Picken kurz.mp3-8b9b90f87d597d1ea93e82c3f850385f.mp3str"
+
+[deps]
+
+source_file="res://audio/soundeffects/Picken/Picken kurz.mp3"
+dest_files=["res://.godot/imported/Picken kurz.mp3-8b9b90f87d597d1ea93e82c3f850385f.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
