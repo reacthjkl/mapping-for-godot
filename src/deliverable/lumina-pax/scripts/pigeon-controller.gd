@@ -1,6 +1,5 @@
 extends Node3D
 
-
 @export var inOutPath: Path3D
 @export var circlePath: Path3D
 @export var follower: PathFollow3D
@@ -10,6 +9,7 @@ signal flyingStopped
 
 func _ready() -> void:
 	setPath()
+	
 	
 func setPath() -> void:
 	# Remember its world‐transform (so it doesn't jump unexpectedly)

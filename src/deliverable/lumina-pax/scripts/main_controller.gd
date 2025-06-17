@@ -55,7 +55,6 @@ func _run_sequence():
 	await $"../Fade_Controller".lights_out_completed
 	# waiting music fade out
 	
-	global_transform
 	# turn on lights, TODO: start music + wait 2 sec
 	$"../Fade_Controller".music_start(bg_music_default_volume)
 	$"../Fade_Controller".lights_fade_in(2)
