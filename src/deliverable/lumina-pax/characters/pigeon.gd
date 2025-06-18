@@ -58,5 +58,5 @@ func fly_away():
 	
 func reset_origami():
 	origami_plane.transparency = 0.0
-	origami_plane.visible = true
+	origami_plane.visible = false
 	origami_plane.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON

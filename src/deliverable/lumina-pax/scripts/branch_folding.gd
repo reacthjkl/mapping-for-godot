@@ -1,65 +1,90 @@
 extends Node3D
 
-@export var gravity: float = 9.8
-@export var max_distance: float = 3.0
-@export var lower_limit: float = -10.0
-@export var fall_curve_amplitude: float = 1.5
-@export var move_speed: float = 0.3  # Geschwindigkeit der Bewegung zur Zielposition
-@export var wind_strength: float = 0.003  # Viel geringere Stärke der Windbewegung
-@export var oscillation_frequency: float = 7  # Frequenz der Schwingung des Zweigs im Wind
+@export var fall_duration: float = 10.0           # gewünschte Fallzeit in Sekunden
+@export var wind_min_strength: float = 0.008      # anfängliche Windstärke
+@export var wind_max_strength: float = 0.05       # maximale Windstärke
+@export var wind_increase_rate: float = 0.005     # Zunahme der Windstärke pro Sekunde
+@export var oscillation_frequency: float = 3.0    # Wind-Oszillationsfrequenz
+@export var fade_duration: float = 0.5            # Zeit für das sanfte „Faden“ am Ende
 
-var isFalling = false
-var inTransition = false
-var velocity: Vector3 = Vector3.ZERO
-var time_in_air: float = 0.0
-var starting_position: Vector3
-
-var targetPosition = Vector3(0.91, 0.62, 0.18)
+# Faktor für die Z-Amplitude (kleiner als 1 → weniger Auslenkung in Z)
+@export var wind_z_factor: float = 0.5            
 
 signal fall_completed
 
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
+var starting_position: Vector3
+var starting_rotation: Vector3
+var target_position: Vector3 = Vector3(0.91, 0.66, 0.18)
+
+var time_in_air: float = 0.0
+var in_fall: bool = false
+
+var velocity: Vector3 = Vector3.ZERO
+var gravity: float = 0.0
+var wind_strength: float = 0.0
 
 func _ready() -> void:
-	starting_position = position
-	animation_player.play("ArmatureAction")
-
-func _process(delta: float) -> void:
-	_update_fall(delta)
+	starting_position = global_transform.origin
+	starting_rotation = rotation
 
 func start_falling() -> void:
-	if not isFalling and not inTransition:
-		isFalling = true
-		inTransition = true
-		velocity = Vector3.ZERO
-		time_in_air = 0.0
-		position = starting_position
+	# Reset
+	global_transform.origin = starting_position
+	rotation = starting_rotation
+	time_in_air = 0.0
+	in_fall = true
+	wind_strength = wind_min_strength
 
-func _update_fall(delta: float) -> void:
-	if inTransition:
-		time_in_air += delta
+	# Gravitation so berechnen, dass Höhe in fall_duration zurückgelegt wird
+	var drop = starting_position.y - target_position.y
+	gravity = 2.0 * drop / pow(fall_duration, 2)
 
-		var wind_offset = Vector3(
-			sin(time_in_air * oscillation_frequency) * wind_strength,
-			0,
-			sin(time_in_air * oscillation_frequency) * wind_strength
-		)
+	# Horizontale Geschwindigkeit so setzen, dass x & z in derselben Zeit ankommen
+	velocity.x = (target_position.x - starting_position.x) / fall_duration
+	velocity.z = (target_position.z - starting_position.z) / fall_duration
+	velocity.y = 0.0
 
-		var direction = (targetPosition - position).normalized()
-		var distance = position.distance_to(targetPosition)
-		var step = move_speed * delta
+func _process(delta: float) -> void:
+	if not in_fall:
+		return
 
-		if step >= distance:
-			position = targetPosition + wind_offset
-			inTransition = false
-			emit_signal("fall_completed")
-		else:
-			position += direction * step + wind_offset
+	time_in_air += delta
 
+	# Windstärke langsam erhöhen (bis max)
+	wind_strength = clamp(wind_strength + wind_increase_rate * delta,
+						  wind_min_strength,
+						  wind_max_strength)
+
+	# Elliptischer Wind-Offset mit reduzierter Z-Amplitude
+	var phase = time_in_air * oscillation_frequency
+	var wind_offset = Vector3(
+		sin(phase) * wind_strength,                          # X-Amplitude voll
+		0.0,
+		sin(phase + PI / 2) * wind_strength * wind_z_factor   # Z-Amplitude reduziert
+	)
+
+	# Gravitation auf Y
+	velocity.y -= gravity * delta
+
+	# Bewegung plus Wind
+	global_transform.origin += velocity * delta + wind_offset
+
+	# Ende-Bedingung
+	if time_in_air >= fall_duration or global_transform.origin.y <= target_position.y:
+		in_fall = false
+		# sanftes Faden zur exakten Endposition
+		var tween = get_tree().create_tween()
+		var action = tween.tween_property(self, "global_transform:origin",
+										  target_position, fade_duration)
+		action.set_trans(Tween.TRANS_SINE)
+		action.set_ease(Tween.EASE_IN_OUT)
+		tween.connect("finished", Callable(self, "_on_fade_complete"))
+
+func _on_fade_complete() -> void:
+	global_transform.origin = target_position
+	emit_signal("fall_completed")
 
 func reset_position() -> void:
-	isFalling = false
-	inTransition = false
-	time_in_air = 0.0
-	velocity = Vector3.ZERO
-	position = starting_position
+	in_fall = false
+	global_transform.origin = starting_position
+	rotation = starting_rotation

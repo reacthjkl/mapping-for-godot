@@ -35,6 +35,7 @@ func _input(event):
 				Engine.time_scale = 1
 				
 func _run_sequence():
+	Engine.time_scale = 100
 	isPlayingSequence = true
 	
 	#stop idle animation
@@ -75,6 +76,8 @@ func _run_sequence():
 	$"../pinboard3_with_notes/Pigeon_Drawing".start_drawing($"../Audio/Soundeffects/Draw Pigeon")
 	await $"../pinboard3_with_notes/Pigeon_Drawing".pictures_done
 	await get_tree().create_timer(2.0).timeout
+	
+	Engine.time_scale = 1
 	
 	#Faltung des Zweigs
 	$"../action_pigeons/pigeon_folding_branch/Plane".visible = true	
@@ -137,11 +140,11 @@ func _run_sequence():
 	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".fly_away()
 	$"../Audio/Soundeffects/Gurren 1".stop()
 	$"../Audio/Soundeffects/Gurren 2".stop()
-
+	
 	# rausfliegen
 	$"../SimplePigeons".request_stop_flying()
 	#await $"../SimplePigeons".flying_stoped
-	
+
 	# branch fällt
 	$"../action_pigeons/branch_falling".start_falling()  # Hier starten wir den Fall
 	await $"../action_pigeons/branch_falling".fall_completed
