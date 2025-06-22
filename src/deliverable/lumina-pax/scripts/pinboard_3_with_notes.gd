@@ -1,6 +1,6 @@
 extends Node3D
 
-@export var positionWhenUp = Vector3(1.3, 1.2, -0.14)
+@export var positionWhenUp = Vector3(1.3, 1.2, -0.4)
 
 #state
 var isUp = false

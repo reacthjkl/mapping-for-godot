@@ -8,6 +8,7 @@ signal lights_in_completed
 @onready var red_spot = $"../Lights/RedSpot"
 @onready var main_light = $"../Lights/MainLight"
 @onready var top_light = $"../Lights/TopLight"
+@onready var inner_light = $"../Lights/InnerLight"
 var original_light_energies: Dictionary = {}
 
 @export var _origami_love_player: AudioStreamPlayer3D
@@ -42,7 +43,8 @@ func lights_fade_out(duration):
 		blue_spot: 2.5,
 		red_spot: 1.0,
 		main_light: 0.3,
-		top_light: 0.1
+		top_light: 0.1,
+		inner_light: 0.0
 	}
 	var time = 0.0
 	original_light_energies.clear()

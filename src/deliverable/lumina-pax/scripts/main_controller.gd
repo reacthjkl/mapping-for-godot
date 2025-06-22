@@ -115,6 +115,9 @@ func _run_sequence():
 	$"../pinboard3_with_notes".disappear()
 	await $"../pinboard3_with_notes".transition_completed
 	
+	#inner light wird ausgeschaltet
+	$"../Lights/InnerLight".light_energy = 0.0
+	
 	#TODO: control flying volume @lena
 	# 8 tauben fliegen aus dem portal rein und bewegen sich im kreis await
 	$"../SimplePigeons".start_flying()
@@ -182,6 +185,9 @@ func _run_sequence():
 	$"../action_pigeons/pigeon_folding_heart".reset_position()
 	$"../action_pigeons/pigeon_folding_pidgeon".reset_position()
 	$"../action_pigeons/pigeon_folding_branch".reset_position()
+	
+	#reset inner light energy
+	$"../Lights/InnerLight".light_energy = 2.0
 
 	#reset volume
 	#TODO: reset flying volume @lena
