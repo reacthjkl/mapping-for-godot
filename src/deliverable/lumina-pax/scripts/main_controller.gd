@@ -196,7 +196,7 @@ func _run_sequence():
 	$"../pinboard3_with_notes/Pigeon_Drawing".reset_drawing()
 	
 	#loving pigeons
-	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".reset()
+	$"../TurtelPigeons/TurtrelPigeonController/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".reset()
 	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".reset()
 
 	#picking pigeon and branch
