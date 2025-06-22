@@ -5,6 +5,10 @@ var isPlayingSequence = false
 var bg_music_default_volume: float
 var waiting_music_default_vol: float
 
+
+@onready var lovingPigonFollower1 = $"../TurtelPigeons/TurtrelPigeonController/TurtrelPigeonPath/TurtrelPigeonPathFollow3D"
+@onready var lovingPigonFollower2 = $"../TurtelPigeons/TurtrelPigeonController2/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D"
+
 func _ready() -> void:
 	
 	#---------set default values-----------
@@ -50,7 +54,6 @@ func _run_sequence():
 	#TODO: add fade out for idle music @lena
 	await $"../Fade_Controller".lights_out_completed
 	# waiting music fade out
-	
 	
 	# turn on lights, TODO: start music + wait 2 sec
 	$"../Fade_Controller".music_start(bg_music_default_volume)
@@ -126,20 +129,37 @@ func _run_sequence():
 	
 	
 	# tauben turteln, spot light auf dieses paar, particles anmachen
-	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".start_flying()
-	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".start_flying()
-	
+	lovingPigonFollower1.start_flying()
+	lovingPigonFollower2.start_flying()
 	#second pigeon started sitting, emmiting hearts
-	await $"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".started_sitting
+	await lovingPigonFollower2.started_sitting
 	$"../ParticleController".emitParticles(10.0)
 	$"../Audio/Soundeffects/Gurren 1".play()
 	$"../Audio/Soundeffects/Gurren 2".play()
 	await $"../ParticleController".stopped
-	
-	$"../TurtelPigeons/TurtrelPigeonPath/TurtrelPigeonPathFollow3D".fly_away()
-	$"../TurtelPigeons/TurtrelPigeonPath2/TurtrelPigeonPathFollow3D".fly_away()
+	# Stop both pigeons from turteln
+	lovingPigonFollower1.get_child(0).stopTurteln()
+	lovingPigonFollower2.get_child(0).stopTurteln()
+
+	# Ensure animations are fully stopped
+	await get_tree().create_timer(0.5).timeout  
+
 	$"../Audio/Soundeffects/Gurren 1".stop()
 	$"../Audio/Soundeffects/Gurren 2".stop()
+
+	# Force reset their state to prevent glitches
+	lovingPigonFollower1.get_child(0).reset()
+	lovingPigonFollower2.get_child(0).reset()
+	$"../TurtelPigeons/TurtrelPigeonController".switchPath()
+	$"../TurtelPigeons/TurtrelPigeonController2".switchPath()
+
+	lovingPigonFollower1.progress_ratio = 0
+	lovingPigonFollower2.progress_ratio = 0
+
+	lovingPigonFollower1.start_flying()
+	lovingPigonFollower2.start_flying()
+	
+
 
 	# rausfliegen
 	$"../SimplePigeons".request_stop_flying()
@@ -166,6 +186,8 @@ func _run_sequence():
 	await $"../Fade_Controller".lights_in_completed
 	
 	# -----------------end, reset values----------------------
+
+	get_tree().reload_current_scene()
 	
 	#pinboard
 	$"../pinboard3_with_notes".reset_position()

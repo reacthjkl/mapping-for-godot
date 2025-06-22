@@ -1,5 +1,5 @@
 extends PathFollow3D
-
+@onready var exit_path = $"../TurtrelPigeonExitPath/TurtrelPigeonExitPathFollow3D"
 @onready var animationPlayer = $"pigeon-lightRose/AnimationPlayer"
 @onready var pigeon = $"pigeon-lightRose"  # Adjust the path according to your scene
 @export var speed: float = 2  # Adjust flight speed
@@ -32,13 +32,12 @@ func _process(delta):
 			emit_signal("started_sitting")
 			started_sitting_emitted = true 
 		# Check if pigeon is valid and has the function
-			if pigeon and pigeon.has_method("turteln"):                                         
+			if pigeon and pigeon.has_method("turteln"):
 				print("executed turteln")
 				pigeon.turteln()
 			else:
 				print("Error: Pigeon node or turte_ratio ln function not found!")
-			
-			
+				
 func start_flying():
 	visible = true
 	flying = true
@@ -47,10 +46,11 @@ func start_flying():
 	
 func fly_away():
 	visible = false
+	
 
 func request_stop_flying():
 	stop_requested = true
 	
 func reset():
 	progress = 0
-	pigeon.stopTurteln()
+	
