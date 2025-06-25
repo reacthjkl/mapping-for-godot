@@ -34,7 +34,7 @@ func request_transition():
 	tween = create_tween()
 	var tween2 = create_tween()
 	tween.tween_property(pigeon, "transparency", 0.0, 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tween2.tween_property(light, "light_energy", 5.0, 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween2.tween_property(light, "light_energy", 3.0, 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	await tween.finished
 	origami_plane.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	var tween3 = create_tween()
