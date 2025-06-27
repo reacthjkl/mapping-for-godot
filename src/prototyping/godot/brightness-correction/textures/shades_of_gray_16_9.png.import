@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgj4kag878uyp"
-path="res://.godot/imported/shades_of_gray.png-a357e5d5cac05e5b6258a93082a4425d.ctex"
+uid="uid://bhcjypompuk5f"
+path="res://.godot/imported/shades_of_gray_16_9.png-0e2cb55d7cdca9fafdd8adf89255abe9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/shades_of_gray.png"
-dest_files=["res://.godot/imported/shades_of_gray.png-a357e5d5cac05e5b6258a93082a4425d.ctex"]
+source_file="res://textures/shades_of_gray_16_9.png"
+dest_files=["res://.godot/imported/shades_of_gray_16_9.png-0e2cb55d7cdca9fafdd8adf89255abe9.ctex"]
 
 [params]
 

@@ -1,9 +1,59 @@
-[gd_scene load_steps=2 format=3 uid="uid://drajys2sv8m0v"]
+[gd_scene load_steps=11 format=3 uid="uid://drajys2sv8m0v"]
 
-[ext_resource type="Script" path="res://scripts/camera_3d.gd" id="1_6ucng"]
+[ext_resource type="Shader" path="res://shaders/brightness-correction.gdshader" id="1_0vp2l"]
+[ext_resource type="Script" path="res://scripts/brightness-correction-controller.gd" id="1_l1w55"]
+[ext_resource type="Script" path="res://scripts/camera_3d.gd" id="2_vqiy4"]
+[ext_resource type="Texture2D" uid="uid://bhcjypompuk5f" path="res://textures/shades_of_gray_16_9.png" id="3_whjtu"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_256uh"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_a7hgd"]
+sky_material = SubResource("ProceduralSkyMaterial_256uh")
+
+[sub_resource type="Environment" id="Environment_ylsw6"]
+background_energy_multiplier = 0.0
+sky = SubResource("Sky_a7hgd")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g3bg0"]
+shader = ExtResource("1_0vp2l")
+shader_parameter/correction_strength = 1.0
+shader_parameter/wall_texture = ExtResource("3_whjtu")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2dnsx"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_qnltk"]
 
 [node name="Node3D" type="Node3D"]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ylsw6")
+
+[node name="BrightnessCorrectionCanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("color_rect")]
+script = ExtResource("1_l1w55")
+color_rect = NodePath("ColorRect")
+
+[node name="ColorRect" type="ColorRect" parent="BrightnessCorrectionCanvasLayer"]
+material = SubResource("ShaderMaterial_g3bg0")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 768.0
+offset_bottom = 432.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.34072)
-script = ExtResource("1_6ucng")
+script = ExtResource("2_vqiy4")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.431755, 0.901991, 0, -0.901991, 0.431755, 0, 1.61894, 2.7043)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.85128, 0, 0, 0, 2.44083, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_2dnsx")
+mesh = SubResource("QuadMesh_qnltk")
