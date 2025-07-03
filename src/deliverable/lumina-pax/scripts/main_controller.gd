@@ -155,9 +155,10 @@ func _run_sequence():
 
 	lovingPigonFollower1.progress_ratio = 0
 	lovingPigonFollower2.progress_ratio = 0
-
+	$"../Skyline".appear_smoothly()
 	lovingPigonFollower1.start_flying()
 	lovingPigonFollower2.start_flying()
+	
 	
 
 
@@ -169,6 +170,9 @@ func _run_sequence():
 	$"../action_pigeons/branch_falling".start_falling()  # Hier starten wir den Fall
 	await $"../action_pigeons/branch_falling".fall_completed
 	
+	lovingPigonFollower1.queue_free()
+	lovingPigonFollower2.queue_free()
+	
 	#Taube kommt und holt den Branch 
 	$"../action_pigeons/pigeon_picking".start_fliegen()
 	await $"../action_pigeons/pigeon_picking"._taube_hat_zweig_erreicht_signal
@@ -176,6 +180,7 @@ func _run_sequence():
 	# close wall, lights down + wait 5 sec
 	$"../Wall__OpeningController".close()
 	await $"../Wall__OpeningController".finished
+	
 	$"../Fade_Controller".lights_fade_out(1.0)
 	await $"../Fade_Controller".lights_out_completed
 	$"../Fade_Controller".music_fade_out(3.0)
