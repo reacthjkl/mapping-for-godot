@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://clhg1xcu3mhbo"
+path="res://.godot/imported/Flattern nach Falten.mp3-5b5988da1312fa3e01fe4fe127338baa.mp3str"
+
+[deps]
+
+source_file="res://audio/soundeffects/Papier-Flattern/Flattern nach Falten.mp3"
+dest_files=["res://.godot/imported/Flattern nach Falten.mp3-5b5988da1312fa3e01fe4fe127338baa.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
