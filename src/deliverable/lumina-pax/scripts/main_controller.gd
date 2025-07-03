@@ -192,5 +192,5 @@ func _run_sequence():
 	
 	# -----------------end, reset values----------------------
 
-		get_tree().reload_current_scene()
-		isPlayingSequence = false
+	get_tree().reload_current_scene()
+	isPlayingSequence = false
