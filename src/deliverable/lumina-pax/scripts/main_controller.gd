@@ -152,9 +152,10 @@ func _run_sequence():
 
 	lovingPigonFollower1.progress_ratio = 0
 	lovingPigonFollower2.progress_ratio = 0
-
+	$"../Skyline".appear_smoothly()
 	lovingPigonFollower1.start_flying()
 	lovingPigonFollower2.start_flying()
+	
 	
 
 
